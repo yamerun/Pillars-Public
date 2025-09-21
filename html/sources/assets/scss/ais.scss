@@ -1,0 +1,240 @@
+@import 'vars';
+@import 'common/root';
+@import 'ais/root';
+@import 'common/reset';
+@import 'common/grid-inline';
+@import 'grid';
+@import 'common/default';
+@import 'common/button-primary';
+@import 'common/preloaders';
+@import 'addons/form';
+@import 'addons/form-alter';
+@import 'addons/notices';
+@import 'addons/tabs';
+@import 'styles/swiper';
+@import 'ais/default';
+
+.body-header__top {
+
+	[class^="col-"] {
+		position: relative;
+		min-height: 1px;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: flex-start;
+	}
+
+	ul.account {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+		font-size: $_12px;
+		font-weight: var(--weight_semibold);
+		line-height: 1.2;
+		text-transform: uppercase;
+
+		>li {
+			>a[class^="icon-"] {
+				display: flex;
+				height: 2rem;
+				position: relative;
+				padding: 0.5rem 1rem 0.5rem 2.5rem;
+				border: 1px solid var(--color_action);
+
+				&:before {
+					content: '';
+					display: inline-block;
+					width: 1.5rem;
+					height: 100%;
+					position: absolute;
+					left: 0.5rem;
+					top: 0;
+					background-position: center;
+					background-size: contain;
+					background-repeat: no-repeat;
+				}
+			}
+
+			a.icon-sigin:before {
+				background-image: url("../images/icon-account-signup.svg");
+			}
+
+			a.icon-login {
+				color: white;
+				background-color: var(--color_action);
+
+				&:before {
+					background-image: url("../images/icon-account-profile.svg");
+				}
+			}
+
+			a.icon-favorite {
+				padding: 0.5rem 1rem;
+				font-size: 0;
+				border-color: transparent;
+
+				&:before {
+					left: 0.25rem;
+					background-image: url("../images/icon-account-favorite.svg");
+				}
+			}
+		}
+	}
+}
+
+body.ais {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0;
+	font-family: var(--font_primary);
+	background: var(--background_ais_main);
+	overflow-y: scroll;
+	overflow-x: overlay;
+
+	>sidebar {
+		display: flex;
+		width: 10rem;
+		min-height: 100vh;
+		flex-direction: column;
+		background: var(--background_ais_sidebar);
+
+		.col-logo {
+			display: flex;
+			align-items: center;
+			padding: 0 0.5rem;
+			background: white;
+		}
+	}
+
+	.custom-logo-link {
+		display: inline-block;
+		background: url("../images/Pillars_logo.svg") center center no-repeat;
+		background-size: contain;
+
+		img {
+			height: auto;
+			max-width: 100%;
+			opacity: 0;
+		}
+	}
+
+	.col-cities {
+		display: none;
+	}
+
+	/**
+	 * NAVIGATION -->
+	 */
+	.navbar-default {
+		width: 100%;
+	}
+
+	.navbar-header {
+		display: none;
+	}
+
+	.navbar-nav {
+		font-size: $_14px;
+
+		>li {
+			a {
+				display: block;
+				padding: 0.75rem 0.5rem;
+				color: white;
+			}
+
+			&:hover {
+				a {
+					background-color: var(--color_action);
+				}
+			}
+
+			&.current-menu-item {
+				background-color: white;
+
+				a {
+					color: var(--background_ais_sidebar);
+
+					&:hover {
+						color: white;
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * <-- NAVIGATION
+	 */
+
+	>main {
+		width: calc(100% - 10rem);
+		min-height: 100vh;
+		background: transparent;
+
+		&:before {
+			display: none;
+		}
+
+		>header {
+			background-color: white;
+		}
+
+		>footer {
+			padding: 0;
+		}
+	}
+}
+
+@import 'ais/architect';
+@import 'pages/wc-catalog';
+@import 'pages/wc-product';
+@import 'pages/wc-product-pc';
+
+@media (min-width: $break_sm) {
+
+	:root {
+		--header-height: 4rem;
+	}
+
+	.body-header__top {
+		height: var(--header-height);
+	}
+
+	body.ais {
+		>sidebar {
+			.col-logo {
+				height: var(--header-height);
+				position: sticky;
+				top: 0;
+				z-index: 9;
+			}
+		}
+
+		>main {
+			>header {
+				position: sticky;
+				top: 0;
+				z-index: 9;
+			}
+		}
+	}
+}
+
+@media (min-width: $break_md) {
+
+	.body-header__top {
+		.container {
+			border: 0;
+		}
+
+		.col-title {
+			flex: 1 1 360px;
+		}
+
+		.col-account {
+			width: 320px;
+		}
+	}
+}

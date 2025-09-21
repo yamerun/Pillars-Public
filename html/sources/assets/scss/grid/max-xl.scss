@@ -1,0 +1,24 @@
+@media (max-width: ($break_xl - 1)) {
+	.txt-center-xl {
+		text-align: center !important;
+		justify-content: center !important;
+	}
+
+	.txt-left-xl {
+		text-align: left !important;
+		justify-content: flex-start !important;
+	}
+
+	.txt-right-xl {
+		text-align: right !important;
+		justify-content: flex-end !important;
+	}
+
+	.f-row-reverse-xl {
+		flex-direction: row-reverse !important;
+	}
+
+	.f-column-reverse-xl {
+		flex-direction: column-reverse !important;
+	}
+}

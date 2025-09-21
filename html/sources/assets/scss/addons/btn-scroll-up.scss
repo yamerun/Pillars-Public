@@ -1,0 +1,29 @@
+@import '../vars';
+
+.btn-up {
+	display: block;
+	width: 46px;
+	height: 46px;
+	position: fixed;
+	right: 1rem;
+	bottom: 1rem;
+	z-index: 9;
+	background: #fff url("data:image/svg+xml;charset=UTF-8,%3csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23clip0_480_2980)'%3e%3cpath d='M7.02477 3.43941L7.02408 15.321H8.97592L8.97661 3.44079L14.2117 8.67585L15.592 7.29548L8 -0.296564L0.40796 7.29548L1.78833 8.67585L7.02477 3.43941Z' fill='%23282932'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='clip0_480_2980'%3e%3crect width='16' height='16' fill='white' transform='matrix(1 0 0 -1 0 16)'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e") center center no-repeat;
+	background-size: 1rem;
+	border-bottom-right-radius: 1rem;
+	box-shadow: 0 0 20px rgba(36, 39, 48, 0.25);
+	opacity: 0.7;
+	@include trans;
+}
+
+.btn-up__hide {
+	display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.btn-up:hover {
+		box-shadow: 0 0 20px rgba(36, 39, 48, 0.4);
+		opacity: 1;
+		cursor: pointer;
+	}
+}

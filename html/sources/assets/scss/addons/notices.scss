@@ -1,0 +1,121 @@
+.tp-get-notice {
+	display: flex;
+	width: 100%;
+	flex-wrap: wrap;
+	align-items: center;
+	position: relative;
+	padding: 1.25rem 0.75rem;
+	color: #555;
+	border-left: 3px solid var(--notice_info);
+	background-color: var(--notice_info_light);
+	box-sizing: border-box;
+
+	&__icon {
+		display: flex;
+		width: 72px;
+		height: 72px;
+		margin: 0;
+
+		i.fa {
+			display: inline-block;
+			width: 72px;
+			height: 72px;
+			z-index: 2;
+			margin: auto;
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-image: url("../images/icon-notice-info.svg");
+			background-size: contain;
+		}
+	}
+
+	&__body {
+		width: calc(100% - 90px);
+		margin-left: 10px;
+	}
+
+	&__title {
+		margin-bottom: 0.5em;
+		color: var(--notice_info);
+		font-size: 1rem;
+		font-weight: 500;
+		line-height: 1.4;
+		text-align: initial;
+	}
+
+	p {
+		margin-bottom: 0.5em;
+		width: 100%;
+		color: #555;
+		font-size: $_14px;
+		text-align: initial;
+		line-height: 1.1;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	ul {
+		padding: 0 0 0 20px !important;
+		margin: auto;
+		margin-left: 0;
+		color: #555;
+		list-style: circle;
+
+		>li {
+			padding: 0 !important;
+			margin-bottom: 0.5rem;
+			font-size: 14px;
+		}
+	}
+}
+
+.tp-get-notice+* {
+	margin-top: 0.5rem;
+}
+
+.tp-get-notice.success {
+	border-color: var(--notice_success);
+	background-color: var(--notice_success_light);
+
+	.tp-get-notice__icon {
+		i.fa {
+			background-image: url("../images/icon-notice-complete.svg");
+		}
+	}
+
+	.tp-get-notice__title {
+		color: var(--notice_success);
+	}
+}
+
+.tp-get-notice.warning {
+	border-color: var(--notice_warning);
+	background-color: var(--notice_warning_light);
+
+	.tp-get-notice__icon {
+		i.fa {
+			background-image: url("../images/icon-notice-warning.svg");
+		}
+	}
+
+	.tp-get-notice__title {
+		color: var(--notice_warning);
+	}
+}
+
+.tp-get-notice.error {
+	border-color: var(--notice_error);
+	background-color: var(--notice_error_light);
+
+	.tp-get-notice__icon {
+		i.fa {
+			background-image: url("../images/icon-notice-error.svg");
+		}
+	}
+
+	.tp-get-notice__title {
+		color: var(--notice_error);
+	}
+}

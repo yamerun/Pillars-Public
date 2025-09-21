@@ -1,0 +1,28 @@
+@media (max-width: ($break_xs - 1)) {
+	.d-flex-xs {
+		display: flex !important;
+	}
+
+	.txt-center-xs {
+		text-align: center !important;
+		justify-content: center !important;
+	}
+
+	.txt-left-xs {
+		text-align: left !important;
+		justify-content: flex-start !important;
+	}
+
+	.txt-right-xs {
+		text-align: right !important;
+		justify-content: flex-end !important;
+	}
+
+	.f-row-reverse-xs {
+		flex-direction: row-reverse !important;
+	}
+
+	.f-column-reverse-xs {
+		flex-direction: column-reverse !important;
+	}
+}

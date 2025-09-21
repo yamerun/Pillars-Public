@@ -1,0 +1,110 @@
+@import '../vars';
+
+.vh-h {
+	height: calc(100vh - 6.5rem);
+	position: sticky;
+	top: 5rem;
+	overflow-y: overlay;
+	overflow-x: hidden;
+	scrollbar-width: thin;
+	scrollbar-color: rgba(0, 0, 0, .2) transparent;
+	overscroll-behavior: contain;
+
+	&::-webkit-scrollbar {
+		width: 0.5rem;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: rgba(0, 0, 0, .2);
+		border-radius: 2rem;
+		border: 0;
+	}
+
+	&::-webkit-scrollbar-button {
+		width: 0.5rem;
+		height: 0.5rem;
+	}
+
+	&:hover {
+		scrollbar-color: rgba(0, 0, 0, .7) transparent;
+
+		&::-webkit-scrollbar-thumb {
+			background-color: rgba(0, 0, 0, .7);
+		}
+	}
+}
+
+.pillars-archi {
+	&-products {
+		&__list {
+			height: 100%;
+
+			&-wrapper {
+				width: 100%;
+				border-collapse: collapse;
+			}
+		}
+
+		&__item {
+			>td {
+				vertical-align: middle;
+				border-bottom: 1px solid #eee;
+			}
+
+			&-thumbs {
+				width: 100px;
+
+				img {
+					margin: 0.25rem auto;
+				}
+			}
+
+			&-info {
+				padding: 0.5rem;
+
+				.title {
+					font-weight: var(--weight_medium);
+				}
+			}
+
+			&-action {
+				width: 40px;
+
+				>ul {
+					display: flex;
+					flex-wrap: wrap;
+					justify-content: space-around;
+					gap: 0.5rem;
+
+					>li a {
+						display: block;
+						width: $_24px;
+						height: $_24px;
+						font-size: 0;
+						background-position: center;
+						background-repeat: no-repeat;
+						background-size: 1rem;
+						background-color: var(--color_alter);
+						border-radius: 0.25rem;
+					}
+				}
+
+				&-view {
+					background-image: url("../images/icon-link-arrow-up.svg");
+				}
+			}
+		}
+
+		&__add-to-project {
+			display: flex;
+			max-width: 22rem;
+			align-items: center;
+			justify-content: flex-end;
+			gap: 1rem;
+		}
+	}
+}

@@ -1,0 +1,25 @@
+@media (max-width: ($break_md - 1)) {
+
+	.txt-center-md {
+		text-align: center !important;
+		justify-content: center !important;
+	}
+
+	.txt-left-md {
+		text-align: left !important;
+		justify-content: flex-start !important;
+	}
+
+	.txt-right-md {
+		text-align: right !important;
+		justify-content: flex-end !important;
+	}
+
+	.f-row-reverse-md {
+		flex-direction: row-reverse !important;
+	}
+
+	.f-column-reverse-md {
+		flex-direction: column-reverse !important;
+	}
+}

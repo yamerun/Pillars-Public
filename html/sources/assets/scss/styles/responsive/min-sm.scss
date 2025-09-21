@@ -1,0 +1,107 @@
+@media (min-width: $break_sm) {
+
+	ul.marker.--values {
+		height: 9rem;
+		flex-direction: column;
+
+		>li {
+			max-width: calc(50% - 1rem);
+		}
+	}
+
+	.image-split {
+		position: relative;
+		text-align: right;
+
+		.image-caption {
+			position: absolute;
+			top: 50%;
+			left: 0;
+			transform: translateY(-50%);
+		}
+	}
+
+	.counters {
+		&__title {
+			margin-bottom: 1rem;
+			font-size: 3rem;
+		}
+
+		&__border {
+			&:after {
+				content: '';
+				display: block;
+				height: 100%;
+				width: 1px;
+				position: absolute;
+				top: 0;
+				right: 0;
+				background: var(--color_primary);
+			}
+		}
+	}
+
+	.client-item {
+		flex-basis: calc((100% - 3*0.5rem)/4);
+	}
+
+	.certificates {
+		&__certificate {
+			min-width: 210px;
+
+			img {
+				height: 290px;
+				width: auto;
+			}
+		}
+
+		&__eac {
+			justify-content: flex-start;
+
+			img {
+				height: 78px;
+				width: auto;
+			}
+		}
+	}
+
+
+	/**
+	* POPUP
+	*/
+	.pillars-popup {
+		&__content {
+			padding: 2rem;
+		}
+
+		&__close {
+			right: -3rem;
+		}
+	}
+
+	/**
+	* FORM
+	*/
+	.form-style {
+		--form_size: 3rem;
+
+		input:is([type=date],
+			[type=datetime-local],
+			[type=email],
+			[type=month],
+			[type=number],
+			[type=password],
+			[type=search],
+			[type=tel],
+			[type=text],
+			[type=time],
+			[type=url],
+			[type=week]),
+		select,
+		textarea {
+			padding-block: 10px;
+		}
+	}
+
+	@import 'min-sm/wc-product';
+}

@@ -1,0 +1,12 @@
+.col-f-column {
+	>[class^="col-"] {
+		flex-direction: column;
+		justify-content: space-between;
+	}
+}
+
+.col-f-center {
+	>[class^="col-"] {
+		justify-content: center;
+	}
+}

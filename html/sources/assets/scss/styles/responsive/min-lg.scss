@@ -1,0 +1,16 @@
+@media (min-width: $break_lg) {
+	.client-item {
+		flex-basis: calc((100% - 7*1rem)/8);
+	}
+
+	.portfolio-item__link-wrapper {
+		padding: 1rem 0 0 1rem;
+		border-radius: 2.5rem 0 0 0;
+	}
+
+	.portfolio-item__link-text {
+		padding: 0.875rem 2rem;
+	}
+
+	@import 'min-lg/wc-product';
+}

@@ -1,0 +1,52 @@
+@import '../vars';
+
+.pillars-tabs {
+	display: flex;
+	flex-wrap: wrap;
+	color: var(--color_primary);
+	font-size: $_14px;
+	letter-spacing: -0.5px;
+
+	&__wrapper {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.25rem;
+	}
+
+	&__item {
+		>* {
+			display: inline-block;
+			padding: 0.5rem;
+			line-height: 1;
+			white-space: nowrap;
+			background-color: white;
+			box-shadow: 0px 1px 20px 0px rgba(0, 0, 0, 0.1);
+			border: 1px solid white;
+			border-radius: $_20px;
+		}
+	}
+
+	&__item.--active {
+
+		>* {
+			color: white;
+			background-color: var(--button_background);
+			border-color: var(--button_background);
+			cursor: default;
+		}
+	}
+
+	&__item.--deactive {
+		opacity: 0.3;
+		pointer-events: none;
+		cursor: not-allowed;
+	}
+}
+
+.pillars-tabs {
+	.pillars-tabs__wrapper {
+		width: calc(100% - var(--up)*2);
+		margin-inline: var(--up);
+	}
+}

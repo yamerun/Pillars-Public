@@ -1,0 +1,102 @@
+﻿:root {
+	--color_primary: var(--grey-900);
+	--color_secondary: var(--grey-300);
+	--color_alter: var(--grey-300);
+
+	--color_paragraph: var(--grey-900);
+	--color_link: var(--silver-800);
+	--color_link_alter: var(--pale-blue-400);
+	--color_link_hover: black;
+	--color_link_paragraph: var(--blue-300);
+	--color_border: var(--grey-900);
+	--color_border_focus: var(--silver-800);
+	--color_nav: var(--grey-900);
+	--color_nav_link: var(--grey-900);
+	--color_nav_link_hover: var(--blue-900);
+	--color_product_label: var(--grey-400);
+
+	--color_background_secondary: var(--grey-300);
+	--color_background_nav: var(--grey-100);
+	--color_background_footer: var(--grey-800);
+
+	--required: var(--red-600);
+
+	--font_primary: 'PT Root UI', sans-serif;
+	--font_primary: 'Montserrat', sans-serif;
+
+	--size_primary: 0.875rem;
+	--size_primary_big: 1.25rem;
+	--size_primary_small: 0.75rem;
+
+	--weight_exlight: 200;
+	--weight_light: 300;
+	--weight_normal: 400;
+	--weight_medium: 500;
+	--weight_semibold: 600;
+	--weight_bold: 700;
+	--weight_ex_bold: 800;
+
+	--button_text: white;
+	--button_border: var(--grey-900);
+	--button_background: var(--grey-900);
+	--button_focus_text: white;
+	--button_focus_border: var(--orange-100);
+	--button_focus_background: var(--orange-100);
+	--button_2_text: white;
+	--button_2_border: var(--orange-100);
+	--button_2_background: var(--orange-100);
+	--button_2_focus_text: white;
+	--button_2_focus_border: var(--orange-200);
+	--button_2_focus_background: var(--orange-200);
+
+	--rgba_1: rgba(36, 39, 48, 0.75);
+
+	--form_text: 14px;
+	--form_background_input: white;
+
+	--border-radius: 1rem;
+	--meniscus-size: 1.5rem;
+
+	/**
+	* AIS
+	*/
+	--notice_info: #528bcc;
+	--notice_info_light: #e3f7fc;
+	--notice_success: #52cc8b;
+	--notice_success_light: #e9ffd9;
+	--notice_warning: #cc8b52;
+	--notice_warning_light: #fff8c4;
+	--notice_error: #cc5252;
+	--notice_error_light: #fff1f1;
+
+
+	/*************************/
+
+
+	--color_action: var(--orange-100);
+	--color_action_hover: var(--orange-200);
+	--color_heading: var(--grey-900);
+	--color_separator: var(--grey-300);
+
+
+	--color_label: var(--grey-400);
+
+
+	--color_background_primary: var(--silver-100);
+
+
+
+
+
+
+	--size_secondary: 1.125rem;
+
+	--border_radius: 0.75rem;
+	--border_radius_2: 0.5rem;
+
+
+	--shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+	--shadow_sm: 0px 25px 20px -10px rgba(0, 0, 0, 0.1);
+
+	--padding-w: 80px;
+}

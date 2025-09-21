@@ -1,0 +1,75 @@
+@import '../vars';
+
+.qty__wrapper {
+	display: flex;
+	width: 9.5rem;
+	justify-content: flex-end;
+
+	span[class^=qty-] {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		border: 1px solid var(--color_border_alter);
+		cursor: pointer;
+
+		&:after {
+			content: "";
+			display: inline-block;
+			width: 1.25rem;
+			height: 1.25rem;
+		}
+	}
+
+	span.qty-remove:after {
+		background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB4PSIxNyIgeT0iOSIgd2lkdGg9IjIiIGhlaWdodD0iMTQiIHJ4PSIwLjUiIHRyYW5zZm9ybT0icm90YXRlKDkwIDE3IDkpIiBmaWxsPSIjOTc5OUFBIi8+PC9zdmc+DQo=") center center no-repeat;
+	}
+
+	span.qty-add:after {
+		background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB4PSIxNyIgeT0iOSIgd2lkdGg9IjIiIGhlaWdodD0iMTQiIHJ4PSIwLjUiIHRyYW5zZm9ybT0icm90YXRlKDkwIDE3IDkpIiBmaWxsPSIjOTc5OUFBIi8+PHJlY3QgeD0iMTEiIHk9IjE3IiB3aWR0aD0iMiIgaGVpZ2h0PSIxNCIgcng9IjAuNSIgdHJhbnNmb3JtPSJyb3RhdGUoLTE4MCAxMSAxNykiIGZpbGw9IiM5Nzk5QUEiLz48L3N2Zz4NCg==") center center no-repeat;
+	}
+
+	input[type="text"] {
+		width: 3rem;
+		height: 2.25rem;
+		font-family: var(--font_primary);
+		font-size: 1rem;
+		font-weight: var(--weight_semibold);
+		line-height: 1.2;
+		text-align: center;
+		border: 0;
+	}
+}
+
+/**
+ * FORM STYLE ALTER
+ */
+
+form.form-style-alter {
+	background-color: white;
+}
+
+.form-style-alter {
+
+	button[type=submit]:not(.btn-1),
+	input[type=submit]:not(.btn-1),
+	input[type=reset] {
+		display: inline-block;
+		width: 100%;
+		padding: 12px 18px;
+		color: #fff;
+		font-family: var(--font_primary);
+		font-size: $_14px;
+		border: 1px solid var(--color_action);
+		background-color: var(--color_action);
+		opacity: 1;
+		@include trans;
+
+		&:hover {
+			border-color: var(--color_action_hover);
+			background-color: var(--color_action_hover);
+			cursor: pointer;
+		}
+	}
+}

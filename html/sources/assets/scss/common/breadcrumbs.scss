@@ -1,0 +1,36 @@
+@import '../vars';
+
+nav.breadcrumbs ul:not(.breadcrumbs),
+ul.breadcrumbs {
+	display: inline-block;
+	width: calc(100% - var(--up)*2);
+	margin: 0 var(--up);
+	font-size: 0.6875rem;
+	text-align: left;
+
+	li {
+		float: left;
+		margin-right: 5px;
+		color: var(--color_secondary);
+		font-family: var(--font_primary);
+
+		&:after {
+			content: '/';
+			margin-left: 5px;
+			color: var(--color_secondary);
+			font-family: var(--font_primary);
+		}
+
+		&:last-child:after {
+			content: '';
+		}
+
+		a {
+			color: var(--color_secondary);
+
+			&:hover {
+				color: var(--color_secondary);
+			}
+		}
+	}
+}

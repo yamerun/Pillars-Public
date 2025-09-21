@@ -1,0 +1,60 @@
+@import '../vars';
+
+.pillars-contact-list {
+	display: flex;
+	flex-wrap: wrap;
+
+	dt {
+		width: 2rem;
+
+		svg,
+		img {
+			width: $_20px;
+		}
+	}
+
+	dd {
+		width: calc(100% - 2rem);
+	}
+
+	&__title {
+		font-weight: var(--weight_medium);
+	}
+
+	&__icon {
+		display: flex;
+		align-items: center;
+		height: $_20px;
+	}
+
+	&__content {
+		font-size: 1rem;
+		line-height: 1.3;
+		text-align: left;
+	}
+
+	&__subtitle {
+		flex-grow: 1;
+		width: 3rem;
+		margin-bottom: 0.125rem;
+		color: var(--color_product_label);
+		font-size: $_14px;
+
+		&+.pillars-contact-list__content {
+			text-align: right;
+		}
+	}
+
+	&+* {
+		margin-top: $_24px;
+	}
+
+	&__footer {
+		display: inline-block;
+		width: fit-content;
+		padding: 1rem 0 0 1rem;
+		margin: 0 -2rem -1.5rem 0;
+		border-top-left-radius: 2.5rem;
+		background: white;
+	}
+}

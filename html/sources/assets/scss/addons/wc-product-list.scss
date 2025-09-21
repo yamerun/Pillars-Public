@@ -1,0 +1,162 @@
+@import '../vars';
+@import '../addons/tabs';
+
+[class^="products-columns-"] {
+	display: flex;
+	width: 100%;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	position: relative;
+}
+
+.woocommerce-loop-product {
+	&__link {
+		.cover {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			max-height: 360px;
+			max-width: 360px;
+			position: relative;
+			border-radius: var(--border-radius);
+			overflow: hidden;
+
+			img {
+				width: 100%;
+			}
+
+			.hover-light {
+				position: absolute;
+				top: 0;
+				left: 0;
+				opacity: 0;
+				@include trans;
+			}
+
+			&:hover {
+				.hover-light {
+					opacity: 1;
+				}
+			}
+
+			&:after {
+				content: 'Охраняется авторским правом ©';
+				display: inline-block;
+				padding: 0.25rem 0.5rem;
+				position: absolute;
+				bottom: 0.5rem;
+				left: 0.5rem;
+				z-index: 2;
+				color: var(--color_primary);
+				font-family: var(--font_primary);
+				font-size: $_12px;
+				background: rgba($color: #ffffff, $alpha: 0.5);
+				border-radius: 0.5rem;
+			}
+		}
+
+		.product-info {
+			display: block;
+			padding: 0.5rem 0;
+		}
+
+	}
+
+	&__title {
+		padding: 0;
+		margin-bottom: 0.5rem;
+		font-size: 1rem;
+		font-weight: var(--weight_normal);
+		text-wrap: balance;
+		border: 0;
+	}
+}
+
+.pillars-wc {
+
+	&-product {
+		&-tags {
+			position: absolute;
+			top: 0.5rem;
+			right: 0.5rem;
+			z-index: 2;
+		}
+
+		&-tag {
+			color: white;
+			font-size: 0.625em;
+			text-transform: uppercase;
+		}
+	}
+
+	&-products {
+		&__section {
+			width: 100%;
+
+			&+.pillars-wc-products__section {
+				margin-top: 1.5rem;
+			}
+		}
+	}
+
+	&-term {
+		&__title-image {
+			display: inline-block;
+			height: 246px;
+			width: 100%;
+			position: relative;
+			overflow: hidden;
+			border-radius: var(--border-radius);
+
+			h1 {
+				position: absolute;
+				top: 2rem;
+				left: 2rem;
+				color: white;
+				border-color: white;
+			}
+
+			&+* {
+				margin-top: $_20px;
+			}
+		}
+	}
+}
+
+.pillars-wc-term__title-image {
+	&.--up-right {
+		h1 {
+			left: auto;
+			right: 2rem;
+		}
+	}
+
+	&.--bottom-left {
+		h1 {
+			top: auto;
+			bottom: 2rem;
+		}
+	}
+
+	&.--bottom-right {
+		h1 {
+			top: auto;
+			left: auto;
+			bottom: 2rem;
+			right: 2rem;
+		}
+	}
+}
+
+@media (max-width: ($break_xs - 1)) {
+	.woocommerce-loop-product {
+		&__link {
+			.cover {
+				&:after {
+					content: '©';
+					font-weight: var(--weight_bold);
+				}
+			}
+		}
+	}
+}

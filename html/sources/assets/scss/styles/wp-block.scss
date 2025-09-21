@@ -1,0 +1,18 @@
+@import '../vars';
+
+.wp-block {
+	&-pullquote {
+		padding: $_20px;
+		color: var(--color_primary);
+		background-color: var(--pale-pink-200);
+		border-radius: 2px;
+	}
+
+	iframe[src*="vk.com/video_ext.php"],
+	iframe[src*="youtube.com/embed"] {
+		width: 100%;
+		height: auto;
+		max-width: 880px;
+		aspect-ratio: 16 / 10;
+	}
+}

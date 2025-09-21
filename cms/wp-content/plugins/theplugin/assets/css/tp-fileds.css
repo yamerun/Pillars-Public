@@ -1,0 +1,23 @@
+#product-additional .inside {
+	display: inline-block;
+	padding: 0;
+}
+
+.tp-filed {
+	padding: 15px 12px;
+	position: relative;
+	box-sizing: border-box;
+	float: left;
+	clear: none;
+}
+
+.tp-filed+.tp-filed {
+	border-left: 1px solid #eee;
+}
+
+.tp-filed label {
+	display: block;
+	font-weight: bold;
+	margin: 0 0 3px;
+	padding: 0;
+}

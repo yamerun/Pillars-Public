@@ -1,0 +1,151 @@
+@media (min-width: $break_md) {
+
+	.pillars-tabs {
+		letter-spacing: 0;
+
+		&__wrapper {
+			justify-content: flex-start;
+			gap: 1rem;
+		}
+
+		&__item {
+			>* {
+				padding: $_10px 1rem;
+				@include trans;
+
+				&:hover {
+					border-color: var(--button_background);
+				}
+			}
+		}
+	}
+
+	.pillars-wc-product-usage__wrapper+.pillars-wc-product-tab__model-3d {
+		position: absolute;
+		top: -0.5rem;
+		right: 0;
+		margin-top: 0;
+	}
+
+
+	/**
+	 * TODO возможно ниже код уже не нужен
+	 */
+
+	.category-item__placeholder,
+	a.video-placeholder.--link {
+		&:after {
+			width: 60px;
+			height: 60px;
+			@include trans;
+		}
+
+		&:hover {
+			&:after {
+				top: 0.5rem;
+				right: 0.5rem;
+			}
+		}
+
+		p {
+			padding: 2rem;
+		}
+	}
+
+	.category-item__placeholder {
+		p {
+			font-size: $_24px;
+		}
+	}
+
+	/**
+	 * НОВОСТИ
+	 */
+	.news-item {
+		&__thumb {
+			height: 280px;
+		}
+
+		&__date {
+			time {
+				padding: $_12px 0 1rem $_24px;
+			}
+		}
+	}
+
+	/**
+	 * ПОРТФОЛИО
+	 */
+	.portfolio-slider {
+		&__container {
+			width: calc(100% - 240px);
+			overflow: visible;
+		}
+
+		&:before {
+			display: none;
+		}
+
+		&::after {
+			top: calc(490px - var(--border-radius));
+		}
+
+		.pillars-slider__pagination {
+			padding-left: 120px;
+		}
+	}
+
+	.portfolio-item {
+		position: relative;
+
+		&__thumb {
+			height: 490px;
+		}
+
+		&__title {
+			font-size: $_20px;
+		}
+
+		&__link {
+			width: 320px;
+			padding: $_32px 2.5rem;
+			top: $_32px;
+			left: $_32px;
+		}
+	}
+
+	.clients.row {
+		justify-content: center;
+		gap: 3rem 2rem;
+	}
+
+	.client-item {
+		flex-basis: calc((100% - 7*0.5rem)/8);
+	}
+
+	.pillars-wc-thankyou-order {
+		&-wrapper {
+			padding: 2rem 3rem 3rem;
+			border: 1px solid var(--color_alter);
+			border-radius: 2rem;
+		}
+	}
+
+	body>footer {
+		padding-inline: 3.5rem 0;
+	}
+
+	.footer {
+		&-logo {
+			width: 170px;
+		}
+
+		&-menu-catalog {
+			max-height: 270px;
+
+			>li {
+				width: 25%;
+			}
+		}
+	}
+}
