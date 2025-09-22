@@ -118,11 +118,15 @@ if (!function_exists('pillars_wc_template_loop_product_thumbnail')) {
 						wp_get_attachment_url($video)
 					);
 					// echo "<script>document.addEventListener('DOMContentLoaded', (event) => {document.querySelector('video').play();});</script>";
+				}
+			}
+
+			$cover	= absint(get_post_meta($product->get_id(), '_pillars_product_image_second_view', true));
+			if ($cover) {
+				if (theplugin_is_mobile()) {
+					echo sprintf('<div class="d-none hover-light" data-image="%s"></div>',  esc_attr(wp_get_attachment_image($cover, $size, true, ['class' => 'hover-light', 'loading' => 'lazy'])));
 				} else {
-					$cover	= absint(get_post_meta($product->get_id(), '_pillars_product_image_second_view', true));
-					if ($cover) {
-						echo wp_get_attachment_image($cover, $size, true, ['class' => 'hover-light', 'loading' => 'lazy']);
-					}
+					echo wp_get_attachment_image($cover, $size, true, ['class' => 'hover-light', 'loading' => 'lazy']);
 				}
 			}
 			?></div>
@@ -157,6 +161,8 @@ if (!function_exists('pillars_wc_get_price_html')) {
 			} else {
 				$price = wc_price(wc_get_price_to_display($product)) . $product->get_price_suffix();
 			}
+
+			// if ( $price == "" && $product->get_type() == 'variable' ) {
 		} else {
 			$prices 		= $product->get_variation_prices(true);
 			$min_price  	= current($prices['price']);
