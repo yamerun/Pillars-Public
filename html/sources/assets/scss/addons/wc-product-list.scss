@@ -67,8 +67,41 @@
 		margin-bottom: 0.5rem;
 		font-size: 1rem;
 		font-weight: var(--weight_normal);
-		text-wrap: balance;
 		border: 0;
+	}
+}
+
+.woocommerce-loop-product__link {
+	.cover.--animate:not(:hover) {
+		.hover-light {
+			animation: alter-view 16s ease-in-out infinite;
+		}
+	}
+}
+
+@keyframes alter-view {
+	0% {
+		opacity: 0;
+	}
+
+	10% {
+		opacity: 0;
+	}
+
+	15% {
+		opacity: 1;
+	}
+
+	65% {
+		opacity: 1;
+	}
+
+	70% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 0;
 	}
 }
 

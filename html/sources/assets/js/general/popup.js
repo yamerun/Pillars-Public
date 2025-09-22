@@ -163,6 +163,13 @@ tp_delegate(document.body, 'click', popup_key + '__btn', function (e) {
 					let form_id = data.params.part;
 					$('#' + form_id).find('input.mask-phone').maskPhone();
 					$('#' + form_id).find('input.mask-date').maskDate();
+
+					const phone_country_code = document.getElementById(form_id).querySelector('.phone-country-code');
+					if (phone_country_code) {
+						const phone_country_code_list = phone_country_code.querySelector('.phone-country-code__list');
+						phone_country_code_list.innerHTML = '';
+						form_phone_init_list_country(phone_country_code_list);
+					}
 				}
 			});
 		}

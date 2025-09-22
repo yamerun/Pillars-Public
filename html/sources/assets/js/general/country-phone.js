@@ -24,7 +24,7 @@ function form_phone_init_list_country(country_list) {
 		li.tabindex = '-1';
 		li.dataset.dialCode = country.code;
 		li.dataset.countryCode = country.iso;
-		li.ariaSelected = false;
+		// li.ariaSelected = false;
 
 		li.innerHTML = `<div class="phone-country-code__flag --${country.iso}"></div><span class="phone-country-code__name">${country.name}</span><span class="phone-country-code__item-dial">+${country.code}</span>`;
 		country_list.appendChild(li);
@@ -129,3 +129,161 @@ tp_delegate(document.body, 'click', 'phone-country-code__container', function (e
 	wrapper.classList.add('active');
 	list.classList.toggle('d-none');
 });
+
+/*
+document.addEventListener('DOMContentLoaded', () => {
+	const phoneInput = document.getElementById('phone-input');
+	const countryDropdown = document.querySelector('.country-dropdown');
+	const countryList = document.querySelector('.country-list');
+	const selectedCountry = document.querySelector('.selected-country');
+	const selectedFlag = selectedCountry.querySelector('.flag-icon');
+	const selectedCode = selectedCountry.querySelector('.country-code');
+
+	// Инициализация
+	function init() {
+		// Заполняем выпадающий список
+		countries.forEach(country => {
+			const li = document.createElement('li');
+			li.dataset.code = country.code;
+			li.dataset.iso = country.iso;
+			li.innerHTML = `<span class="flag-icon">${country.flag}</span> <span>${country.name}</span> <span class="country-code">${country.code}</span>`;
+			countryList.appendChild(li);
+		});
+
+		// Устанавливаем страну по умолчанию
+		setCountry(countries[0]);
+	}
+
+	// Установка выбранной страны
+	function setCountry(country) {
+		selectedFlag.textContent = country.flag;
+		selectedCode.textContent = country.code;
+		selectedFlag.style.backgroundImage = `url(https://flagcdn.com/24x18/${country.iso}.png)`;
+		phoneInput.value = country.code + ' ';
+		phoneInput.focus();
+	}
+
+	// Обработка клика по выпадающему списку
+	countryDropdown.addEventListener('click', (e) => {
+		countryList.classList.toggle('hidden');
+		e.stopPropagation();
+	});
+
+	// Обработка выбора страны из списка
+	countryList.addEventListener('click', (e) => {
+		const selectedLi = e.target.closest('li');
+		if (selectedLi) {
+			const code = selectedLi.dataset.code;
+			const country = countries.find(c => c.code === code);
+			if (country) {
+				setCountry(country);
+			}
+			countryList.classList.add('hidden');
+		}
+	});
+
+	// Закрытие списка при клике вне его
+	document.addEventListener('click', (e) => {
+		if (!countryDropdown.contains(e.target)) {
+			countryList.classList.add('hidden');
+		}
+	});
+
+	// Форматирование номера телефона
+	phoneInput.addEventListener('input', (e) => {
+		let value = e.target.value.trim();
+		const currentCode = selectedCode.textContent.trim();
+
+		// Если код страны не совпадает, переключаем
+		const matchingCountry = countries.find(c => value.startsWith(c.code));
+		if (matchingCountry && matchingCountry.code !== currentCode) {
+			setCountry(matchingCountry);
+			// Устанавливаем курсор в правильную позицию после смены кода
+			requestAnimationFrame(() => {
+				phoneInput.selectionStart = phoneInput.value.length;
+				phoneInput.selectionEnd = phoneInput.value.length;
+			});
+		}
+
+		// Удаляем все, кроме цифр
+		value = value.replace(/\D/g, '');
+
+		// Если значение не пустое, добавляем + и код страны
+		if (value.length > 0) {
+			e.target.value = '+' + value;
+		}
+	});
+
+	init();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+	const phoneInput = document.getElementById('phone');
+
+	// Функция для очистки номера от всего, кроме цифр
+	const getCleanNumber = (value) => {
+		return value.replace(/\D/g, '');
+	};
+
+	// Функция для форматирования номера телефона
+	const formatPhoneNumber = (value) => {
+		const cleaned = getCleanNumber(value);
+		let formatted = '';
+
+		if (cleaned.length > 0) {
+			formatted += '+7';
+		}
+		if (cleaned.length > 1) {
+			formatted += ' (' + cleaned.substring(1, 4);
+		}
+		if (cleaned.length > 4) {
+			formatted += ') ' + cleaned.substring(4, 7);
+		}
+		if (cleaned.length > 7) {
+			formatted += '-' + cleaned.substring(7, 9);
+		}
+		if (cleaned.length > 9) {
+			formatted += '-' + cleaned.substring(9, 11);
+		}
+
+		return formatted;
+	};
+
+	// Обработчик события ввода
+	phoneInput.addEventListener('input', (e) => {
+		const value = e.target.value;
+		const formattedValue = formatPhoneNumber(value);
+		e.target.value = formattedValue;
+	});
+
+	// Обработчик события нажатия клавиши для предотвращения удаления маски
+	phoneInput.addEventListener('keydown', (e) => {
+		const value = e.target.value;
+		const cleanNumber = getCleanNumber(value);
+
+		// Разрешаем Backspace, стрелки и другие служебные клавиши
+		if (e.key === 'Backspace' || e.key.startsWith('Arrow')) {
+			return;
+		}
+
+		// Запрещаем ввод, если достигнута максимальная длина (11 цифр)
+		if (cleanNumber.length >= 11) {
+			e.preventDefault();
+		}
+	});
+
+	// Установка начального значения маски при фокусе
+	phoneInput.addEventListener('focus', () => {
+		if (phoneInput.value === '') {
+			phoneInput.value = '+7';
+		}
+	});
+
+	// Удаление маски, если поле осталось пустым после потери фокуса
+	phoneInput.addEventListener('blur', () => {
+		if (getCleanNumber(phoneInput.value).length === 1) {
+			phoneInput.value = '';
+		}
+	});
+});
+*/

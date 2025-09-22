@@ -54,6 +54,12 @@
 						display: flex;
 					}
 				}
+
+				/*
+				>div:first-child {
+					margin-left: 1rem;
+				}
+				*/
 			}
 
 			&__cover {
@@ -293,6 +299,7 @@
 table.variations {
 	width: 100%;
 	text-align: left;
+	/* border-spacing: 0 $_20px; */
 
 	th,
 	td {
@@ -466,6 +473,7 @@ table.variations {
 
 					&:hover {
 						.pillars-slider__buttons-wrapper {
+							/* opacity: 1; */
 							pointer-events: all;
 						}
 					}
