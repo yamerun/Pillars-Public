@@ -12,6 +12,8 @@ add_action('admin_bar_menu', 'theplugin_multisite_add_admin_bar_link', 99);
  */
 function theplugin_multisite_get_blog_prefix($blog_id = 0)
 {
+	$blog_id = absint($blog_id);
+
 	global $wpdb;
 	$prefix = 'wp_'; // TODO продумать корректное отображение для $wpdb->prefix
 	return ($blog_id !== 1 && $blog_id) ? $prefix . $blog_id . '_' : $prefix;
