@@ -24,7 +24,7 @@ function form_phone_init_list_country(country_list) {
 		li.tabindex = '-1';
 		li.dataset.dialCode = country.code;
 		li.dataset.countryCode = country.iso;
-		// li.ariaSelected = false;
+		li.ariaSelected = false;
 
 		li.innerHTML = `<div class="phone-country-code__flag --${country.iso}"></div><span class="phone-country-code__name">${country.name}</span><span class="phone-country-code__item-dial">+${country.code}</span>`;
 		country_list.appendChild(li);
@@ -41,15 +41,17 @@ function form_phone_init_list_country(country_list) {
  * @param {*} country
  */
 function form_phone_set_country(phone, country) {
-	let flag = phone.querySelector('.phone-country-code__flag');
-	const input = form_phone_get_input(phone);
-	flag.removeAttribute('class');
-	flag.classList.add('phone-country-code__flag', '--' + country.iso);
-	phone.querySelector('.phone-country-code__dial').textContent = '+' + country.code;
+	document.querySelectorAll('.phone-country-code__container .phone-country-code__flag').forEach(flag => {
+		flag.parentElement.querySelector('.phone-country-code__dial').textContent = '+' + country.code;
+		flag.removeAttribute('class');
+		flag.classList.add('phone-country-code__flag', '--' + country.iso);
 
-	input.setAttribute('placeholder', '+' + country.code + ' ' + country.placeholder);
-	input.dataset.mask = '+' + country.code + ' ' + country.mask;
-	input.style = 'padding-left: ' + (phone.offsetWidth - phone.querySelector('.phone-country-code__dial').offsetWidth) + 'px !important';
+		const input = form_phone_get_input(flag.parentElement);
+		input.dataset.mask = '+' + country.code + ' ' + country.mask;
+		input.setAttribute('placeholder', '+' + country.code + ' ' + country.placeholder);
+		input.style = 'padding-left: ' + (phone.offsetWidth - phone.querySelector('.phone-country-code__dial').offsetWidth) + 'px !important';
+	});
+
 	$('input.mask-phone, .mask-phone input').maskPhone();
 }
 
