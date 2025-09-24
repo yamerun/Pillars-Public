@@ -9,15 +9,14 @@
 <?php get_header(); ?>
 
 <?php
-
-$products   = [];
-$term       = '';
+$products	= [];
+$term		= '';
 
 if ($_POST) {
 
 	/* Check wp nonce */
 	$security = false;
-	if (isset($_POST['search_verify_key']) && sanitize_key($_POST['search_verify_key'], 'all') != '') {
+	if (isset($_POST['search_verify_key']) && sanitize_key($_POST['search_verify_key']) != '') {
 		if (wp_verify_nonce(sanitize_key($_POST['search_verify_key']), 'search_verify_action') == 1) {
 			$security = true;
 		}
@@ -32,7 +31,20 @@ if ($_POST) {
 		$term = sanitize_text_field($_POST['search']);
 		$errors = ($term) ? false : true;
 		if ($term) {
-			$products = pillars_wc_search_product_by_term($term, ['count' => 100, 'view' => '']);
+			$products = theplugin_wc_product_search_ids_by_indexing($term);
+			if ($products['maybe']['base']) {
+				if (!$products['maybe']['variation']) {
+					$result = $products['variation'];
+				} elseif ($products['base']) {
+					$result = $products['base'];
+				} else {
+					$result = $products['variation'];
+				}
+			} else {
+				$result = $products['base'];
+			}
+
+			$products = $result;
 		}
 
 		/* Send data --> end */
@@ -64,9 +76,9 @@ if ($_POST) {
 				</div>
 			</div>
 			<div class="products-columns-4">
-				<?php for ($i = 0; $i < count($products); $i++) {
-					$post		= get_post($products[$i]['id']);
-					$product	= wc_get_product($products[$i]['id']);
+				<?php foreach ($products as $id) {
+					$post		= get_post($id);
+					$product	= wc_get_product($id);
 					wc_get_template('content-product.php');
 				} ?>
 			</div>
