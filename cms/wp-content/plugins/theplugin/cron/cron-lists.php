@@ -52,3 +52,4 @@ function theplugin_cron_add_interval($schedules)
 
 require THEPLUGIN_DIR . '/cron/update-date-published.php';
 require THEPLUGIN_DIR . '/cron/update-date-modified.php';
+require THEPLUGIN_DIR . '/cron/update-indexing-wc-product.php';

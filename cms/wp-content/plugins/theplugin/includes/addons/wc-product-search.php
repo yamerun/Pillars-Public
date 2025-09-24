@@ -204,6 +204,17 @@ function theplugin_wc_product_search_ids_by_indexing($search = '', $tags = ['', 
 				'variation'	=> [],
 			];
 			$result = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table WHERE title LIKE %s", $tags[0] . $wpdb->esc_like($string) . $tags[1]), ARRAY_A);
+
+			if (!$result) {
+				$table = $wpdb->prefix . 'wc_search_product_synonyms';
+				$result = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table WHERE synonym LIKE %s", $tags[0] . $wpdb->esc_like($string) . $tags[1]));
+
+				if ($result) {
+					$table = $wpdb->prefix . 'wc_search_products';
+					$result = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table WHERE id = %d", $result->title_id), ARRAY_A);
+				}
+			}
+
 			if ($result) {
 				foreach ($result as $item) {
 					// Проходим по типам товаров
@@ -256,4 +267,25 @@ function theplugin_wc_product_search_ids_by_indexing($search = '', $tags = ['', 
 	$intersect['maybe'] = $is_maybe;
 
 	return $intersect;
+}
+
+/**
+ * Добавление синонимов к индексации наименований товаров
+ *
+ * @param [type] $title_id
+ * @param [type] $synonym
+ * @return int|bool
+ */
+function theplugin_wc_product_set_synonym_by_title($title_id, $synonym)
+{
+	global $wpdb;
+	$table = $wpdb->prefix . 'wc_search_product_synonyms';
+	$synonym = trim(mb_strtolower(html_entity_decode($synonym)), '".,«»');
+
+	$wpdb->insert($table, [
+		'title_id'	=> absint($title_id),
+		'synonym'	=> $synonym
+	]);
+
+	return $wpdb->insert_id;
 }
