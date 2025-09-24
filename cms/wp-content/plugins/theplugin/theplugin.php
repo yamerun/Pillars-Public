@@ -67,14 +67,25 @@ function theplugin_activate()
 	 */
 	$table = $wpdb->prefix . 'wc_search_products';
 	$wpdb->query("CREATE TABLE IF NOT EXISTS $table (
-			id				bigint(20) UNSIGNED AUTO_INCREMENT NOT NULL,
-			title			varchar(100),
-			base_ids		text,
-			variation_ids	text,
-			date_update		datetime DEFAULT '1970-01-01 00:00:00',
-			priority		int(3) UNSIGNED DEFAULT 10,
-			is_auto			BOOLEAN DEFAULT 1,
-			PRIMARY KEY (id)
+		id				bigint(20) UNSIGNED AUTO_INCREMENT NOT NULL,
+		title			varchar(100),
+		base_ids		text,
+		variation_ids	text,
+		date_update		datetime DEFAULT '1970-01-01 00:00:00',
+		priority		int(3) UNSIGNED DEFAULT 10,
+		is_auto			BOOLEAN DEFAULT 1,
+		PRIMARY KEY (id)
+	);");
+
+	$table = $wpdb->prefix . 'wc_search_product_synonyms';
+	$wpdb->query("CREATE TABLE IF NOT EXISTS $table (
+		synonym_id		bigint(20) UNSIGNED AUTO_INCREMENT NOT NULL,
+		title_id		bigint(20) UNSIGNED NOT NULL,
+		synonym			varchar(100),
+		PRIMARY KEY (synonym_id),
+		FOREIGN KEY (title_id) REFERENCES wp_wc_search_products (id)
+			ON UPDATE CASCADE
+			ON DELETE RESTRICT
 	);");
 }
 
