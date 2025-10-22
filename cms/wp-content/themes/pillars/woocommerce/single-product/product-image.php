@@ -43,13 +43,14 @@ $images = pillars_wc_get_product_gallery_images($product);
 								'<a class="pillars-wc-product-gallery__image-link" data-fancybox="product-gallery" %s href="%s">
 									<div class="pillars-wc-product-gallery__cover image-radius %s">
 										<div class="media-ratio">%s</div>
-										%s
+										%s%s
 									</div>
 								</a>' . PHP_EOL,
 								(isset($image['iframe'])) ? 'data-type="iframe"' : '',
 								$image['link'],
 								$image['class'],
 								$image['image'],
+								($image['content']) ? '<figcaption>' . $image['content'] . '</figcation>' : '',
 								(isset($image['iframe'])) ? do_shortcode('[pillars_svg key="video-play"]') : '',
 							); ?>
 						</div>

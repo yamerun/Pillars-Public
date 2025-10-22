@@ -288,7 +288,8 @@ function pillars_wc_get_product_gallery_images($product)
 				'image' 	=> wp_get_attachment_image($videos['cover_id'], 'woocommerce_single'),
 				'link'		=> theplugin_get_video_embed_link($videos['url']),
 				'class'		=> '',
-				'iframe'	=> true
+				'iframe'	=> true,
+				'content'	=> ''
 			);
 		}
 	}
@@ -302,10 +303,11 @@ function pillars_wc_get_product_gallery_images($product)
 	if ($image_ids) {
 		foreach ($image_ids as $attachment_id) {
 			$images[] = array(
-				'thumb' => wp_get_attachment_image_url($attachment_id, 'thumbnail'),
-				'image' => wp_get_attachment_image($attachment_id, 'woocommerce_single'),
-				'link'	=> wp_get_attachment_image_url($attachment_id, 'full'),
-				'class'	=> ''
+				'thumb'		=> wp_get_attachment_image_url($attachment_id, 'thumbnail'),
+				'image'		=> wp_get_attachment_image($attachment_id, 'woocommerce_single'),
+				'link'		=> wp_get_attachment_image_url($attachment_id, 'full'),
+				'class'		=> '',
+				'content'	=> trim(get_post_field('post_excerpt', $attachment_id))
 			);
 		}
 	}
