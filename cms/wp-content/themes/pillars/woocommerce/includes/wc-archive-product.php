@@ -63,6 +63,7 @@ function pillars_wc_archive_shop_tabs_header()
 	if (is_shop()) {
 		$category_groups = pillars_get_option('product_category_group');
 		unset($category_groups['-1']);
+		unset($category_groups['playgrounds']);
 
 		$args = array(
 			'label'		=> 'Навигация по подкатегориям Каталога',
