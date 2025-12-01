@@ -12,17 +12,11 @@
 			<?php
 
 			$categories_grid = [
-				'ball' => [
-					'category_id'	=> 34,
+				'swing' => [
+					'category_id'	=> 253,
 					'image_id'		=> 0,
-					'image_size'	=> 'medium',
-					'class'			=> 'col-6 col-md-3 ratio-1-1',
-				],
-				'cube' => [
-					'category_id'	=> 33,
-					'image_id'		=> 0,
-					'image_size'	=> 'medium',
-					'class'			=> 'col-6 col-md-3 ratio-1-1',
+					'image_size'	=> 'medium_large',
+					'class'			=> 'col-12 col-md-6 ratio-2-1',
 				],
 				'bench' => [
 					'category_id'	=> 267,
@@ -30,20 +24,14 @@
 					'image_size'	=> 'medium_large',
 					'class'			=> 'col-12 col-md-6 ratio-2-1',
 				],
-				'swing' => [
-					'category_id'	=> 253,
-					'image_id'		=> 0,
-					'image_size'	=> 'medium_large',
-					'class'			=> 'col-12 col-md-6 ratio-2-1',
-				],
-				'halfsphere' => [
-					'category_id'	=> 274,
+				'urns' => [
+					'category_id'	=> 1148,
 					'image_id'		=> 0,
 					'image_size'	=> 'medium',
 					'class'			=> 'col-6 col-md-3 ratio-1-1',
 				],
-				'kashpo' => [
-					'category_id'	=> 19,
+				'bike' => [
+					'category_id'	=> 1217,
 					'image_id'		=> 0,
 					'image_size'	=> 'medium',
 					'class'			=> 'col-6 col-md-3 ratio-1-1',
@@ -54,8 +42,14 @@
 					'image_size'	=> 'medium_large',
 					'class'			=> 'col-12 col-md-6 ratio-2-1',
 				],
-				'table' => [
-					'category_id'	=> 287,
+				'parklet' => [
+					'category_id'	=> 508,
+					'image_id'		=> 0,
+					'image_size'	=> 'medium_large',
+					'class'			=> 'col-12 col-md-6 ratio-2-1',
+				],
+				'amphitheater' => [
+					'category_id'	=> 1212,
 					'image_id'		=> 0,
 					'image_size'	=> 'medium',
 					'class'			=> 'col-6 col-md-3 ratio-1-1',
