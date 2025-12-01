@@ -134,49 +134,44 @@
 
 	&-term {
 		&__title-image {
-			display: inline-block;
-			height: 246px;
+			display: flex;
+			min-height: 246px;
 			width: 100%;
 			position: relative;
 			overflow: hidden;
 			border-radius: var(--border-radius);
+			justify-content: space-between;
+			flex-direction: column;
 
 			h1 {
 				position: absolute;
-				top: 2rem;
-				left: 2rem;
 				color: white;
+				margin: 2rem 1rem 1rem;
 				border-color: white;
 			}
 
 			&+* {
 				margin-top: $_20px;
 			}
-		}
-	}
-}
 
-.pillars-wc-term__title-image {
-	&.--up-right {
-		h1 {
-			left: auto;
-			right: 2rem;
-		}
-	}
+			.media-ratio {
+				position: relative;
+				top: 0;
+				left: 0;
+				width: 100%;
+				min-height: 246px;
 
-	&.--bottom-left {
-		h1 {
-			top: auto;
-			bottom: 2rem;
-		}
-	}
+				&>img {
+					min-height: 246px;
+					border-radius: 1rem;
+				}
+			}
 
-	&.--bottom-right {
-		h1 {
-			top: auto;
-			left: auto;
-			bottom: 2rem;
-			right: 2rem;
+			.pillars-wc-term-description__header {
+				position: relative;
+				padding: 0 0 1.25rem;
+				background: linear-gradient(0deg, rgba(255, 255, 255, 0.8) 90%, transparent);
+			}
 		}
 	}
 }
@@ -188,6 +183,71 @@
 				&:after {
 					content: '©';
 					font-weight: var(--weight_bold);
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: ($break_md - 1)) {
+	.pillars-wc-term__title-image {
+		&.--up-right {
+			h1 {
+				right: 0;
+				top: 0;
+			}
+		}
+
+		&.--bottom-left {
+			h1 {
+				left: 0;
+				top: 168px;
+			}
+		}
+
+		&.--bottom-right {
+			h1 {
+				right: 0;
+				top: 168px;
+			}
+		}
+	}
+}
+
+@media (min-width: $break_md) {
+	.pillars-wc {
+		&-term {
+			&__title-image {
+				h1 {
+					position: relative;
+					margin: 2rem 2rem 0;
+				}
+
+				.media-ratio {
+					width: 100%;
+					height: 100%;
+					position: absolute;
+				}
+
+				.pillars-wc-term-description__header {
+					padding: 2rem 2rem 1.25rem;
+					margin-top: 0;
+					color: white;
+					background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 70%, transparent);
+				}
+
+				&.--up-right {
+					align-items: flex-end;
+				}
+
+				&.--bottom-left {
+					justify-content: flex-end;
+					align-items: flex-start;
+				}
+
+				&.--bottom-right {
+					justify-content: flex-end;
+					align-items: flex-end;
 				}
 			}
 		}

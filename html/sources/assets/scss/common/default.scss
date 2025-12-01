@@ -192,6 +192,14 @@ ul.marker {
 	aspect-ratio: 2/1;
 }
 
+.ratio-4-3 {
+	aspect-ratio: 4/3;
+}
+
+.ratio-16-9 {
+	aspect-ratio: 16/9;
+}
+
 .spacer::after,
 .spacer-double::after {
 	content: '';

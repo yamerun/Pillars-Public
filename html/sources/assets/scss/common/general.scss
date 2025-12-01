@@ -739,6 +739,12 @@ a.preload-item {
 		line-height: 1.25;
 		border: 0;
 	}
+
+	iframe:not([class]) {
+		max-width: 100%;
+		height: auto;
+		aspect-ratio: 16/9;
+	}
 }
 
 .section-title-image {
