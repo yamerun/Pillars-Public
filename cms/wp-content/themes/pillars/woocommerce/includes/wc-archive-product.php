@@ -4,7 +4,7 @@ defined('ABSPATH') || exit;
 
 add_action('woocommerce_archive_description', 'pillars_wc_archive_title_header', 5);
 add_action('woocommerce_archive_description', 'pillars_wc_archive_shop_tabs_header', 5);
-add_action('woocommerce_archive_description', 'pillars_wc_archive_description_header', 10);
+// add_action('woocommerce_archive_description', 'pillars_wc_archive_description_header', 10);
 
 add_action('woocommerce_after_main_content', 'pillars_wc_archive_videoreviews', 10);
 add_action('woocommerce_after_main_content', 'pillars_wc_archive_description', 10);
@@ -32,15 +32,22 @@ function pillars_wc_archive_title_header()
 		if ($term) {
 			$image_id		= get_term_meta($term->term_id, '_pillars_cat_title_image_id', true);
 			$image_position	= get_term_meta($term->term_id, '_pillars_cat_title_image_position', true);
+
+			ob_start();
+			pillars_wc_archive_description_header();
+			$description = ob_get_clean();
+
 			if ($image_id) {
 				echo sprintf(
-					'<div class="pillars-wc-term__title-image%s"><div class="media-ratio">%s</div><h1>%s</h1></div>',
+					'<div class="pillars-wc-term__title-image%s"><div class="media-ratio">%s</div><h1>%s</h1>%s</div>',
 					($image_position && $image_position != '-1') ? ' --' . $image_position : '',
 					wp_get_attachment_image($image_id, 'full'),
-					woocommerce_page_title(false)
+					woocommerce_page_title(false),
+					$description
 				);
 			} else {
 				echo '<h1>' . woocommerce_page_title(false) . '</h1>';
+				echo $description;
 			}
 		}
 	}
