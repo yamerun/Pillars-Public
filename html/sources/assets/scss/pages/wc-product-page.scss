@@ -319,6 +319,14 @@ table.variations {
 		>label {
 			margin-top: 0.5rem;
 		}
+
+		&.--center {
+			vertical-align: middle;
+
+			>label {
+				top: 0 !important;
+			}
+		}
 	}
 
 	td.quantity {

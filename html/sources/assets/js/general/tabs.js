@@ -1,51 +1,64 @@
-tp_delegate(document.body, 'click', 'pillars-tabs__item', function (e) {
+// Примагничивание панели навигации по секциям Товарам
+if (document.querySelector('.pillars-wc-product-tabs__nav')) {
+	const box = document.querySelector('.pillars-wc-product-tabs__nav').getBoundingClientRect();
+	const elY = box.top + window.pageYOffset;
+	let elOffset = 0;
 
-	const tab = tp_get_target_by_class(e, 'pillars-tabs__item');
-	const nav = tab.closest('nav');
+	const product_tabs_nav = {
+		el: document.querySelector('.pillars-wc-product-tabs__nav'),
+		show() {
+			// закрепляем панель
+			this.el.classList.add('--fixed');
+			// Если экран браузера под мобильный формат, то добавялем отсуп шапки сайта
+			if (window.innerWidth < window.wp_theplugin.break_sm) {
+				elOffset = document.querySelector('body > header').offsetHeight;
+				this.el.style.top = elOffset + 'px';
+			} else {
+				this.el.style.top = '0px';
+				elOffset = 0;
+			}
+		},
+		hide() {
+			// открепляем панель
+			this.el.classList.remove('--fixed');
+			if (window.innerWidth < window.wp_theplugin.break_sm) {
+				this.el.style.top = '0px';
+				elOffset = 0;
+			}
+		},
+		addEventListener() {
+			window.addEventListener('scroll', () => {
+				// определяем величину прокрутки
+				const scrollY = window.scrollY || document.documentElement.scrollTop;
+				// если страница прокручена больше чем положение панели навигации, то примагничиванием к верху окна браузера
+				scrollY > elY ? this.show() : this.hide();
 
-	if (nav.getAttribute('data-tab_group')) {
-
-		if (!tab.classList.contains('--no-tab')) {
-
-			e.preventDefault();
-
-			const link = tab.querySelector('a');
-			const id = link.getAttribute('href').indexOf('#');
-
-			if (id !== -1) {
-				let hash = link.getAttribute('href').substring(id + 1);
-
-				if (hash) {
-					if (document.getElementById(hash)) {
-						const element = document.getElementById(hash);
-						const group = element.getAttribute('data-tab_group');
-						const items = document.querySelectorAll('[data-tab_group="' + group + '"]:not(nav)');
-
-						nav.querySelectorAll('.pillars-tabs__item').forEach(elm => {
-							elm.classList.remove('--active');
-						});
-
-						for (let i = 0; i < items.length; i++) {
-							if (items[i].id == element.id) {
-								if (element.style.display != undefined && element.style.display == 'none') {
-									tp_slide_toggle_animate(element, 0.2, false);
+				// Если есть элементы секций из навигации
+				const navbar = this.el;
+				const tabs_items = this.el.querySelectorAll('.pillars-wc-product-tabs__item');
+				if (tabs_items.length) {
+					// Задаём первичный выбор секции
+					let nav = tabs_items[0];
+					// Ищем секцию в поле видимости браузера
+					tabs_items.forEach(element => {
+						element.classList.remove('active');
+						if (element.getAttribute('data-id')) {
+							const id = element.getAttribute('data-id');
+							if (document.getElementById(id)) {
+								const section = document.getElementById(id).getBoundingClientRect();
+								if (scrollY > (section.top + window.pageYOffset - navbar.offsetHeight - elOffset)) {
+									nav = element;
 								}
-								tab.classList.add('--active');
-							} else {
-								if (element.style.display == undefined || element.style.display != 'none') {
-									tp_slide_toggle_animate(items[i], 0.2, true);
-								}
-
 							}
 						}
-					}
-				} else {
+					});
 
+					// Задаём класс активности элемента навигации для видимой секции
+					nav.classList.add('active');
 				}
-
-				console.log(hash);
-			}
+			});
 		}
 	}
 
-});
+	product_tabs_nav.addEventListener();
+}

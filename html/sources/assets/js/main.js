@@ -1,6 +1,6 @@
 // @prepros-append general/base.js
 // @prepros-append general/animate.js
-// prepros-append general/tabs.js
+// @prepros-append general/tabs.js
 // @prepros-append general/menu.js
 // @prepros-append general/format.js
 // @prepros-append general/api.js

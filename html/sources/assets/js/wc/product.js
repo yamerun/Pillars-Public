@@ -268,6 +268,11 @@ document.addEventListener('DOMContentLoaded', function (e) {
 			select.classList.add('visuallyhidden');
 		}
 
+		let permalinks = [];
+		if (select.getAttribute('data-permalinks')) {
+			permalinks = JSON.parse(select.getAttribute('data-permalinks'));
+		}
+
 		wrapper = select.parentElement.querySelector('.pillars-select[data-id="' + select.id + '"]');
 		wrapper.querySelector('.pillars-select__toggle').innerHTML = '';
 		dropdown = wrapper.querySelector('.pillars-select__dropdown');
@@ -291,6 +296,15 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
 				if (option.hasAttribute('data-color')) {
 					li.insertAdjacentHTML('afterBegin', '<span class="pillars-select__option-color" style="background:' + option.getAttribute('data-color') + ';"></span>');
+				}
+
+				if (option.hasAttribute('data-image')) {
+					li = document.createElement('a');
+					li.className = 'pillars-select__option';
+					li.innerHTML = option.innerHTML;
+					li.setAttribute('href', permalinks[option.getAttribute('value')]);
+					li.insertAdjacentHTML('afterBegin', '<span class="pillars-select__option-image"><img src="' + option.getAttribute('data-image') + '" width="60" height="60"></span>');
+					wrapper.classList.add('--image');
 				}
 
 				if (option.hasAttribute('data-price')) {
@@ -373,11 +387,11 @@ document.addEventListener('DOMContentLoaded', function (e) {
 	 * Измение значений опций атрибутов с обновлением параметров
 	 */
 	tp_delegate(document.body, 'click', 'pillars-select__option', function (e) {
-		e.preventDefault();
-
 		const option = tp_get_target_by_class(e, 'pillars-select__option');
 
-		if (!option.closest('.pillars-select__toggle')) {
+		if (!option.closest('.pillars-select__toggle') && option.getAttribute('value')) {
+
+			e.preventDefault();
 
 			const wrapper = option.closest('.pillars-select');
 			const select = document.getElementById(wrapper.getAttribute('data-id'));
