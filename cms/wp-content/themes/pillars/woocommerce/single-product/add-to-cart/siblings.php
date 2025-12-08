@@ -19,10 +19,10 @@ if ($args['values'] && $args['label']) {
 		<table class="variations" role="presentation">
 			<tbody>
 				<tr>
-					<th class="label"><label for="product_siblings"><?= esc_html($args['label']) ?></label></th>
+					<th class="label --center"><label for="product_siblings"><?= esc_html($args['label']) ?></label></th>
 					<td class="value">
-						<select id="product_siblings" class="" data-permalinks="<?= esc_attr(theplugin_json_encode($permalinks)) ?>">
-							<?= pillars_get_options_wrapper($args['values'], $args['id']) ?>
+						<select id="product_siblings" class="dropdown-image" data-permalinks="<?= esc_attr(theplugin_json_encode($permalinks)) ?>">
+							<?= pillars_get_options_wrapper($args['values'], $args['id'], 'dropdown-image') ?>
 						</select>
 					</td>
 				</tr>

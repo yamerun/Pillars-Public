@@ -87,7 +87,7 @@ function pillars_wc_product_has_siblings()
 	if ($siblings && isset($siblings['label']) && isset($siblings['values'])) {
 		$siblings['id'] = $product->get_id();
 		foreach ($siblings['values'] as $id => $item) {
-			if (get_post_status($id) != 'publish') {
+			if (get_post_status($id) != 'publish' && !current_user_can('manage_woocommerce')) {
 				unset($siblings['values'][$id]);
 			}
 		}
@@ -532,7 +532,7 @@ function pillars_wc_product_tabs_videoreview()
 }
 
 /**
- * Вывод секции для табов "Брошюра"
+ * Вывод секции для табов "Коллекция"
  *
  * @return void
  */

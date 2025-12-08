@@ -22,7 +22,7 @@ if ($args['values'] && $args['label']) {
 					<th class="label"><label for="product_backlight"><?= esc_html($args['label']) ?></label></th>
 					<td class="value">
 						<select id="product_backlight" class="" data-permalinks="<?= esc_attr(theplugin_json_encode($permalinks)) ?>">
-							<?= pillars_get_options_wrapper($args['values'], $args['id']) ?>
+							<?= pillars_get_options_wrapper($args['values'], $args['id'], 'dropdown-image') ?>
 						</select>
 					</td>
 				</tr>
