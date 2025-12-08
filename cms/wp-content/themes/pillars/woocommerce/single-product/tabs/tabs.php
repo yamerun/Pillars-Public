@@ -37,7 +37,8 @@ if (!empty($product_tabs)) : ?>
 							<ul class="pillars-wc-product-tabs__wrapper" role="tablist">
 								<?php foreach ($product_tabs as $key => $product_tab) {
 									echo sprintf(
-										'<li class="pillars-wc-product-tabs__item" id="tab-title-%s" role="tab" aria-controls="tab-%s"><a href="#tab-%s">%s</a></li>',
+										'<li class="pillars-wc-product-tabs__item" id="tab-title-%s" data-id="tab-%s" role="tab" aria-controls="tab-%s"><a href="#tab-%s">%s</a></li>',
+										esc_attr($key),
 										esc_attr($key),
 										esc_attr($key),
 										esc_attr($key),
@@ -46,6 +47,7 @@ if (!empty($product_tabs)) : ?>
 								} ?>
 							</ul>
 						</nav>
+						<div class="pillars-wc-product-tabs__nav-feeder"></div>
 					</div>
 				</div>
 			</div>
