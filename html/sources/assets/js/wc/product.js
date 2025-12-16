@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
 			form.setAttribute('data-price', display_price);
 			setTimeout(function () {
 				pillars_product_calc_price(form);
-			}, 500);
+			}, 10);
 		}
 	}
 
@@ -323,7 +323,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
 		// Обновление стоимости товара за едницу для подсчёта
 		if (update_price) {
-			pillars_set_price_data(select.closest('form'));
+			setTimeout(function () {
+				pillars_set_price_data(select.closest('form'));
+			}, 500);
+
 		}
 	}
 
@@ -372,6 +375,12 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
 			observer.observe(attrs_select, config);
 		}
+
+		setTimeout(function () {
+			let i = attrs_selects.length - 1;
+			pillars_set_price_data(attrs_selects[i].closest('form'));
+		}, 100);
+
 	}
 
 	/**
