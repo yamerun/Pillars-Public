@@ -141,7 +141,7 @@ function theplugin_dashboard_fields()
 		'field_id'			=> 'social_links',
 		'field_label'		=> 'Ссылки на соцсети:',
 		'filed_callback'	=> 'theplugin_dashboard_fields_customize_textarea',
-		'args'				=> array('description' => 'Шорткод [tp_social_links]')
+		'args'				=> array('description' => 'Шорткод [tp-social-links]')
 	));
 
 	theplugin_dashboard_fields_customize(array(

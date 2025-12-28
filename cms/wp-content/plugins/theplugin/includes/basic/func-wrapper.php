@@ -927,6 +927,18 @@ function theplugin_get_categories_list_wrapper_by_options($list = [], $offset = 
 }
 
 /**
+ * Округления числа до `significance` разряда в большую сторону
+ *
+ * @param [type] $number
+ * @param integer $significance
+ * @return int|bool
+ */
+function theplugin_ceil($number, $significance = 1)
+{
+	return (is_numeric($number) && is_numeric($significance)) ? (ceil($number / $significance) * $significance) : false;
+}
+
+/**
  * Функция-костыль для вывода логотипа для мульти-сайтов
  *
  * @param integer $blog_id
