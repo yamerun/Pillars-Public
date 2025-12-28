@@ -38,7 +38,7 @@ if (document.querySelector('.pillars-wc-product-tabs__nav')) {
 				const tabs_items = this.el.querySelectorAll('.pillars-wc-product-tabs__item');
 				if (tabs_items.length) {
 					// Задаём первичный выбор секции
-					let nav = tabs_items[0];
+					let nav = '';
 					// Ищем секцию в поле видимости браузера
 					tabs_items.forEach(element => {
 						element.classList.remove('active');
@@ -54,7 +54,32 @@ if (document.querySelector('.pillars-wc-product-tabs__nav')) {
 					});
 
 					// Задаём класс активности элемента навигации для видимой секции
-					nav.classList.add('active');
+					if (nav) {
+						nav.classList.add('active');
+					}
+				}
+			});
+
+			window.addEventListener('DOMContentLoaded', () => {
+				const navbar = this.el;
+				const tabs_links = this.el.querySelectorAll('.pillars-wc-product-tabs__item a:not([href^="#"])');
+				if (tabs_links.length) {
+
+					tabs_links.forEach(element => {
+						element.onclick = (e) => {
+							const id = element.closest('.pillars-wc-product-tabs__item').getAttribute('data-id');
+							if (document.getElementById(id)) {
+								e.preventDefault();
+								const section = document.getElementById(id).getBoundingClientRect();
+								window.scrollTo({
+									top: section.top + window.pageYOffset - navbar.offsetHeight - elOffset + 10,
+									left: 0,
+									behavior: 'smooth'
+								});
+							}
+						};
+						console.log(element);
+					});
 				}
 			});
 		}
