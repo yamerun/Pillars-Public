@@ -30,7 +30,11 @@
 					)); ?>
 				</div>
 			</div>
+		</div>
 
+		<div class="col-md-1"></div>
+
+		<div class="col-md-4">
 			<div class="block g-block">
 				<h5 class="pillars-contact-list__title">Отдел кадров</h5>
 
@@ -39,21 +43,6 @@
 					<dd class="pillars-contact-list__subtitle">E-mail</dd>
 					<dt class="pillars-contact-list__icon"><?= pillars_theme_get_svg_symbol('contact-icon-mail') ?></dt>
 					<dd class="pillars-contact-list__content"><?= do_shortcode('[tp-get-contact type="email" key="contacts_email_hr"]') ?></dd>
-				</dl>
-			</div>
-		</div>
-
-		<div class="col-md-1"></div>
-
-		<div class="col-md-4">
-			<div class="block g-block">
-				<h5 class="pillars-contact-list__title">Производство</h5>
-
-				<dl class="pillars-contact-list">
-					<dt></dt>
-					<dd class="pillars-contact-list__subtitle">E-mail</dd>
-					<dt class="pillars-contact-list__icon"><?= pillars_theme_get_svg_symbol('contact-icon-mail') ?></dt>
-					<dd class="pillars-contact-list__content"><?= do_shortcode('[tp-get-contact type="email" key="contacts_email_production"]') ?></dd>
 				</dl>
 			</div>
 
