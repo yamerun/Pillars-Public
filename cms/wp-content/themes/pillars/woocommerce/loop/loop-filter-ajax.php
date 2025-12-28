@@ -13,18 +13,22 @@ defined('ABSPATH') || exit;
 
 $params = pillars_wc_set_categories_tab_items($args);
 if ($params['items']) { ?>
-	<nav class="pillars-tabs row-sm" <?= $params['attrs'] ?>>
-		<ul class="pillars-tabs__wrapper">
-			<?php foreach ($params['items'] as $item) {
-				echo sprintf(
-					'
-				<li class="%s"><a href="%s" data-id="%s">%s</a></li>',
-					$item['class'],
-					$item['href'],
-					$item['data-id'],
-					$item['label']
-				);
-			} ?>
-		</ul>
-	</nav>
+	<div id="category-tabs" class="block">
+		<nav class="pillars-wc-product-tabs__nav" <?= $params['attrs'] ?>>
+			<ul class="pillars-wc-product-tabs__wrapper" role="tablist">
+				<?php foreach ($params['items'] as $item) {
+					echo sprintf(
+						'<li class="%s" id="tab-%s" data-id="%s" role="tab" aria-controls="tab-%s"><a href="%s">%s</a></li>',
+						esc_attr(join(' ', $item['class'])),
+						esc_attr($item['data-id']),
+						esc_attr($item['data-id']),
+						esc_attr($item['data-id']),
+						esc_attr($item['href']),
+						wp_kses_post($item['label'])
+					);
+				} ?>
+			</ul>
+		</nav>
+		<div class="pillars-wc-product-tabs__nav-feeder"></div>
+	</div>
 <?php }

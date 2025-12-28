@@ -85,11 +85,12 @@ function pillars_wc_archive_shop_tabs_header()
 		);
 
 		foreach ($category_groups as $id => $title) {
-			$args['items'][] = array(
+			$args['items'][$id] = array(
 				'link'	=> true,
+				'id'	=> 'product-group-' . $id,
 				'href'	=> '#product-group-' . $id,
 				'label'	=> $title,
-				'class'	=> 'pillars-tabs__item'
+				'class'	=> 'pillars-wc-product-tabs__item'
 			);
 		}
 
@@ -105,21 +106,40 @@ function pillars_wc_archive_shop_tabs_header()
 		$params = join(' ', $params);
 
 		?>
-		<nav class="pillars-tabs" <?= $params ?>>
-			<ul class="pillars-tabs__wrapper">
-				<?php foreach ($args['items'] as $item) {
+		<nav class="pillars-wc-product-tabs__nav" <?= $params ?>>
+			<ul class="pillars-wc-product-tabs__wrapper" role="tablist">
+				<?php foreach ($args['items'] as $id => $item) {
 					echo sprintf(
 						'
-						<li class="%s"><a href="%s">%s</a></li>',
-						$item['class'],
-						$item['href'],
-						$item['label']
+				<li class="%s" id="tab-%s" data-id="%s" role="tab" aria-controls="tab-%s"><a href="%s">%s</a></li>',
+						esc_attr($item['class']),
+						esc_attr($id),
+						esc_attr($item['id']),
+						esc_attr($id),
+						esc_attr($item['href']),
+						wp_kses_post($item['label'])
 					);
 				} ?>
 			</ul>
 		</nav>
+		<div class="pillars-wc-product-tabs__nav-feeder"></div>
 <?php
 	}
+
+	/*
+	if (is_product_taxonomy()) {
+		$term = get_term_by('name', woocommerce_page_title(false), 'product_cat');
+		if ($term) {
+			$tabs = pillars_wc_get_categories_tabs($term->term_id);
+
+			if (count($tabs) > 1) {
+				pillars_wc_get_categories_list_filter($tabs);
+			} else {
+				wc_get_template('archive-product/no-filters.php');
+			}
+		}
+	}
+	*/
 }
 
 /**
@@ -133,6 +153,7 @@ function pillars_wc_archive_description_header()
 		$term = get_queried_object();
 
 		if ($term) {
+			// $args['description'] = pillars_get_term_meta($term->term_id, 'product_cat_desc_top');
 			$args['description'] = get_term_meta($term->term_id, '_pillars_cat_description_top', true);
 
 			if ($args['description']) {
@@ -246,11 +267,15 @@ function pillars_wc_set_categories_tab_items($args = array())
 
 	foreach ($args as $cat_id => $value) {
 		if (isset($value['title'])) {
+			$slug = ($value['slug']) ? $value['slug'] : 'category-tabs';
+			$link = (isset($value['link']) && $value['link']) ? $value['link'] : '#' . $slug;
+			$link = (isset($value['redirect']) && $value['redirect'] == 'yes') ? $link : '#' . $slug;
+
 			$params['items'][] = array(
-				'data-id'	=> ($value['slug']) ? $value['slug'] : '#',
-				'href'		=> (isset($value['link']) && $value['link']) ? $value['link'] : '#',
+				'data-id'	=> $slug,
+				'href'		=> $link,
 				'label'		=> sprintf('<span class="hide-sm">%s</span><span class="show-sm">%s</span>', $value['title'], $value['short']),
-				'class'		=> 'pillars-tabs__item' . ((isset($value['redirect']) && $value['redirect']) ? ' --no-tab' : '')
+				'class'		=> ['pillars-wc-product-tabs__item']
 			);
 		}
 	}
@@ -490,79 +515,81 @@ function pillars_wc_get_categories_list_filter_by_grid($pa_args = [], $tax = '',
 	}
 
 	foreach ($pa_args as $cat_id => $args) {
+		if (!isset($args['only_tab'])) {
 
-		wc_get_template('loop/loop-filter-start.php', $args);
-		wc_get_template('loop/loop-start.php');
+			wc_get_template('loop/loop-filter-start.php', $args);
+			wc_get_template('loop/loop-start.php');
 
-		foreach ($pa_terms as $pa_term) {
+			foreach ($pa_terms as $pa_term) {
 
-			$query_args = array(
-				'post_type'			=> 'product',
-				'post_status'		=> 'publish',
-				'posts_per_page'	=> -1,
-				'tax_query'			=> array(
-					array(
-						'taxonomy'		=> 'product_cat',
-						'field'			=> 'ID',
-						'terms'			=> array((int) $cat_id),
-						'operator'		=> 'IN',
-					)
-				),
-				'orderby'		=> $product_order
-			);
-
-			if (current_user_can('manage_woocommerce')) {
-				$query_args['post_status'] = array('publish', 'private');
-			}
-
-			if (!empty($pa_term)) {
-				$query_args['tax_query'][] = array(
-					'taxonomy'			=> $tax,
-					'field'				=> 'slug',
-					'terms'				=> array($pa_term->slug),
-					'operator'			=> 'IN',
+				$query_args = array(
+					'post_type'			=> 'product',
+					'post_status'		=> 'publish',
+					'posts_per_page'	=> -1,
+					'tax_query'			=> array(
+						array(
+							'taxonomy'		=> 'product_cat',
+							'field'			=> 'ID',
+							'terms'			=> array((int) $cat_id),
+							'operator'		=> 'IN',
+						)
+					),
+					'orderby'		=> $product_order
 				);
-			}
 
-			if ($filter) {
-				switch ($cat_id) {
-					case 344:
-						$exclude = array(839);
-						break;
-					case 839:
-						$exclude = array(342, 463);
-						break;
-					case 463:
-						$exclude = array(342, 344, 839);
-						break;
-					default:
-						$exclude = array();
-						break;
+				if (current_user_can('manage_woocommerce')) {
+					$query_args['post_status'] = array('publish', 'private');
 				}
 
-				if ($exclude) {
+				if (!empty($pa_term)) {
 					$query_args['tax_query'][] = array(
-						'taxonomy'			=> 'product_cat',
-						'field'				=> 'ID',
-						'terms'				=> $exclude,
-						'operator'			=> 'NOT IN',
+						'taxonomy'			=> $tax,
+						'field'				=> 'slug',
+						'terms'				=> array($pa_term->slug),
+						'operator'			=> 'IN',
 					);
 				}
+
+				if ($filter) {
+					switch ($cat_id) {
+						case 344:
+							$exclude = array(839);
+							break;
+						case 839:
+							$exclude = array(342, 463);
+							break;
+						case 463:
+							$exclude = array(342, 344, 839);
+							break;
+						default:
+							$exclude = array();
+							break;
+					}
+
+					if ($exclude) {
+						$query_args['tax_query'][] = array(
+							'taxonomy'			=> 'product_cat',
+							'field'				=> 'ID',
+							'terms'				=> $exclude,
+							'operator'			=> 'NOT IN',
+						);
+					}
+				}
+
+				$query = new WP_Query($query_args);
+
+				if ($query->have_posts()) :
+					while ($query->have_posts()) : $query->the_post();
+						wc_get_template('content-product.php');
+					endwhile;
+				endif;
+
+				wp_reset_query();
 			}
 
-			$query = new WP_Query($query_args);
-
-			if ($query->have_posts()) :
-				while ($query->have_posts()) : $query->the_post();
-					wc_get_template('content-product.php');
-				endwhile;
-			endif;
-
-			wp_reset_query();
+			wc_get_template('loop/loop-end.php');
+			wc_get_template('loop/loop-filter-end.php');
 		}
-
-		wc_get_template('loop/loop-end.php');
-		wc_get_template('loop/loop-filter-end.php');
 	}
 }
 
@@ -573,25 +600,57 @@ function pillars_wc_get_categories_list_filter_by_grid($pa_args = [], $tax = '',
  * @param integer $term_id
  * @return array
  */
-function pillars_wc_get_categories_tabs($term_id = 0)
+function pillars_wc_get_categories_tabs($term_id = 0, $get_children = true)
 {
 	if (!$term_id)
 		return array();
 
-	$term_childs = get_term_children($term_id, 'product_cat');
-	$args = array(
-		'0' => [
-			'title'	=> get_term_meta($term_id, '_pillars_tab_title_general', true),
-			'short'	=> 'Все'
-		],
-	);
-	foreach ($term_childs as $id) {
-		if (get_term_meta($id, '_pillars_tab_title', true) == 'yes') {
-			$args[$id] = array(
-				'title'		=> get_term_meta($id, '_pillars_tab_title_long', true),
-				'short'		=> get_term_meta($id, '_pillars_tab_title_short', true),
-				'redirect'	=> get_term_meta($id, '_pillars_tab_title_redirect', true),
+	$args = array();
+
+	if ($get_children) {
+		$term_childs = get_term_children($term_id, 'product_cat');
+		if ($term_childs) {
+			foreach ($term_childs as $id) {
+				if (get_term_meta($id, '_pillars_tab_title', true) == 'yes') {
+					$args[$id] = array(
+						'title'		=> get_term_meta($id, '_pillars_tab_title_long', true),
+						'short'		=> get_term_meta($id, '_pillars_tab_title_short', true),
+						'redirect'	=> get_term_meta($id, '_pillars_tab_title_redirect', true),
+					);
+				}
+			}
+		}
+	} else {
+		$parent_id = wp_get_term_taxonomy_parent_id($term_id, 'product_cat');
+		if ($parent_id) {
+			$args = array(
+				$parent_id => [
+					'title'		=> get_term_meta($parent_id, '_pillars_tab_title_general', true),
+					'short'		=> 'Все',
+					'redirect'	=> 'yes',
+					'only_tab'	=> true,
+				],
 			);
+
+			$term_childs = get_term_children($parent_id, 'product_cat');
+			foreach ($term_childs as $id) {
+				if ($term_id != $id) {
+					if (get_term_meta($id, '_pillars_tab_title', true) == 'yes' && get_term_meta($id, '_pillars_tab_title_redirect', true) == 'yes') {
+						$args[$id] = array(
+							'title'		=> get_term_meta($id, '_pillars_tab_title_long', true),
+							'short'		=> get_term_meta($id, '_pillars_tab_title_short', true),
+							'redirect'	=> 'yes',
+							'only_tab'	=> true,
+						);
+					}
+				} else {
+					$args[$id] = array(
+						'title'		=> get_term_meta($id, '_pillars_tab_title_long', true),
+						'short'		=> get_term_meta($id, '_pillars_tab_title_short', true),
+						'redirect'	=> 'no',
+					);
+				}
+			}
 		}
 	}
 

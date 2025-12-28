@@ -57,29 +57,24 @@ do_action('woocommerce_before_main_content');
 			$term = get_term_by('name', woocommerce_page_title(false), 'product_cat');
 
 			if ($term) {
-				$tabs	= pillars_wc_get_categories_tabs($term->term_id);
+				$tabs	= pillars_wc_get_categories_tabs($term->term_id, (get_term_meta($term->term_id, '_pillars_tab_breadcrumbs', true) != 'yes'));
 				$groups	= get_term_meta($term->term_id, '_pillars_group_products', true);
 				$filter = true;
 
-				if ($groups && count($tabs) < 2) {
+				// Если есть параметр группировки товаров и нет табов для вывода, то задаём базовое значение таба по текущей категории
+				if ($groups && !$tabs) {
 					$tabs[$term->term_id] = array(
 						'title'			=> get_term_meta($term->term_id, '_pillars_tab_title_long', true),
 						'short'			=> get_term_meta($term->term_id, '_pillars_tab_title_short', true),
 						'redirect'		=> get_term_meta($term->term_id, '_pillars_tab_title_redirect', true),
 						'hide_title'	=> true
 					);
+					// Скрываем панель навигации по категориям
 					$filter = false;
 				}
 
-				if (count($tabs) > 1) {
+				if ($tabs) {
 					pillars_wc_get_categories_list_filter_by_grid($tabs, $groups, $filter);
-					/*
-					if ($term->term_id == 253) {
-						pillars_wc_get_categories_list_filter_by_grid($tabs, $groups, $filter);
-					} else {
-						pillars_wc_get_categories_list_filter($tabs, $groups, $filter);
-					}
-					*/
 				} else {
 					wc_get_template('archive-product/no-filters.php');
 				}
