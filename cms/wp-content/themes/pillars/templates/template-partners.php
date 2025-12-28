@@ -20,11 +20,14 @@ get_header(); ?>
 			</div>
 		</div>
 
-		<div class="row section-title-image__content --top">
+		<div class="row section-title-image__content --bottomp">
 			<div class="col-sm-6">
 				<div class="block color-white">
 					<h1><?php the_title(); ?></h1>
-					<?php the_excerpt(); ?>
+					<?php $excerpt = apply_filters('the_excerpt', get_the_excerpt());
+					if (strpos($excerpt, '<p>&nbsp;</p>') === false) {
+						echo $excerpt;
+					} ?>
 					<a href="#form-partner" class="btn-2">Оставить заявку на сотрудничество</a>
 				</div>
 			</div>
