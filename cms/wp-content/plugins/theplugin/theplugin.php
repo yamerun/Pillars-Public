@@ -109,6 +109,8 @@ require THEPLUGIN_DIR . '/includes/functions-metadata.php';
 /* STYLES, SCRIPTS & CUSTOMIZE */
 require_once THEPLUGIN_DIR . '/includes/theme/scripts-styles.php';
 
+require_once THEPLUGIN_DIR . '/includes/theme/customize.php';
+
 /**
  * Helpers function
  */
@@ -144,6 +146,11 @@ add_action('plugins_loaded', function () {
  * Список функций и фильтров для работы с YML-фидом для Яндекс.Маркет
  */
 require THEPLUGIN_DIR . '/includes/addons/yml-market.php';
+
+/**
+ * Список функций и фильтров для работы WP в режиме мультисайта
+ */
+require THEPLUGIN_DIR . '/includes/addons/llms-txt.php';
 
 /**
  * Список функций и фильтров для работы WP в режиме мультисайта
