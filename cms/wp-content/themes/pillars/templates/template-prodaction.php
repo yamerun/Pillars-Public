@@ -68,10 +68,10 @@ get_header();
 
 					<?php echo do_shortcode(sprintf(
 						'[get-popup id="%s" form="%s" text="%s" class="btn-2" container="button" args="%s"]',
-						'contract-production',
-						'contract-production',
+						'contract_production_laser',
+						'contract_production',
 						'Рассчитать стоимость',
-						theplugin_array_to_args(['type' => 'Лазерная резка металла'])
+						theplugin_array_to_args(['type' => 'Лазерная резка металла', 'page_id' => get_the_ID()])
 					)); ?>
 
 					<div class="spacer-double"></div>
@@ -105,10 +105,10 @@ get_header();
 
 					<?php echo do_shortcode(sprintf(
 						'[get-popup id="%s" form="%s" text="%s" class="btn-2" container="button" args="%s"]',
-						'contract-production',
-						'contract-production',
+						'contract_production_turning',
+						'contract_production',
 						'Рассчитать стоимость',
-						theplugin_array_to_args(['type' => 'ЧПУ токарная обработка металла'])
+						theplugin_array_to_args(['type' => 'ЧПУ токарная обработка металла', 'page_id' => get_the_ID()])
 					)); ?>
 
 					<div class="spacer-double"></div>
@@ -142,10 +142,10 @@ get_header();
 
 					<?php echo do_shortcode(sprintf(
 						'[get-popup id="%s" form="%s" text="%s" class="btn-2" container="button" args="%s"]',
-						'contract-production',
-						'contract-production',
+						'contract_production_miling',
+						'contract_production',
 						'Рассчитать стоимость',
-						theplugin_array_to_args(['type' => 'ЧПУ фрезерная обработка металла и дерева'])
+						theplugin_array_to_args(['type' => 'ЧПУ фрезерная обработка металла и дерева', 'page_id' => get_the_ID()])
 					)); ?>
 
 					<div class="spacer-double"></div>
@@ -179,10 +179,10 @@ get_header();
 
 					<?php echo do_shortcode(sprintf(
 						'[get-popup id="%s" form="%s" text="%s" class="btn-2" container="button" args="%s"]',
-						'contract-production',
-						'contract-production',
+						'contract_production_powder',
+						'contract_production',
 						'Рассчитать стоимость',
-						theplugin_array_to_args(['type' => 'Порошково-полимерная покраска металла'])
+						theplugin_array_to_args(['type' => 'Порошково-полимерная покраска металла', 'page_id' => get_the_ID()])
 					)); ?>
 
 					<div class="spacer-double"></div>
@@ -216,10 +216,10 @@ get_header();
 
 					<?php echo do_shortcode(sprintf(
 						'[get-popup id="%s" form="%s" text="%s" class="btn-2" container="button" args="%s"]',
-						'contract-production',
-						'contract-production',
+						'contract_production_metal',
+						'contract_production',
 						'Рассчитать стоимость',
-						theplugin_array_to_args(['type' => 'Изготовление металлоконструкций любой сложности'])
+						theplugin_array_to_args(['type' => 'Изготовление металлоконструкций любой сложности', 'page_id' => get_the_ID()])
 					)); ?>
 
 					<div class="spacer-double"></div>
