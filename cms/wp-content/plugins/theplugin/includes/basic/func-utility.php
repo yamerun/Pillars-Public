@@ -426,9 +426,16 @@ function theplugin_get_form_wrapper_filter_components($args = array())
 
 	$args = wp_parse_args($args, $defaults);
 
+	// Формируем пустой массив для всех компонентов формы
+	$components = [];
+
 	if ($args['components']) {
 		foreach ($args['components'] as $row => $rows) {
 			if (is_array($rows) && $rows) {
+
+				// Пустой массив строки формы `.form-style__row`
+				$components[$row] = [];
+
 				foreach ($rows as $i => $items) {
 
 					// Если есть правила произвольного вывода компонентов
@@ -460,17 +467,22 @@ function theplugin_get_form_wrapper_filter_components($args = array())
 							$elements = call_user_func($func_filter, $params);
 
 							if ($elements) {
-								theplugin_array_insert_after_key($args['components'][$row], $i, $elements);
+								foreach ($elements as $element) {
+									$components[$row][] = $element;
+								}
 							}
 						}
+					} else {
+						$components[$row][] = $items;
 					}
 				}
 			}
 		}
 	}
 
-	if ($args['components']) {
-		foreach ($args['components'] as $row => $rows) {
+	// Обработка параметров вывода компонентов, если есть фильтры обработки их значений
+	if ($components) {
+		foreach ($components as $row => $rows) {
 			if (is_array($rows) && $rows) {
 				foreach ($rows as $i => $items) {
 					if (isset($items['elements']) && is_array($items['elements'])) {
@@ -482,13 +494,15 @@ function theplugin_get_form_wrapper_filter_components($args = array())
 								}
 							}
 
-							$args['components'][$row][$i]['elements'][$name] = $item;
+							$components[$row][$i]['elements'][$name] = $item;
 						}
 					}
 				}
 			}
 		}
 	}
+
+	$args['components'] = $components;
 
 	return $args;
 }
@@ -635,9 +649,6 @@ function theplugin_is_mobile()
 		return false;
 	}
 
-	/**
-	 * Флаг для отключения проверки на мобильное устройство
-	 */
 	if (isset($_GET['unmobile'])) {
 		return false;
 	}
