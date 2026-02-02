@@ -145,8 +145,11 @@ tp_delegate(document.body, 'click', popup_key + '__btn', function (e) {
 
 	// Проверяем наличие атрибута `data-form` для подгрузки формы
 	if (target.hasAttribute('data-form')) {
+		// Формируем путь до формы
+		let form_item = '#' + popup_id + ' #' + target.getAttribute('data-form');
+
 		// Проверяем существование формы
-		if (!document.getElementById(target.getAttribute('data-form'))) {
+		if (!document.querySelector(form_item)) {
 			if (!popup_current.querySelector('.get-form')) {
 				popup_current.querySelector(popup_class + '__close').insertAdjacentHTML('afterend', '<div class="get-form"></div>');
 			}
@@ -161,14 +164,27 @@ tp_delegate(document.body, 'click', popup_key + '__btn', function (e) {
 				if (data.params.part != undefined) {
 					console.log('sections-request', data.params.part);
 					let form_id = data.params.part;
-					$('#' + form_id).find('input.mask-phone').maskPhone();
-					$('#' + form_id).find('input.mask-date').maskDate();
+					$(form_item).find('input.mask-phone').maskPhone();
+					$(form_item).find('input.mask-date').maskDate();
 
-					const phone_country_code = document.getElementById(form_id).querySelector('.phone-country-code');
+					// Добавляем класс для отображения `label` для тега `select`
+					const selects = document.querySelector(form_item).querySelectorAll('select.form-style__input');
+					if (selects.length) {
+						selects.forEach(select => {
+							// Если есть значение `select`, то добавляем класс `active`
+							if (select.value != '') {
+								select.parentElement.classList.add('active');
+							}
+						});
+					}
+
+					const phone_country_code = document.querySelector(form_item).querySelector('.phone-country-code');
 					if (phone_country_code) {
 						const phone_country_code_list = phone_country_code.querySelector('.phone-country-code__list');
 						phone_country_code_list.innerHTML = '';
 						form_phone_init_list_country(phone_country_code_list);
+						// Активируем отображение `label`, чтобы маску сразу было видно
+						phone_country_code.parentElement.classList.add('active');
 					}
 				}
 			});
