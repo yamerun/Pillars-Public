@@ -4,7 +4,9 @@ defined('ABSPATH') || exit;
 
 add_action('pillars_wc_before_shop_loop_item', 'pillars_wc_before_shop_loop_item_col_open', 5);
 
+add_action('woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_link_open', 5);
 add_action('woocommerce_before_shop_loop_item_title', 'pillars_wc_template_loop_product_thumbnail', 10);
+add_action('woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_link_close', 15);
 
 add_action('pillars_wc_after_shop_loop_item', 'pillars_wc_after_shop_loop_item_col_close', 5);
 

@@ -21,3 +21,8 @@ defined('ABSPATH') || exit;
 global $product;
 
 echo sprintf('<span class="price">%s</span>', pillars_wc_get_product_price_html($product->get_id()));
+echo sprintf(
+	'<a href="%s#tab-additional_information" class="btn-1 alt">%s</a>',
+	get_permalink($product->get_id()),
+	'Характеристики'
+);

@@ -185,7 +185,13 @@ function pillars_wc_get_product_price_html($id = 0)
 				$price = 'Скоро в продаже';
 				break;
 			default:
-				$price = 'Цена по запросу';
+				$price = do_shortcode(sprintf(
+					'[get-popup id="%s" form="%s" text="%s" class="btn-1" container="a" args="%s"]',
+					'price-request-' . $id,
+					'price',
+					'Запросить цену',
+					theplugin_array_to_args(['page_id' => $id])
+				));
 				break;
 		}
 	} else {

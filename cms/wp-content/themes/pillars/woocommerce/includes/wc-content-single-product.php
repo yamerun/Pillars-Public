@@ -257,7 +257,7 @@ function pillars_wc_single_has_price_request_shortcode($price = '', $product_id 
 			break;
 		default:
 			$form		= 'price';
-			$price_txt	= 'Цена по запросу';
+			$price_txt	= 'Запросить цену';
 			break;
 	}
 
