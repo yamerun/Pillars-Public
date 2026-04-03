@@ -49,7 +49,12 @@ function pillars_shortcode_header_multisite_selector()
 
 			$sites	= get_sites(['public' => 1]);
 			$data	= [];
-			$uri	= (isset($_SERVER['REQUEST_URI'])) ? $_SERVER['REQUEST_URI'] : '/';
+			if (get_post_type() == 'post') {
+				$uri = '/';
+			} else {
+				$uri = (isset($_SERVER['REQUEST_URI'])) ? $_SERVER['REQUEST_URI'] : '/';
+			}
+
 			foreach ($sites as $site) {
 				$url = theplugin_multisite_get_url_by_domain($site->domain, $uri);
 				$name = trim(str_replace('Pillars',  '', get_blog_details($site->blog_id)->blogname));
