@@ -27,7 +27,7 @@
 	&__content {
 		width: auto;
 		min-width: 340px;
-		max-width: 600px;
+		max-width: 800px;
 		min-height: 240px;
 		position: relative;
 		padding: 1rem;
@@ -41,6 +41,26 @@
 		&:hover {
 			box-shadow: var(--shadow_hover);
 		}
+
+		/*
+		.informer {
+			display: flex;
+			max-width: 340px;
+			text-align: center;
+			flex-wrap: wrap;
+			align-content: center;
+
+			p {
+				margin-top: 15px;
+				text-align: center;
+			}
+
+			>img {
+				display: block;
+				margin: 0 auto 10px;
+			}
+		}
+		*/
 	}
 
 	&__close {
