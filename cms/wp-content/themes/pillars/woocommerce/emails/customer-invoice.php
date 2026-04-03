@@ -31,23 +31,7 @@ do_action('woocommerce_email_header', $email_heading, $email); ?>
 <p><?php printf(esc_html__('Hi %s,', 'woocommerce'), esc_html($order->get_billing_first_name())); ?></p>
 
 <?php if ($order->has_status('pending')) { ?>
-	<p>
-		<?php
-		printf(
-			wp_kses(
-				/* translators: %1$s Site title, %2$s Order pay link */
-				__('An order has been created for you on %1$s. Your invoice is below, with a link to make payment when you’re ready: %2$s', 'woocommerce'),
-				array(
-					'a' => array(
-						'href' => array(),
-					),
-				)
-			),
-			esc_html(get_bloginfo('name', 'display')),
-			'<a href="' . esc_url($order->get_checkout_payment_url()) . '">' . esc_html__('Pay for this order', 'woocommerce') . '</a>'
-		);
-		?>
-	</p>
+	<p>Ваш заказ был сформирован. По всем вопросам обращайтесь по телефону <a href="tel:88002221604">88002221604</a>.</p>
 
 <?php } else { ?>
 	<p>
