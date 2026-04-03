@@ -48,11 +48,15 @@ function theplugin_custom_bulk_action_multisite_product_handler($redirect, $doac
 			$results[$success][] = $post_id;
 		}
 
-		$redirect = add_query_arg(array(
+		$args = [];
+		foreach ($results as $key => $items) {
+			$args['theplugin_posts_' . $key] = join(',', $items);
+		}
+
+		$redirect = add_query_arg(array_merge(array(
 			'theplugin_posts_moved'		=> count($object_ids),
-			'theplugin_posts_results'	=> $results,
 			'theplugin_blogid'			=> $blog_id
-		), $redirect);
+		), $args), $redirect);
 	}
 
 	return $redirect;

@@ -43,6 +43,8 @@ function theplugin_custom_bulk_multisite_term_actions($bulk_array)
 		foreach ($sites as $site) {
 			$bulk_array["copy_term_to_{$site->blog_id}"] = "Скопировать в {$site->blogname}";
 		}
+
+		$bulk_array["copy_term_to_0"] = "Скопировать во все поддомены";
 	}
 
 	return $bulk_array;
@@ -178,17 +180,36 @@ function theplugin_custom_bulk_action_multisite_term_handler($redirect, $doactio
 
 	// Проверяем наличие ярлыка на действие копирования записей
 	if (strpos($doaction, 'copy_term_to_') === 0) {
-		$blog_id = str_replace('copy_term_to_', '', $doaction); // get blog ID from action name
-		$results = [
-			'success'	=> [],
-			'fail'		=> [],
-			'meta'		=> []
-		];
+		$blog_id	= absint(str_replace('copy_term_to_', '', $doaction)); // get blog ID from action name
+		$blog_ids	= [];
+		if ($blog_id) {
+			$blog_ids = [$blog_id];
+		} else {
+			$sites = get_sites(
+				array(
+					'site__not_in'	=> get_current_blog_id(), // exclude the current blog
+					'number'		=> 50,
+				)
+			);
 
-		foreach ($object_ids as $term_id) {
-			// Обработка записи
-			$success = theplugin_multisite_copy_term_to_site($term_id, $blog_id);
-			$results[$success][] = $term_id;
+			if ($sites) {
+				foreach ($sites as $site) {
+					$blog_ids[] = $site->blog_id;
+				}
+			}
+		}
+
+		foreach ($blog_ids as $blog_id) {
+			$results = [
+				'success'	=> [],
+				'fail'		=> [],
+				'meta'		=> []
+			];
+			foreach ($object_ids as $term_id) {
+				// Обработка записи
+				$success = theplugin_multisite_copy_term_to_site($term_id, $blog_id);
+				$results[$success][] = $term_id;
+			}
 		}
 
 		$redirect = add_query_arg(array(

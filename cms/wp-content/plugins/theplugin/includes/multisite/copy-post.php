@@ -35,7 +35,6 @@ function theplugin_custom_bulk_multisite_post_actions($bulk_array)
 
 	$sites = get_sites(
 		array(
-			// 'site__in' => array( 1,2,3 )
 			'site__not_in'	=> get_current_blog_id(), // exclude the current blog
 			'number'		=> 50,
 		)
@@ -45,6 +44,8 @@ function theplugin_custom_bulk_multisite_post_actions($bulk_array)
 		foreach ($sites as $site) {
 			$bulk_array["copy_post_to_{$site->blog_id}"] = "Скопировать в {$site->blogname}";
 		}
+
+		$bulk_array["copy_post_to_0"] = "Скопировать во все поддомены";
 	}
 
 	return $bulk_array;
@@ -250,24 +251,48 @@ function theplugin_custom_bulk_action_multisite_post_handler($redirect, $doactio
 
 	// Проверяем наличие ярлыка на действие копирования записей
 	if (strpos($doaction, 'copy_post_to_') === 0) {
-		$blog_id = str_replace('copy_post_to_', '', $doaction); // get blog ID from action name
-		$results = [
-			'success'	=> [],
-			'fail'		=> [],
-			'meta'		=> []
-		];
+		$blog_id = absint(str_replace('copy_post_to_', '', $doaction)); // get blog ID from action name
+		$blog_ids	= [];
+		if ($blog_id) {
+			$blog_ids = [$blog_id];
+		} else {
+			$sites = get_sites(
+				array(
+					'site__not_in'	=> get_current_blog_id(), // exclude the current blog
+					'number'		=> 50,
+				)
+			);
 
-		foreach ($object_ids as $post_id) {
-			// Обработка записи
-			$success = theplugin_multisite_copy_post_to_site($post_id, $blog_id);
-			$results[$success][] = $post_id;
+			if ($sites) {
+				foreach ($sites as $site) {
+					$blog_ids[] = $site->blog_id;
+				}
+			}
 		}
 
-		$redirect = add_query_arg(array(
+		foreach ($blog_ids as $blog_id) {
+			$results = [
+				'success'	=> [],
+				'fail'		=> [],
+				'meta'		=> []
+			];
+
+			foreach ($object_ids as $post_id) {
+				// Обработка записи
+				$success = theplugin_multisite_copy_post_to_site($post_id, $blog_id);
+				$results[$success][] = $post_id;
+			}
+		}
+
+		$args = [];
+		foreach ($results as $key => $items) {
+			$args['theplugin_posts_' . $key] = join(',', $items);
+		}
+
+		$redirect = add_query_arg(array_merge(array(
 			'theplugin_posts_moved'		=> count($object_ids),
-			'theplugin_posts_results'	=> $results,
 			'theplugin_blogid'			=> $blog_id
-		), $redirect);
+		), $args), $redirect);
 	}
 
 	return $redirect;
@@ -283,37 +308,42 @@ function theplugin_custom_bulk_multisite_post_notices()
 {
 	if (!empty($_REQUEST['theplugin_posts_moved'])) {
 
+		echo '<div class="updated notice is-dismissible"><p>';
+
 		// because I want to add blog names to notices
 		$blog = get_blog_details($_REQUEST['theplugin_blogid']);
 
-		$args = wp_parse_args($_REQUEST['theplugin_posts_results'], array(
-			'success'	=> [],
-			'fail'		=> [],
-			'meta'		=> []
-		));
+		foreach ([
+			'theplugin_posts_success',
+			'theplugin_posts_fail',
+			'theplugin_posts_meta'
+		] as $key) {
+			$args[$key] = ($_REQUEST[$key]) ? explode(',', $_REQUEST[$key]) : [];
+		}
+
 
 		// depending on ho much posts were changed, make the message different
-		echo '<div class="updated notice is-dismissible"><p>';
 		printf(
 			_n(
 				'%d запись скопирована/обновлена в "%s".',
 				'%d записей скопировано/обновлено в "%s".',
-				count($args['success'])
+				count($args['theplugin_posts_success'])
 			),
-			count($args['success']),
+			count($args['theplugin_posts_success']),
 			$blog->blogname
 		);
+		echo ($args['theplugin_posts_success']) ? ' / ' . join(', ', $args['theplugin_posts_success']) : '';
 		echo '</p><p>';
 		printf(
 			'Ошибок копирования: %d',
-			count($args['fail']),
-			($args['fail']) ? join(', ', $args['fail']) : '',
+			count($args['theplugin_posts_fail']),
+			($args['theplugin_posts_fail']) ? ' / ' . join(', ', $args['theplugin_posts_fail']) : '',
 		);
 		echo '<br>';
 		printf(
 			'Ошибок мета-данных: %d',
-			count($args['meta']),
-			($args['meta']) ? join(', ', $args['meta']) : '',
+			count($args['theplugin_posts_meta']),
+			($args['theplugin_posts_meta']) ? ' / ' . join(', ', $args['theplugin_posts_meta']) : '',
 		);
 		echo '</p></div>';
 	}
