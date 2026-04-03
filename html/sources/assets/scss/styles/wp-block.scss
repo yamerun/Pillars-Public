@@ -8,6 +8,17 @@
 		border-radius: 2px;
 	}
 
+	&-quote {
+		padding: $_20px 2rem;
+		color: var(--color_primary);
+		background-color: var(--color_background_nav);
+		border-left: 3px solid var(--color_alter);
+
+		p {
+			font-size: 1rem;
+		}
+	}
+
 	iframe[src*="vk.com/video_ext.php"],
 	iframe[src*="youtube.com/embed"] {
 		width: 100%;

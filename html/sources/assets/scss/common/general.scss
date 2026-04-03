@@ -13,6 +13,15 @@
 		justify-content: center;
 	}
 
+	/*
+	.col-contact,
+	.col-account {
+		width: 25%;
+		justify-content: flex-start;
+		overflow: hidden;
+	}
+	*/
+
 	.col-account {
 		justify-content: flex-end;
 	}
@@ -96,6 +105,18 @@
 	display: flex;
 	align-items: center;
 	position: relative;
+
+	/*
+	&:before {
+		content: '';
+		display: inline-block;
+		width: 1rem;
+		height: 1rem;
+		margin-right: 0.25rem;
+		background: url("data:image/svg+xml,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M2%206.656C2%203.344%204.714.666%208.017.666%2011.302.667%2014%203.33%2014%206.623c0%201.451-.53%202.852-1.49%203.94l-3.93%204.456-.003.002c-.009.01-.038.044-.07.074a.734.734%200%200%201-.749.165.734.734%200%200%201-.263-.162c-.032-.03-.061-.063-.07-.074l-.003-.002-3.903-4.379A5.99%205.99%200%200%201%202%206.656Zm6%202.01a2%202%200%201%200%200-4%202%202%200%200%200%200%204Z%22%20fill%3D%22%23afafaf%22%2F%3E%3C%2Fsvg%3E%0A");
+		background-size: contain;
+	}
+	*/
 
 	.multisite-selector__option {
 		font-weight: var(--weight_semibold);
@@ -324,11 +345,11 @@ body {
 			line-height: 1.25;
 
 			>li {
-				margin: 0 0 0 22px;
+				margin: 0 0 0 2.5rem;
 
 				>a {
 					display: flex;
-					align-items: center;
+					flex-direction: column;
 					color: var(--color_nav_link);
 
 					>svg {
@@ -347,7 +368,8 @@ body {
 					}
 
 					>span {
-						display: none;
+						color: var(--color_alter);
+						font-size: 0.875em;
 					}
 
 					&:hover {
@@ -504,6 +526,9 @@ section.bg-2 {
 }
 
 @import 'breadcrumbs';
+/* @import 'wp-gutenberg'; */
+/* предстоит разобраться, что нужно для первой отрисовки */
+/* @import 'common/tabs'; */
 
 .category-item {
 	display: inline-block;

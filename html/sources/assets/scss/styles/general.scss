@@ -123,7 +123,7 @@ ul.marker.--values {
 	}
 
 	&__title {
-		height: 42px;
+		min-height: 42px;
 		margin-top: 1em;
 		font-size: 1rem;
 		font-weight: var(--weight_normal);
@@ -522,6 +522,23 @@ a.video-placeholder.--link {
 	70% {
 		color: var(--color_alter);
 	}
+
+	/*
+	0% {
+		color: var(--color_alter);
+		filter: drop-shadow(0 0 5px #fffded);
+	}
+
+	50% {
+		color: #fffded;
+		filter: drop-shadow(0 0 10px #fffded);
+	}
+
+	100% {
+		color: var(--color_alter);
+		filter: drop-shadow(0 0 5px #fffded);
+	}
+	*/
 }
 
 body>footer {
