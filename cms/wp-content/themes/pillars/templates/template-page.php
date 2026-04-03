@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Template Name: Сотрудничество
+ * Template Name: Страница с заголовком
  */
 
 get_header(); ?>
@@ -20,7 +20,21 @@ get_header(); ?>
 			</div>
 		</div>
 
-		<?php get_template_part('template-parts/section/partners', 'excerpt'); ?>
+		<div class="row section-title-image__content --bottom">
+			<div class="col-sm-6">
+				<div class="block color-white">
+					<h1><?php the_title(); ?></h1>
+					<?php $excerpt = trim(apply_filters('the_excerpt', get_the_excerpt()));
+					if ($excerpt != '<p>&nbsp;</p>') {
+						echo $excerpt;
+					} ?>
+				</div>
+			</div>
+
+			<div class="col-sm-6">
+				<div class="block"></div>
+			</div>
+		</div>
 
 	</div>
 </section>
@@ -42,30 +56,5 @@ get_template_part('template-parts/section/partners', 'advantage');
 get_template_part('template-parts/section/partners', 'product-cat');
 get_template_part('template-parts/section/trust-us', null, ['section' => true]);
 ?>
-
-<section>
-	<div class="container">
-		<div class="row">
-			<div class="col-md-7">
-				<div class="block">
-					<?php
-					$form = get_post_meta(get_the_ID(), '_cooperation_form', true);
-					$form = ($form) ? $form : 'partner';
-					echo do_shortcode('[pl-form-components part="' . $form . '"]');
-					?>
-				</div>
-			</div>
-			<div class="col-md-5">
-				<div class="block">
-					<div class="image-radius">
-						<div class="media-ratio">
-							<?= wp_get_attachment_image(7604, 'medium') ?>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div><!-- .row -->
-	</div>
-</section>
 
 <?php get_footer(); ?>
