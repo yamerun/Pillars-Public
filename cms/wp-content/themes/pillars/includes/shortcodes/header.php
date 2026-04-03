@@ -127,6 +127,16 @@ function pillars_shortcode_header_contacts($params)
 			<li class="phone">
 				<?= do_shortcode('[pillars-contact type="' . $keys['phone'] . '"]') ?>
 			</li>
+			<li class="phone-action show-sm">
+				<?= do_shortcode(sprintf(
+					'[get-popup id="%s" form="%s" text="%s" class="btn-2" container="button" args="%s"]',
+					'recall',
+					'recall',
+					'Заказать обратный звонок',
+					theplugin_array_to_args(['page_id' => get_the_ID()])
+				))
+				?>
+			</li>
 			<li class="email">
 				<?= do_shortcode('[pillars-contact type="' . $keys['email'] . '" key="contacts_email"]') ?>
 			</li>
