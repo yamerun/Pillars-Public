@@ -10,11 +10,11 @@
 defined('ABSPATH') || exit;
 ?>
 <div class="row">
-	<div class="pillars-wc-catalog__sidebar hide-md">
+	<div class="pillars-wc-catalog__sidebar hide-sm">
 		<div class="block">
 			<?php echo pillars_theme_wc_get_product_cat_for_menu(array(
-				'before'	=> '<nav class="pillars-wc-catalog__list"><ul>',
-				'after'		=> '</ul></nav>',
+				'before'	=> '<nav class="pillars-wc-catalog__list">',
+				'after'		=> '</nav>',
 				'groups'	=> true
 			)); ?>
 		</div>

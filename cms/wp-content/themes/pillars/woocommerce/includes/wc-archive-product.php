@@ -3,7 +3,7 @@
 defined('ABSPATH') || exit;
 
 add_action('woocommerce_archive_description', 'pillars_wc_archive_title_header', 5);
-add_action('woocommerce_archive_description', 'pillars_wc_archive_shop_tabs_header', 5);
+// add_action('woocommerce_archive_description', 'pillars_wc_archive_shop_tabs_header', 5);
 // add_action('woocommerce_archive_description', 'pillars_wc_archive_description_header', 10);
 
 add_action('woocommerce_after_main_content', 'pillars_wc_archive_videoreviews', 10);
