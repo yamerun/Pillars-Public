@@ -29,6 +29,10 @@ $links		= array(
 		'link'	=> get_permalink(theplugin_multisite_post_get_sibling_id(3274, $blog_id, 1)),
 		'title'	=> __pl('Оплата')
 	],
+	'montage' => [
+		'link'	=> get_permalink(theplugin_multisite_post_get_sibling_id(11456, $blog_id, 1)),
+		'title'	=> __pl('Монтаж МАФ у вас на объекте')
+	],
 );
 
 ?>

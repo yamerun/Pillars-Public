@@ -18,6 +18,7 @@ $brochure = get_post_meta($product->get_id(), '_pillars_product_brochure', true)
 		<li>Срок производства от 3 дней</li>
 		<li>Гарантия 12 месяцев</li>
 		<li>Доставка по всей России и СНГ</li>
+		<li><a href="<?= get_permalink(theplugin_multisite_post_get_sibling_id(11456, get_current_blog_id(), 1)) ?>">Монтаж МАФ у вас на объекте</a></li>
 	</ul>
 
 	<?php if (is_array($brochure) && isset($brochure['url']) && $brochure['url']) { ?>
