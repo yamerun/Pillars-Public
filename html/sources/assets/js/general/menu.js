@@ -89,3 +89,80 @@ if (menu_video_links.length) {
 		menu_video_link.querySelector('a').setAttribute('rel', 'nofollow');
 	}
 }
+
+/**
+ * Вывод списка категорий на указаной группе
+ *
+ * @param {*} menu_item
+ */
+function menu_catalog_wrapper(menu_item) {
+	const menu_item_catalog = document.getElementById('menu-item-catalog');
+	const menu_item_catalog_items = menu_item.querySelectorAll('.sub-menu li a[data-image]');
+	const menu_item_catalog_container = menu_item_catalog.querySelector('.sub-menu-wrapper');
+
+	let menu_item_category = '';
+
+	menu_item.classList.add('active');
+
+	menu_item_catalog_items.forEach(item => {
+		menu_item_category += '<a href="' + item.href + '" class="catalog-item ' + item.parentElement.getAttribute('class') + '"><div class="catalog-item__cover"><div class="media-ratio"><img width="150" height="150" src="' + item.getAttribute('data-image') + '"></div></div><div class="catalog-item__title">' + item.textContent + '</div></a>';
+	});
+
+	setTimeout(function () {
+		menu_item_catalog_container.classList.add('hide');
+	}, 100);
+	setTimeout(function () {
+		menu_item_catalog_container.innerHTML = '';
+		menu_item_catalog_container.insertAdjacentHTML('afterbegin', menu_item_category);
+	}, 200);
+	setTimeout(function () {
+		menu_item_catalog_container.classList.remove('hide');
+	}, 300);
+}
+
+/**
+ *
+ */
+function menu_item_catalog_hide() {
+	const menu_item_catalog = document.getElementById('menu-item-catalog');
+	if (menu_item_catalog.classList.contains('show')) {
+		menu_item_catalog.classList.remove('show');
+	}
+}
+
+/**
+ *
+ */
+const menu_item_catalog_groups = document.querySelectorAll('#menu-item-catalog .sub-menu.sub-class [class^="product_group-"]');
+menu_catalog_wrapper(menu_item_catalog_groups[0]);
+
+menu_item_catalog_groups.forEach(group => {
+	group.addEventListener('mouseover', () => {
+		if (!group.classList.contains('active')) {
+			menu_item_catalog_groups.forEach(item => { item.classList.remove('active') });
+			menu_catalog_wrapper(group);
+		}
+	});
+
+	group.addEventListener('click', (e) => { e.preventDefault() });
+});
+
+
+const menu_item_catalog = document.getElementById('menu-item-catalog');
+menu_item_catalog.addEventListener('mouseover', () => {
+	if (window.innerWidth > window.wp_data.break_sm) {
+		menu_item_catalog.classList.add('show');
+	}
+});
+
+// Скрытие меню Каталога при различных сценариях
+window.addEventListener('scroll', menu_item_catalog_hide);
+window.addEventListener('resize', menu_item_catalog_hide);
+tp_delegate(document.getElementById('main-menu'), 'mouseover', 'menu-item-has-children', function (e) {
+	menu_item_catalog_hide();
+});
+document.addEventListener('click', function (e) {
+	if (!e.target.closest('#menu-item-catalog')) {
+		menu_item_catalog_hide();
+	}
+});

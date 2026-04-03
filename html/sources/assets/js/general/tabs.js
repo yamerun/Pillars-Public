@@ -87,3 +87,44 @@ if (document.querySelector('.pillars-wc-product-tabs__nav')) {
 
 	product_tabs_nav.addEventListener();
 }
+
+if (document.querySelector('.pillars-wc-catalog__list')) {
+	const catalog_tabs_nav = {
+		el: document.querySelector('.pillars-wc-catalog__list'),
+		show() {
+		},
+		hide() {
+		},
+		addEventListener() {
+			window.addEventListener('scroll', () => {
+				// определяем величину прокрутки
+				const scrollY = window.scrollY || document.documentElement.scrollTop;
+
+				// Если есть элементы секций из навигации
+				const tabs_items = this.el.querySelectorAll('[class^="product_group-"]');
+				if (tabs_items.length) {
+					// Задаём первичный выбор секции
+					let nav = '';
+					// Ищем секцию в поле видимости браузера
+					tabs_items.forEach(element => {
+						element.classList.remove('active');
+						const id = element.querySelector('a').getAttribute('href').replace('#', '');
+						if (document.getElementById(id)) {
+							const section = document.getElementById(id).getBoundingClientRect();
+							if (scrollY > (section.top + window.pageYOffset - 10)) {
+								nav = element;
+							}
+						}
+					});
+
+					// Задаём класс активности элемента навигации для видимой секции
+					if (nav) {
+						nav.classList.add('active');
+					}
+				}
+			})
+		}
+	};
+
+	catalog_tabs_nav.addEventListener();
+}

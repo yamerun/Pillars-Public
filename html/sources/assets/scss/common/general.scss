@@ -772,6 +772,16 @@ a.preload-item {
 	}
 }
 
+.article {
+	&.post {
+		.wp-block {
+			*:is(p, ul, ol) {
+				font-size: 0.9375rem;
+			}
+		}
+	}
+}
+
 .section-title-image {
 	min-height: 400px;
 	padding-bottom: 2.5rem;

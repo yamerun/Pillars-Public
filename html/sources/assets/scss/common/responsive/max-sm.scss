@@ -214,7 +214,7 @@
 						@include trans;
 					}
 
-					>.sub-menu.sub-class {
+					.sub-menu.sub-class {
 						flex-wrap: wrap;
 
 						li[class^="product_group-"] {
@@ -226,22 +226,27 @@
 								align-items: center;
 								gap: 0.5rem;
 								line-height: 2;
-
-								/*
-								&:after {
-									content: '';
-									display: inline-block;
-									width: 10px;
-									height: 5px;
-									background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iNyIgdmlld0JveD0iMCAwIDEyIDciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+DQoJPHBhdGggZD0iTTEgMS4wNDI5N0w1Ljk1NTc0IDUuOTk5MDMiIHN0cm9rZT0iIzIyMjIyMiIgc3Ryb2tlLXdpZHRoPSIwLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgLz4NCgk8cGF0aCBkPSJNMTEgMUw2LjA0Mzk2IDUuOTU1OTEiIHN0cm9rZT0iIzIyMjIyMiIgc3Ryb2tlLXdpZHRoPSIwLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgLz4NCjwvc3ZnPg==") center center no-repeat;
-								}
-								*/
 							}
 
 							>.sub-menu {
 								position: relative;
 								left: 0;
 								padding-left: 0.5rem;
+							}
+						}
+
+						*:is(.product_cat-581, .product_cat-51) {
+							position: relative;
+
+							>a>span:after {
+								content: "ЕАЭС 042";
+								padding: 0.25rem 0.5rem;
+								color: white;
+								font-size: 0.75em;
+								line-height: 1;
+								background: var(--color_action);
+								border-radius: var(--border-radius);
+								margin-left: 0.5rem;
 							}
 						}
 					}
@@ -259,6 +264,10 @@
 						transform: rotate(180deg);
 						@include trans;
 					}
+				}
+
+				&#menu-header-catalog .sub-menu-wrapper {
+					display: none;
 				}
 			}
 

@@ -1,0 +1,10 @@
+@import '../../vars';
+
+@media (min-width: $break_xl) {
+
+	body>header {
+		#menu-item-catalog>.sub-menu {
+			width: 1330px;
+		}
+	}
+}
