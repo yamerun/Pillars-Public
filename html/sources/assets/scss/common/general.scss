@@ -364,7 +364,7 @@ body {
 					}
 
 					>strong {
-						font-weight: var(--weight_normal);
+						font-size: 1.25em;
 					}
 
 					>span {
@@ -448,8 +448,8 @@ body {
 		.btn-category {
 			display: inline-block;
 			padding: $_12px $_24px;
-			color: var(--button_text);
-			background: var(--button_background);
+			color: var(--button_border);
+			background: transparent;
 			border: 1px solid var(--button_border);
 			border-radius: 2rem;
 			@include trans;

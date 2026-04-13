@@ -4,18 +4,21 @@
  * @param {*} item
  */
 function is_menu_item_childrens_show(e, item) {
+	e.preventDefault();
 	const wrapper = item.parentElement;
-	if (window.innerWidth < window.wp_theplugin.break_sm) {
-		e.preventDefault();
 
-		if (wrapper.classList.contains('active')) {
-			wrapper.classList.remove('active');
-		} else {
-			wrapper.classList.add('active');
-		}
-	} else {
+	if (wrapper.classList.contains('active')) {
 		wrapper.classList.remove('active');
+	} else {
+		if (window.innerWidth > window.wp_theplugin.break_sm) {
+			document.querySelectorAll('.navbar-collapse .menu-item-has-children.active').forEach(element => {
+				element.classList.remove('active');
+			});
+		}
+		wrapper.classList.add('active');
 	}
+
+
 }
 
 const main_menu = document.getElementById('main_menu');
@@ -121,12 +124,22 @@ function menu_catalog_wrapper(menu_item) {
 }
 
 /**
+ * Скрытие элементов меню с дочерними элементов по переданному родителю
  *
+ * @param {*} wrapper
+ */
+function menu_item_has_children_hide(wrapper) {
+	wrapper.querySelectorAll('.menu-item-has-children.active').forEach(element => {
+		element.classList.remove('active');
+	});
+}
+
+/**
+ * Скрытие элементов меню Каталога
  */
 function menu_item_catalog_hide() {
-	const menu_item_catalog = document.getElementById('menu-item-catalog');
-	if (menu_item_catalog.classList.contains('show')) {
-		menu_item_catalog.classList.remove('show');
+	if (window.innerWidth > window.wp_data.break_sm) {
+		menu_item_has_children_hide(document.querySelector('#main_menu'));
 	}
 }
 
@@ -151,18 +164,25 @@ menu_item_catalog_groups.forEach(group => {
 const menu_item_catalog = document.getElementById('menu-item-catalog');
 menu_item_catalog.addEventListener('mouseover', () => {
 	if (window.innerWidth > window.wp_data.break_sm) {
-		menu_item_catalog.classList.add('show');
+		menu_item_has_children_hide(document.querySelector('.navbar-collapse'));
+		menu_item_catalog.classList.add('active');
 	}
 });
 
 // Скрытие меню Каталога при различных сценариях
 window.addEventListener('scroll', menu_item_catalog_hide);
 window.addEventListener('resize', menu_item_catalog_hide);
-tp_delegate(document.getElementById('main-menu'), 'mouseover', 'menu-item-has-children', function (e) {
-	menu_item_catalog_hide();
-});
+// Скрытие активного элемента меню с дочерними элементами
 document.addEventListener('click', function (e) {
-	if (!e.target.closest('#menu-item-catalog')) {
+	if (!e.target.closest('#main_menu')) {
 		menu_item_catalog_hide();
+	}
+});
+
+// Скрытие активного элемента меню с дочерними элементами при наведение на элемент без дочерних элементов
+tp_delegate(document.getElementById('main-menu'), 'mouseover', 'menu-item', function (e) {
+	const menu_item = tp_get_target_by_class(e, 'menu-item');
+	if (!menu_item.classList.contains('menu-item-has-children') && !menu_item.closest('.sub-menu')) {
+		menu_item_has_children_hide(document.querySelector('#main-menu'));
 	}
 });

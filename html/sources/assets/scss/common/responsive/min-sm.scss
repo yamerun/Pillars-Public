@@ -65,43 +65,13 @@
 						>span {
 							padding-block: 1.25rem;
 							position: relative;
-
-							/*
-							&:before {
-								content: '';
-								display: block;
-								width: 0;
-								height: 2px;
-								position: absolute;
-								left: 50%;
-								bottom: 0;
-								background-color: var(--color_nav_link);
-								@include trans;
-							}
-							*/
 						}
 
 						&:hover {
 							color: var(--color_nav_link_hover);
 							font-weight: var(--weight_semibold);
-
-							/*
-							>span:before {
-								left: 0;
-								width: 100%;
-								transform: translateX(0);
-							}
-							*/
 						}
 					}
-
-					/*
-					&.current-menu-item a>span:after {
-						left: 1rem;
-						width: calc(100% - 2rem);
-						transform: translateX(0);
-					}
-					*/
 				}
 
 				.sub-menu {
@@ -137,10 +107,8 @@
 						@include trans;
 						pointer-events: none;
 					}
-				}
 
-				.menu-item-has-children:not(.unhover) {
-					&:hover {
+					&.active {
 						>a {
 							font-weight: var(--weight_semibold);
 						}
@@ -160,20 +128,25 @@
 			}
 
 			#menu-header-catalog.navbar-nav {
+				margin-right: 0.5rem;
+
 				.sub-menu {
 					overflow: hidden;
 				}
 
 				.sub-menu-container {
 					display: grid;
-					grid-template-columns: 160px 1fr;
+					grid-template-columns: 1fr;
+					grid-template-rows: 1fr 290px;
 				}
 
 				.sub-menu.sub-class {
 					display: flex;
-					padding: 0 0.5rem 1.5rem;
-					justify-content: space-around;
-					border: 0;
+					padding: 0;
+					margin-bottom: 1rem;
+					justify-content: space-between;
+					border: 1px solid var(--color_alter);
+					border-radius: 1rem;
 
 					li[class^="product_group-"] {
 						>span {
@@ -186,17 +159,20 @@
 
 						>a {
 							display: block;
-							padding-block: $_8px;
+							padding: $_8px 1.5rem;
+							border-radius: 1rem;
 							@include trans;
 
 							&:hover {
 								font-weight: var(--weight_semibold);
+								background-color: #f3f3f3;
 							}
 						}
 
 						&.active {
 							>a {
 								font-weight: var(--weight_semibold);
+								background-color: #f3f3f3;
 							}
 						}
 					}
@@ -230,6 +206,7 @@
 
 					.catalog-item {
 						max-width: 110px;
+						padding-top: 3rem;
 						opacity: 1;
 						@include trans;
 
@@ -245,7 +222,7 @@
 								content: 'ЕАЭС 042';
 								padding: 0.25rem 0.5rem;
 								position: absolute;
-								top: 0.25rem;
+								top: 2.75rem;
 								right: -0.25rem;
 								color: white;
 								font-size: 0.75em;
@@ -287,16 +264,22 @@
 			}
 
 			#menu-item-catalog {
-				&.show {
-					>a {
-						font-weight: var(--weight_semibold);
-					}
+				>a {
+					display: block;
+					padding-block: 0.5rem;
+					color: white;
 
-					>.sub-menu {
-						left: 0;
-						opacity: 1;
-						z-index: 10;
-						pointer-events: all;
+					>span {
+						padding: 0.75rem 2rem;
+						background: var(--color_action);
+						border-radius: 2rem;
+						border: 0;
+
+						&:after {
+							width: 12px;
+							height: 7px;
+							background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSI3IiB2aWV3Qm94PSIwIDAgMTIgNyIgZmlsbD0ibm9uZSI+CiAgPHBhdGggZD0iTTEgMS4wNDI5N0w1Ljk1NTc0IDUuOTk5MDMiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2UtbGluZWNhcD0icm91bmQiPjwvcGF0aD4KICA8cGF0aCBkPSJNMTEgMUw2LjA0Mzk2IDUuOTU1OTEiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2UtbGluZWNhcD0icm91bmQiPjwvcGF0aD4KPC9zdmc+Cg==');
+						}
 					}
 				}
 			}
