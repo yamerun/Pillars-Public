@@ -41,7 +41,7 @@ add_shortcode('pillars-contact', function ($params) {
 				$email = filter_var(theplugin_get_theme_mod($atts['key']));
 				if ($email) {
 					return sprintf(
-						'<a  class="pillars-popup__btn" href="mailto:%s" data-id="feedback" data-form="form-feedback" data-form_args="%s"><strong>%s</strong></a>',
+						'<a  class="pillars-popup__btn" href="mailto:%s" data-id="feedback" data-form="form-feedback" data-form_args="%s"><strong>%s</strong><span>&nbsp;</span></a>',
 						$email,
 						theplugin_array_to_args(['page_id' => get_the_ID()]),
 						$email
