@@ -21,7 +21,7 @@ add_action('woocommerce_single_variation', 'pillars_wc_single_variation_add_to_c
 
 add_action('woocommerce_after_quantity_input_field', 'pillars_wc_single_product_discount_info', 5);
 
-add_action('wc_product_production_after', 'pillars_wc_single_simple_after_add_to_cart_button', 5);
+// add_action('wc_product_production_after', 'pillars_wc_single_simple_after_add_to_cart_button', 5);
 
 add_action('woocommerce_after_single_product_summary', 'pillars_wc_output_related_products', 20);
 
@@ -283,15 +283,15 @@ function pillars_wc_single_variation_add_to_cart_button()
 	$price = pillars_wc_get_product_price_request($product->get_id());
 	if ($price !== false) {
 		pillars_wc_single_has_price_request_shortcode($price, $product->get_id(), false);
+		wc_get_template('single-product/add-to-cart/prodaction.php');
 	} else {
 		wc_get_template('single-product/add-to-cart/variation-add-to-cart-button.php');
+		wc_get_template('single-product/add-to-cart/partners.php');
 	}
-
-	wc_get_template('single-product/add-to-cart/prodaction.php');
 }
 
 /**
- * Вывод кнопки на `Индивидуальное производство` в простых товарах
+ * Вывод кнопки на `Запросить 3D-модель` в простых товарах
  *
  * @return void
  */
