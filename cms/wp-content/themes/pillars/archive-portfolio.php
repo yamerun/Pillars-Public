@@ -18,8 +18,9 @@ get_header();
 			<?php if (have_posts()) : ?>
 
 				<div class="col-12">
-					<div class="block">
+					<div class="block d-flex f-wrap f-center f-between">
 						<?php the_archive_title('<h1>', '</h1>'); ?>
+						<a class="btn-1 alt m-untop" href="https://vkvideo.ru/@pillars_ru" target="_blank">Видео-обзоры</a>
 					</div>
 				</div><!-- .page-header -->
 
