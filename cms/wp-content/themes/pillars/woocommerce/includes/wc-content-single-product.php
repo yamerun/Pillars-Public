@@ -5,6 +5,7 @@ defined('ABSPATH') || exit;
 add_action('init', 'pillars_wc_get_related_products');
 
 add_action('pillars_wc_single_product_title', 'woocommerce_template_single_title', 5);
+add_action('pillars_wc_single_product_title', 'pillars_wc_single_product_collection', 10);
 
 add_action('pillars_wc_single_product_images_before', 'pillars_wc_product_custom_tags_wrapper', 5);
 
@@ -33,6 +34,38 @@ add_filter('woocommerce_product_tabs',			'pillars_wc_product_tabs');
 add_filter('woocommerce_product_additional_information_heading', 'pillars_wc_product_additional_information_heading');
 add_filter('woocommerce_attribute',				'pillars_wc_product_woocommerce_attribute_filter', 10, 3);
 add_filter('wc_product_enable_dimensions_display', 'pillars_wc_product_enable_dimensions_display_filter', 10, 1);
+
+/**
+ * Undocumented function
+ *
+ * @return void
+ */
+function pillars_wc_single_product_collection()
+{
+	global $product;
+
+	$collection = $product->get_attribute('kollektsiya');
+	if ($collection && !is_wp_error($collection)) {
+		if (mb_strpos($collection, ',') !== false) {
+			$collections = explode(',', $collection);
+		} else {
+			$collections = [$collection];
+		}
+
+		foreach ($collections as $collection) {
+			$collection	= get_term_by('name', trim($collection), 'pa_kollektsiya');
+			if (!is_wp_error($collection)) {
+				if (get_term_meta($collection->term_id, '_pillars_hide_term', true) !== 'yes') {
+					echo sprintf(
+						'<a class="pillars-wc-product-collection" href="%s">Коллекция «%s»</a>',
+						get_term_link($collection->term_id, 'pa_kollektsiya'),
+						$collection->name
+					);
+				}
+			}
+		}
+	}
+}
 
 /**
  * Шаблон вывода списка приемуществ на странице Товара

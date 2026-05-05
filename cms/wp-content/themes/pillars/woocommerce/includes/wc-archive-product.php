@@ -37,7 +37,7 @@ function pillars_wc_archive_title_header()
 			pillars_wc_archive_description_header();
 			$description = ob_get_clean();
 
-			if ($image_id) {
+			if ($image_id && pillars_wc_product_cat_has_filter_thumbnails() !== 'yes') {
 				echo sprintf(
 					'<div class="pillars-wc-term__title-image%s"><div class="media-ratio">%s</div><h1>%s</h1>%s</div>',
 					($image_position && $image_position != '-1') ? ' --' . $image_position : '',
@@ -272,6 +272,7 @@ function pillars_wc_set_categories_tab_items($args = array())
 			$link = (isset($value['redirect']) && $value['redirect'] == 'yes') ? $link : '#' . $slug;
 
 			$params['items'][] = array(
+				'id'		=> absint($value['id']),
 				'data-id'	=> $slug,
 				'href'		=> $link,
 				'label'		=> sprintf('<span class="hide-sm">%s</span><span class="show-sm">%s</span>', $value['title'], $value['short']),
@@ -291,6 +292,18 @@ function pillars_wc_set_categories_tab_items($args = array())
 	$params['attrs'] = join(' ', $params['attrs']);
 
 	return $params;
+}
+
+/**
+ * Проверка вывода фильтра товаров с миниатюрами
+ *
+ * @return string
+ */
+function pillars_wc_product_cat_has_filter_thumbnails()
+{
+	if (term_exists(get_queried_object_id(), 'product_cat')) {
+		return get_term_meta(get_queried_object_id(), '_pillars_tab_filter_thumbs', true);
+	}
 }
 
 /**
@@ -330,9 +343,10 @@ function pillars_wc_get_categories_list_filter($pa_args = [], $tax = '', $filter
 		if (absint($cat_id)) {
 			$term = get_term($cat_id, 'product_cat');
 			if ($term instanceof WP_Term) {
-				$pa_args[$cat_id]['slug'] = $term->slug;
-				$pa_args[$cat_id]['name'] = $term->name;
-				$pa_args[$cat_id]['link'] = get_term_link($term, 'product_cat');
+				$pa_args[$cat_id]['id']		= $term->term_id;
+				$pa_args[$cat_id]['slug']	= $term->slug;
+				$pa_args[$cat_id]['name']	= $term->name;
+				$pa_args[$cat_id]['link']	= get_term_link($term, 'product_cat');
 			}
 		}
 	}
@@ -349,6 +363,7 @@ function pillars_wc_get_categories_list_filter($pa_args = [], $tax = '', $filter
 		}
 		$term = get_term($link, 'product_cat');
 		if ($term instanceof WP_Term) {
+			$pa_args[$link]['id']	= $term->term_id;
 			$pa_args[$link]['slug'] = $term->slug;
 			$pa_args[$link]['name'] = $term->name;
 		}
@@ -471,9 +486,10 @@ function pillars_wc_get_categories_list_filter_by_grid($pa_args = [], $tax = '',
 		if (absint($cat_id)) {
 			$term = get_term($cat_id, 'product_cat');
 			if ($term instanceof WP_Term) {
-				$pa_args[$cat_id]['slug'] = $term->slug;
-				$pa_args[$cat_id]['name'] = $term->name;
-				$pa_args[$cat_id]['link'] = get_term_link($term, 'product_cat');
+				$pa_args[$cat_id]['id']		= $term->term_id;
+				$pa_args[$cat_id]['slug']	= $term->slug;
+				$pa_args[$cat_id]['name']	= $term->name;
+				$pa_args[$cat_id]['link']	= get_term_link($term, 'product_cat');
 			}
 		}
 	}
@@ -490,6 +506,7 @@ function pillars_wc_get_categories_list_filter_by_grid($pa_args = [], $tax = '',
 		}
 		$term = get_term($link, 'product_cat');
 		if ($term instanceof WP_Term) {
+			$pa_args[$link]['id']	= $term->term_id;
 			$pa_args[$link]['slug'] = $term->slug;
 			$pa_args[$link]['name'] = $term->name;
 		}
@@ -519,6 +536,8 @@ function pillars_wc_get_categories_list_filter_by_grid($pa_args = [], $tax = '',
 
 			wc_get_template('loop/loop-filter-start.php', $args);
 			wc_get_template('loop/loop-start.php');
+
+			// TODO подумать над оптимизацией запроса, чтобы не все вытаскивать термины из переданной таксономии, к примеру коллекции.
 
 			foreach ($pa_terms as $pa_term) {
 
@@ -550,13 +569,14 @@ function pillars_wc_get_categories_list_filter_by_grid($pa_args = [], $tax = '',
 					);
 				}
 
-				if ($filter) {
+				if ($filter && get_queried_object_id() !== $cat_id) {
+					// TODO предусмотреть работу для поддоменов
 					switch ($cat_id) {
 						case 344:
 							$exclude = array(839);
 							break;
 						case 839:
-							$exclude = array(342, 463);
+							$exclude = array(342);
 							break;
 						case 463:
 							$exclude = array(342, 344, 839);
@@ -656,3 +676,54 @@ function pillars_wc_get_categories_tabs($term_id = 0, $get_children = true)
 
 	return $args;
 }
+
+/**
+ * Вывод списка коллекций товаров
+ *
+ * @return string
+ */
+function pillars_theme_wc_get_by_product_collections_for_catalog()
+{
+	$wrapper		= array();
+	$collections	= get_terms([
+		'taxonomy'	=> 'pa_kollektsiya',
+		'orderby'	=> 'name',
+		'order'		=> 'ASC',
+	]);
+
+	if ($collections) {
+		foreach ($collections as $collection) {
+			if (get_term_meta($collection->term_id, '_pillars_hide_term', true) !== 'yes') {
+				$wrapper[] = sprintf(
+					'
+			<div class="col-md-3 col-sm-4 col-6 collection-item">
+				%s
+			</div>',
+					pillars_theme_wc_get_product_cat_for_catalog_item([
+						'term_id'	=> $collection->term_id,
+						'link'		=> get_term_link($collection->term_id, 'pa_kollektsiya'),
+						'thumb'		=> wp_get_attachment_image(get_term_meta($collection->term_id, '_pillars_cat_product_image_id', true), 'medium_large'),
+						'name'		=> $collection->name,
+					]),
+				);
+			}
+		}
+	}
+
+	return implode(PHP_EOL, $wrapper);
+}
+
+/**
+ * Шорткод для вывода списка коллекций товаров
+ */
+add_shortcode('pillars_product_collections', function ($params) {
+	if (!is_admin()) {
+		$atts = shortcode_atts(array(), $params);
+
+		ob_start();
+		woocommerce_product_loop_start();
+		echo pillars_theme_wc_get_by_product_collections_for_catalog();
+		woocommerce_product_loop_end();
+		return ob_get_clean();
+	}
+});
