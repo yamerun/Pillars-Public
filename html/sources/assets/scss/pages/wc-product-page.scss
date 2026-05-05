@@ -19,6 +19,25 @@
 			border: 0;
 		}
 
+		&-collection {
+			display: inline-block;
+			color: var(--color_action);
+
+			&:after {
+				content: "";
+				display: inline-block;
+				width: 1rem;
+				height: 1rem;
+				background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgMTMuMzY0MUwxOC4yMjI1IDdMMjAgOC44MTc5NUwxMiAxN0w0IDguODE3OTVMNS43Nzc1IDdMMTIgMTMuMzY0MVoiIGZpbGw9IiNGRjY0MDAiLz48L3N2Zz4NCg==") center center no-repeat;
+				background-size: contain;
+				transform: rotate(-90deg) translateX(-3px);
+			}
+
+			&:hover {
+				color: var(--color_action);
+			}
+		}
+
 		&-gallery {
 
 			&__images {
@@ -586,7 +605,23 @@ table.variations {
 	}
 }
 
+@media (min-width: $break_md) {
+	.pillars-wc-product {
+		&-title {
+			display: inline-block;
+		}
+
+		&-collection {
+			margin-left: 0.5rem;
+		}
+	}
+}
+
 @media (max-width: ($break_sm - 1)) {
+	.pillars-wc-product-collection {
+		margin-top: 0.25rem;
+	}
+
 	.pillars-wc-product-section {
 		padding-top: 0;
 	}

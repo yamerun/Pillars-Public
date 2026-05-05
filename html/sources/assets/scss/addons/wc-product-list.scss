@@ -129,6 +129,38 @@
 	}
 }
 
+.collection-item {
+	.catalog-item {
+		&__cover {
+			&:after {
+				content: '';
+				display: inline-block;
+				width: 100%;
+				height: 50%;
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: 1;
+				background: radial-gradient(ellipse farthest-side at top left, rgba(0, 0, 0, 0.6) 20%, rgba(0, 0, 0, 0) 97%);
+			}
+		}
+
+		&__title {
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 2;
+			padding: 2rem 0.75rem;
+			color: white;
+			font-size: 1.25em;
+			font-weight: var(--weight_medium);
+			text-align: left;
+
+
+		}
+	}
+}
+
 @keyframes alter-view {
 	0% {
 		opacity: 0;
