@@ -10,6 +10,9 @@ add_action('get_footer', 'pillars_styles_fonts');
 add_action('get_footer', 'pillars_styles_svg');
 add_action('get_footer', 'pillars_styles_footer');
 
+add_action('wp_footer', 'pillars_footer_btn_action_recall_me', 1);
+add_action('wp_footer', 'pillars_footer_btn_action_up', 1);
+
 add_action('wp_body_open', 'pillars_body_open_action_video');
 
 add_filter('the_content', 'pillars_content_has_scripts_styles', 20);
@@ -209,7 +212,6 @@ function pillars_scripts_footer()
 	wp_enqueue_script('pillars-main');
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('pillars-main-jquery');
-	// wp_enqueue_script('plotly');
 }
 
 function pillars_styles_footer()
@@ -255,7 +257,32 @@ function pillars_content_has_scripts_styles($content)
 	return $content;
 }
 
+/**
+ * Вывод кнопки обратного звонка для ПК
+ *
+ * @return void
+ */
+function pillars_footer_btn_action_recall_me()
+{
+	if (!theplugin_is_mobile()) { ?>
+		<a class="btn-recall-me pillars-popup__btn --active" href="tel:<?= do_shortcode('[tp-get-contact wrapper="link"]') ?>" data-id="recall" data-form="form-recall" data-form_args="<?= theplugin_array_to_args(['page_id' => get_the_ID()]) ?>">
+			<?= pillars_theme_get_svg_symbol('contact-icon-phone') ?>
+			<p>Перезвоните мне</p>
+		</a>
+	<?php }
+}
 
+/**
+ * Вывод кнопки скролла к верху страницы
+ *
+ * @return void
+ */
+function pillars_footer_btn_action_up()
+{
+	if (theplugin_is_mobile()) { ?>
+		<div class="btn-up btn-up__hide"></div>
+	<?php }
+}
 
 /**
  * Function for `wp_body_open` action-hook.
@@ -264,7 +291,7 @@ function pillars_content_has_scripts_styles($content)
  */
 function pillars_body_open_action()
 {
-?>
+	?>
 	<style>
 		.pillars-preloader-page {
 			position: fixed;
