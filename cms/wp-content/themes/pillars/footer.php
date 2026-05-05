@@ -79,8 +79,6 @@ if (!isset($_COOKIE['pillars_cookie_agree'])) {
 	</div>
 </footer>
 
-<div class="btn-up btn-up__hide"></div>
-
 <?php wp_footer(); ?>
 
 </body>

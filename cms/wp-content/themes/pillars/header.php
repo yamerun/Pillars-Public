@@ -6,11 +6,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="yandex-verification" content="dbd739e20dcaab5a" />
-	<meta name="google-site-verification" content="3CyCo_1pYmueceumIgsWiX7kmg67qV2uF5QDiQ6cv-4" />
-	<?php if (get_current_blog_id() !== 1) { ?>
-		<meta name="google-site-verification" content="KP7aJjW0UkQJ_PFACXWXrEKxtm4zWpCR8D4yqF7en4o" />
-	<?php } ?>
-	<meta name="facebook-domain-verification" content="9xldkld3xk8m8arvhl6lk0qskq6jur" />
 	<meta name="p:domain_verify" content="6861d6535137a0fb0fb869af31415bb1" />
 
 	<?= do_shortcode('[tp-get-theme-color]') ?>
