@@ -61,7 +61,7 @@ if (!function_exists('pillars_woocommerce_cart_link_fragment')) {
  */
 function pillars_wc_loop_shop_per_page()
 {
-	return 24;
+	return 32;
 }
 
 /**
