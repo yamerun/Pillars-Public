@@ -723,7 +723,7 @@ a.preload-item {
 	}
 	*/
 
-	a:not(.wc-block-grid__product-link):not([class^="btn-"]) {
+	a:not(.wc-block-grid__product-link):not([class^="btn-"]):not(:has(img)) {
 		color: var(--color_link_paragraph);
 
 		&:hover {
@@ -770,15 +770,10 @@ a.preload-item {
 		height: auto;
 		aspect-ratio: 16/9;
 	}
-}
 
-.article {
-	&.post {
-		.wp-block {
-			*:is(p, ul, ol) {
-				font-size: 0.9375rem;
-			}
-		}
+
+	.wp-block-gallery.has-nested-images figure.wp-block-image {
+		flex-grow: initial;
 	}
 }
 
