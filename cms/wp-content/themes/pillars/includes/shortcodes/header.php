@@ -142,7 +142,7 @@ function pillars_shortcode_header_contacts($params)
 				))
 				?>
 			</li>
-			<li class="email">
+			<li class="email hide-lg">
 				<?= do_shortcode('[pillars-contact type="' . $keys['email'] . '" key="contacts_email"]') ?>
 			</li>
 		</ul>

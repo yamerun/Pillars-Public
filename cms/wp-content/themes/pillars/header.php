@@ -19,14 +19,14 @@
 		<div class="body-header__top">
 			<div class="container">
 				<div class="row">
-					<div class="col-tagline hide-sm">
+					<div class="col-tagline hide-md">
 						<?= do_shortcode('[pillars_header_tagline]') ?>
 						<?= do_shortcode('[pillars_header_multisite]') ?>
 					</div>
 					<div class="col-logo">
 						<?= theplugin_get_custom_logo() ?>
 					</div>
-					<div class="col-contact hide-sm">
+					<div class="col-contact hide-md">
 						<?= do_shortcode('[pillars_header_contacts]') ?>
 					</div>
 					<div class="col-account">
