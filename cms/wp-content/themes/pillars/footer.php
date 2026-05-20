@@ -9,15 +9,20 @@ if (!isset($_COOKIE['pillars_cookie_agree'])) {
 <footer class="wc-cart-hide">
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-3 col-6">
+			<div class="col-sm-3">
 				<div class="block">
 					<div class="footer-logo">
 						<?= theplugin_get_custom_logo() ?>
 						<?= do_shortcode('[tp-logo-footer-desc]') ?>
 					</div>
+					<ul class="footer-list">
+						<li><a href="https://pokraska.pillars.ru/" target="_blank">Порошковая покраска металла</a></li>
+						<li><a href="https://frezerovka.pillars.ru/" target="_blank">Обработка на фрезерных станках ЧПУ</a></li>
+						<li><a href="https://molding.pillars.ru/" target="_blank">Производство форм</a></li>
+					</ul>
 				</div>
 			</div>
-			<div class="col-sm-3 col-6">
+			<div class="col-sm-3">
 				<div class="block">
 					<h5 class="footer-title">Меню</h5>
 					<?php wp_nav_menu(array(
@@ -64,7 +69,7 @@ if (!isset($_COOKIE['pillars_cookie_agree'])) {
 				</div>
 				<div class="block">
 					<h5 class="footer-title"><?= get_the_title(wc_get_page_id('shop')) ?></h5>
-					<?= pillars_theme_wc_get_product_cat_for_menu(array('before' => '<ul class="footer-menu-catalog footer-menu">', 'links' => ['https://molding.pillars.ru' => 'Производство форм'])) ?>
+					<?= pillars_theme_wc_get_product_cat_for_menu(array('before' => '<ul class="footer-menu-catalog footer-list footer-menu">')) ?>
 				</div>
 			</div>
 		</div><!-- .row -->
