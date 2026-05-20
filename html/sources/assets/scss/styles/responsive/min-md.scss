@@ -132,16 +132,22 @@
 	}
 
 	body>footer {
-		padding-inline: 3.5rem 0;
+		padding-bottom: 6rem;
 	}
 
 	.footer {
 		&-logo {
-			width: 170px;
+			width: 220px;
+
+			>a {
+				display: block;
+				width: 170px;
+			}
 		}
 
 		&-menu-catalog {
 			max-height: 270px;
+			column-gap: 0;
 
 			>li {
 				width: 25%;

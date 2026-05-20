@@ -174,4 +174,25 @@
 			white-space: nowrap;
 		}
 	}
+
+	.footer {
+		&-logo {
+			width: 200px;
+			margin-inline: auto;
+
+			p {
+				font-size: 1.125rem;
+				text-align: center;
+			}
+
+			&+* {
+				width: 100%;
+				margin-top: 3em;
+			}
+		}
+
+		&-menu {
+			column-count: 2;
+		}
+	}
 }
