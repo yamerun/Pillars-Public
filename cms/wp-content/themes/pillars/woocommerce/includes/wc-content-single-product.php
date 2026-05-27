@@ -27,6 +27,7 @@ add_action('woocommerce_after_quantity_input_field', 'pillars_wc_single_product_
 add_action('woocommerce_after_single_product_summary', 'pillars_wc_output_related_products', 20);
 
 add_action('woocommerce_after_single_product', 'pillars_wc_single_product_news_slider', 5);
+add_action('woocommerce_after_single_product', 'pillars_wc_single_product_yandex_reviews', 10);
 
 add_filter('pillars_wc_attribute_options_additional_filter', 'pillars_wc_attribute_options_additional', 5, 1);
 add_filter('pillars_wc_attribute_label',		'pillars_wc_attribute_label_filter', 10, 3);
@@ -387,6 +388,16 @@ function pillars_wc_single_product_discount_info()
 function pillars_wc_single_product_news_slider()
 {
 	echo do_shortcode('[tp-get-part part="news-slider"]');
+}
+
+/**
+ * Вывод секции отзывов с Яндекс.Карт
+ *
+ * @return void
+ */
+function pillars_wc_single_product_yandex_reviews()
+{
+	echo do_shortcode('[tp-get-part part="yandex-reviews"]');
 }
 
 /**

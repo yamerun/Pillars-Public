@@ -30,6 +30,7 @@
 </section>
 
 <?= do_shortcode('[tp-get-part part="news-slider"]') ?>
+<?= do_shortcode('[tp-get-part part="yandex-reviews"]') ?>
 
 <section>
 	<div class="container">
