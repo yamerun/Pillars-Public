@@ -238,4 +238,39 @@ document.addEventListener('DOMContentLoaded', function (e) {
 		});
 	}
 
+	let yreviews_slider = document.querySelector('.y-review__container');
+	if (yreviews_slider) {
+		new Swiper('.y-review__container', {
+			navigation: swiper_args.navigation,
+			pagination: swiper_args.pagination,
+
+			// Количество слайдов для показа
+			slidesPerView: 1,
+			// Деактивация слайдера при меньшем или равном количестве слайдов, чем в slidesPerView
+			watchOverflow: true,
+			// Отступ между слайдами
+			spaceBetween: swiper_args.spaceBetween,
+			// Количество слайдов в пролистывании
+			slidesPerGroup: 1,
+			// Зациклить
+			loop: false,
+			// Отключение автопролистывания до границ слайда
+			freeMode: false,
+			speed: 500,
+			breakpoints: {
+				480: {
+					slidesPerView: 1,
+					slidesPerGroup: 1,
+				},
+				768: {
+					slidesPerView: 2,
+					slidesPerGroup: 2,
+				},
+				1200: {
+					slidesPerView: 3,
+					slidesPerGroup: 3,
+				},
+			},
+		});
+	}
 });

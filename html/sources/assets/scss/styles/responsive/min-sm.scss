@@ -103,5 +103,30 @@
 		}
 	}
 
+	.y-reviews {
+		&-badge {
+			padding-bottom: var(--pillars-slider-navigation-size);
+		}
+
+		&-slider {
+			width: calc(100% - 240px - 1rem);
+		}
+	}
+
+	.call-me-action {
+		&__description {
+			width: calc(100% - 300px - 1rem);
+		}
+
+		&__button {
+			text-align: right;
+
+			&>a {
+				width: fit-content;
+				margin-inline: auto 0;
+			}
+		}
+	}
+
 	@import 'min-sm/wc-product';
 }
