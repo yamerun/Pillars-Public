@@ -79,7 +79,7 @@ add_shortcode('tp-social-yandex-map', function ($params) {
 		$code = theplugin_get_theme_mod('yandex_map_company');
 
 		if ($code) {
-			$widget	= theplugin_yandex_reviews_widget($code);
+			$widget	= theplugin_yandex_reviews_widget($code, true);
 			return sprintf(
 				'<ul class="icons-list"><li><div>%s%s</div></li></ul>',
 				theplugin_get_svg_symbol('social-icon-yandex', 'social'),

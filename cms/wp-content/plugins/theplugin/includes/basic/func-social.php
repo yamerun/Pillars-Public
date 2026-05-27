@@ -97,15 +97,21 @@ function theplugin_get_social_list_by_theme_mod()
  * @param [type] $company
  * @return string
  */
-function theplugin_yandex_reviews_widget($company)
+function theplugin_yandex_reviews_widget($company, $is_mini = false)
 {
-	$args = get_option('maps_reviews_widget');
+	$args		= get_option('maps_reviews_widget');
+	$wrappers	= '';
 
 	$update = true;
 	if ($args) {
 		if ((wp_date('U') - $args['update']) < 86400) {
 			$update = false;
 		}
+	}
+
+	$commets = get_option('maps_reviews_widget_comments');
+	if (!$commets && !$update) {
+		$update = true;
 	}
 
 	if ($update) {
@@ -149,6 +155,13 @@ function theplugin_yandex_reviews_widget($company)
 			}
 		}
 
+		$dom	= new DomDocument();
+		$dom->loadHTML($data);
+		$xpath	= new DOMXpath($dom);
+		$link	= $xpath->query("//a[contains(@class,'badge__link-to-map')]");
+		if ($link)
+			$args['link'] = $link[0]->getAttribute('href');
+
 		if ($elements == count($tags)) {
 			$args['update'] = wp_date('U');
 			update_option('maps_reviews_widget', $args);
@@ -157,9 +170,106 @@ function theplugin_yandex_reviews_widget($company)
 				'count'		=> '',
 				'stars'		=> '',
 				'rating'	=> '',
+				'link'		=> ''
 			];
+		}
+
+		$commets	= [];
+		$tags		= [
+			'photo'	=> "//img[contains(@class,'comment__photo')]",
+			'name'	=> "//p[contains(@class,'comment__name')]",
+			'date'	=> "//p[contains(@class,'comment__date')]",
+			'stars'	=> "//ul[contains(@class,'stars')]",
+			'text'	=> "//p[contains(@class,'comment__text')]",
+		];
+
+		foreach ($tags as $key => $query) {
+			$tables = $xpath->query($query);
+			if ($tables->length) {
+				foreach ($tables as $i => $item) {
+					switch ($key) {
+						case 'photo':
+							$commets[$i][$key] = $item->getAttribute('src');
+							break;
+						case 'stars':
+							$commets[$i][$key] = $item->childNodes->length;
+							break;
+						default:
+							$commets[$i][$key] = $item->textContent;
+							break;
+					}
+				}
+			}
+		}
+
+		if ($commets) {
+			update_option('maps_reviews_widget_comments', $commets);
 		}
 	}
 
-	return sprintf('<div class="mini-badge__rating-info">%s<div>%s%s</div></div>', $args['count'], $args['stars'], $args['rating']);
+	if ($is_mini) {
+		return sprintf(
+			'<div class="mini-badge__rating-info">%s<div>%s%s</div></div>',
+			$args['count'],
+			$args['stars'],
+			$args['rating'],
+		);
+	}
+
+	$wrappers = '';
+	if ($commets) {
+		ob_start(); ?>
+		<div class="y-reviews">
+			<div class="y-reviews-badge">
+				<img loading="lazy" src="<?= get_template_directory_uri() ?>/assets/images/yandex-map.svg" width="55" height="28">
+				<div class="mini-badge__rating-info">
+					<?= $args['count'] ?>
+					<div>
+						<?= $args['stars'] ?>
+						<?= $args['rating'] ?>
+					</div>
+				</div>
+				<a href="<?= $args['link'] ?>" class="mini-badge__link-to-map" target="_blank">Оставить отзыв</a>
+			</div>
+			<div class="y-reviews-slider">
+				<div class="y-review__container swiper-container">
+					<div class="y-review__wrapper swiper-wrapper">
+						<?php foreach ($commets as $comment) {
+							if ($comment['text']) { ?>
+								<div class="y-review__slide swiper-slide">
+									<div class="y-review">
+										<div class="y-review__header">
+											<img src="<?= $comment['photo'] ?>" alt="" class="y-review__photo">
+											<div class="y-review__profile">
+												<p class="y-review__name"><?= $comment['name'] ?></p>
+												<p class="y-review__date"><?= $comment['date'] ?></p>
+											</div>
+										</div>
+										<div class="y-review__stars">
+											<ul class="stars-list">
+												<?php for ($i = 0; $i < $comment['stars']; $i++) {
+													echo '<li class="stars-list__star"></li>';
+												} ?>
+											</ul>
+										</div>
+										<p class="y-review__text"><?= $comment['text'] ?></p>
+									</div>
+								</div>
+						<?php }
+						} ?>
+					</div>
+					<div class="pillars-slider__navigations">
+						<div class="pillars-slider__pagination"></div>
+						<div class="pillars-slider__buttons">
+							<div class="pillars-slider__button-prev"></div>
+							<div class="pillars-slider__button-next"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+<?php $wrappers = ob_get_clean();
+	}
+
+	return $wrappers;
 }
