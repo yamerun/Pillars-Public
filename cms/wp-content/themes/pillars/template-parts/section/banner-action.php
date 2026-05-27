@@ -1,0 +1,1 @@
+<a href="https://vk.com/pillars_ru" target="_blank"><?= wp_get_attachment_image(11872, 'full', false, ['class' => 'alignnone']) ?></a>
