@@ -1,0 +1,115 @@
+@import '../vars';
+
+.post-article {
+	--size_primary: 1rem;
+
+	*:is(p:not([class]), figure) {
+		margin-bottom: 0.75em;
+
+		&>a>img {
+			border-radius: 0 0 2rem 0;
+		}
+	}
+
+	*:is(p, figure)>a:has(img) {
+		display: inline-block;
+		position: relative;
+
+		&:after {
+			content: 'перейти';
+			display: inline-block;
+			padding: 0.25rem 1.5rem 0.25rem 1rem;
+			position: absolute;
+			right: 1.5rem;
+			bottom: 1.5rem;
+			color: white;
+			font-size: 0.75em;
+			text-transform: uppercase;
+			background: var(--color_action) url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.0005 12L6 4.99969L7.99974 3L17 12L7.99974 21L6 19.0003L13.0005 12Z' fill='white'/%3E%3C/svg%3E%0A") 78px 4px no-repeat;
+			background-size: 18px 18px;
+			border-radius: var(--border-radius);
+			@include trans;
+		}
+
+		&:hover {
+			border-bottom: 0 !important;
+
+			&:after {
+				color: white;
+				background-color: var(--color_action_hover);
+			}
+		}
+	}
+
+	*:is(p, figure)>a[title]:has(img) {
+		position: relative;
+
+		&:before {
+			content: attr(title);
+			display: inline-block;
+			padding: 0.4rem 1.25rem;
+			position: absolute;
+			top: 1rem;
+			left: 1rem;
+			color: white;
+			background-color: rgba(255, 255, 255, 0.25);
+			border-radius: 2rem;
+			box-shadow: 0px 0px 25px 0px rgba(255, 255, 255, 0.25) inset;
+			backdrop-filter: blur(0.5rem);
+			transition: all ease-in 0.3s;
+		}
+	}
+
+	.wp-block {
+		*:is(.h1, h2, .h2, h3) {
+			padding-left: 0;
+			font-weight: var(--weight_medium);
+
+			&+* {
+				margin-top: 0.75em;
+			}
+		}
+
+		*+*:is(.h1, h2, .h2, h3) {
+			margin-top: 1.125em;
+		}
+	}
+}
+
+.posts-block {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	align-content: flex-start;
+}
+
+/**
+ * RESPONSIVE
+ */
+@media (min-width: $break_sm) {
+	.post-article {
+		p>a:has(img:is(.alignleft, .alignright)) {
+			display: inline-block;
+			max-width: 60%;
+			margin-block: 0.25rem 1rem;
+		}
+
+		p>a:has(img.alignleft) {
+			margin-inline: 0 2rem;
+			float: left;
+		}
+
+		p>a:has(img.alignright) {
+			margin-inline: 2rem 0;
+			float: right;
+		}
+	}
+}
+
+@media (min-width: $break_md) {
+	.posts-block {
+		.--item+.--item {
+			margin-top: 2rem;
+		}
+	}
+}
