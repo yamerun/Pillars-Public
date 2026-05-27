@@ -123,10 +123,12 @@ function pillars_scripts_header()
 function pillars_styles_header()
 {
 	// Базовый стиль оформления большиства первых экранов сайта
-
-
 	if (is_front_page()) {
 		theplugin_file_get_content_css_by_theme_inline('/assets/css/pages/frontpage.min.css', 'pillars-frontpage');
+	}
+
+	if (is_singular(['post', 'portfolio'])) {
+		theplugin_file_get_content_css_by_theme_inline('/assets/css/pages/post.min.css', 'pillars-post');
 	}
 
 	if (theplugin_is_template('template-contact')) {

@@ -216,3 +216,61 @@ add_shortcode('image-radius', function ($params) {
 
 	return '<div class="image-radius"><div class="media-ratio">' . wp_get_attachment_image(absint($atts['id']), $atts['size']) . '</div></div>';
 });
+
+/**
+ * Вывод html-обёртки похожих статей по категории на странице постов
+ *
+ * @return string
+ */
+add_shortcode('posts-related', function ($params) {
+	$atts = shortcode_atts(array(), $params);
+
+	$wrapper = '';
+
+	if (is_singular('post')) {
+		$post_id = get_queried_object_id();
+		$categories = get_the_category($post_id);
+
+		$posts = get_posts(
+			array(
+				'post_type'			=> 'post',
+				'post_status'		=> 'publish',
+				'posts_per_page'	=> 4,
+				'order'				=> 'asc',
+				'orderby'			=> 'rand',
+				'exclude'			=> array($post_id),
+				'tax_query'		=> array(
+					array(
+						'taxonomy'	=> 'category',
+						'field'		=> 'term_taxonomy_id',
+						'terms'		=> $categories[0]->term_id,
+					)
+				)
+			)
+		);
+
+
+		if ($posts) {
+			ob_start();
+
+			echo '<div class="row posts-block">' . PHP_EOL;
+			echo '<div class="col-12"><div class="block"><h2>Похожие статьи</h2></div></div>' . PHP_EOL;
+
+			global $post;
+			foreach ($posts as $post) {
+				setup_postdata($post);
+				echo '<div class="col-md-3 col-sm-6">' . PHP_EOL;
+				echo '<div class="block">' . PHP_EOL;
+				get_template_part('template-parts/content/news-item', null, ['class' => '--mini']);
+				echo '</div>' . PHP_EOL;
+				echo '</div>' . PHP_EOL;
+			}
+
+			wp_reset_postdata();
+			echo '</div>' . PHP_EOL;
+			$wrapper = ob_get_clean();
+		}
+	}
+
+	return $wrapper;
+});
