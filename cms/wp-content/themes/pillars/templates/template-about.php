@@ -135,13 +135,16 @@ get_header();
 					<p>Каждая партия выпускаемой продукции проходит многоступенчатый контроль качества на всех этапах производства. Все изделия проходят 48-часовое тестирование, в процессе которого отбраковывается некачественный товар.</p>
 				</div>
 				<div class="block certificates">
-					<h4 class="certificates__title">Сертификаты</h4>
+					<h4 class="certificates__title">Сертификаты и декларации</h4>
 					<div class="certificates__certificate">
 						<a data-fancybox="eac" href="<?= get_template_directory_uri() ?>/assets/images/Certificate_pillars_EAC.png">
 							<img width="210" height="300" src="<?= get_template_directory_uri() ?>/assets/images/Certificate_pillars_EAC_preview.png">
 						</a>
 						<a data-fancybox="eac" href="<?= wp_get_attachment_image_url(9343, 'full') ?>">
 							<img width="210" height="300" src="<?= wp_get_attachment_image_url(9343, 'medium') ?>">
+						</a>
+						<a data-fancybox="eac" href="<?= wp_get_attachment_url(11893) ?>">
+							<img width="210" height="300" src="<?= wp_get_attachment_image_url(11894, 'medium') ?>">
 						</a>
 					</div>
 					<div class="certificates__eac">
