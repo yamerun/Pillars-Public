@@ -1,4 +1,45 @@
 ﻿:root {
+
+
+	/* Text */
+	--color_2: #000;
+	--rgba_0: rgba(0, 0, 0, 0.8);
+	--rgba_1: rgba(36, 39, 48, 0.75);
+	/* #242730 */
+
+	/* Dots */
+	--color_5: rgba(76, 56, 56, 0.85);
+	/* #4C3838 colotitle */
+
+	--blue-300: #1ba3f0;
+	--blue-900: #151833;
+	/* Bg btn */
+	--grey-100: #f0f0f0;
+	/* BG */
+	--grey-200: #c4c4c4;
+	--grey-300: #afafaf;
+	/* Border Form */
+	--grey-400: #777;
+	/* footer */
+	--grey-800: #333;
+	// new primary color
+	--grey-900: #222;
+	/* Orange text */
+	--orange-100: #ff693a;
+	--orange-200: #ff8138;
+	/* Blue, link menu */
+	--pale-blue-400: #8c8282;
+	--pale-blue-500: #7585AD;
+	/* Light Grey */
+	--pale-pink-200: #e9d3d3;
+	/* Cities list */
+	--puce-500: #765a5a;
+	--red-600: #dd4c4c;
+	/* Light text */
+	--silver-300: #928888;
+	--silver-800: #242730;
+
+
 	--color_primary: var(--grey-900);
 	--color_secondary: var(--grey-300);
 	--color_alter: var(--grey-300);
@@ -90,10 +131,6 @@
 
 
 	--size_secondary: 1.125rem;
-
-	--border_radius: 0.75rem;
-	--border_radius_2: 0.5rem;
-
 
 	--shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
 	--shadow_sm: 0px 25px 20px -10px rgba(0, 0, 0, 0.1);
