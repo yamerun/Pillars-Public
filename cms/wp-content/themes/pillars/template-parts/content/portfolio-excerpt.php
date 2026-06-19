@@ -1,4 +1,4 @@
-<div class="col-12">
+<div class="col-sm-6">
 	<div class="block">
 		<div class="portfolio-item">
 			<div class="portfolio-item__thumb">

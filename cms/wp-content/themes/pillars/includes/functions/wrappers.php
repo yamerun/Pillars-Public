@@ -148,3 +148,72 @@ function pillars_account_link_wrapper($args = array())
 		return $wrapper;
 	}
 }
+
+/**
+ * Парсинг контента для вывода галереи Портфолио
+ *
+ * @param string $content
+ * @return array
+ */
+function pillars_portfolio_get_gallery_ids(&$content)
+{
+	$gallery	= theplugin_get_preg_tag(['<!-- wp:gallery', '<!-- /wp:gallery -->'], $content);
+	if ($gallery) {
+		$content = str_replace($gallery[0], '', $content);
+		$images = theplugin_get_preg_tag(['<!-- wp:image ', ' -->'], $gallery[1], true);
+		$gallery = [];
+		if ($images) {
+			foreach ($images[1] as $item) {
+				$image = theplugin_maybe_array($item);
+				$gallery[] = absint($image['id']);
+			}
+		}
+	} else {
+		$gallery = [];
+	}
+
+	return $gallery;
+}
+
+/**
+ * Парсинг контента для вывода видео-обзора Портфолио
+ *
+ * @param string $content
+ * @return string
+ */
+function pillars_portfolio_get_iframe(&$content)
+{
+	$iframe		= theplugin_get_preg_tag(['<iframe src=', '</iframe>'], $content);
+	if ($iframe) {
+		$content	= str_replace($iframe[0], '', $content);
+		$iframe		= sprintf('<div class="portfolio-video-review">%s</div>', strtr($iframe[0], ['autoplay=1' => 'autoplay=0',]));
+	} else {
+		$iframe = '';
+	}
+
+	return $iframe;
+}
+
+/**
+ * Парсинг контента для вывода товаров Портфолио
+ *
+ * @param string $content
+ * @return array
+ */
+function pillars_portfolio_get_product_ids(&$content)
+{
+	if (get_current_blog_id() !== 1)
+		return [];
+
+	$products	= theplugin_get_preg_tag(['<!-- wp:woocommerce/handpicked-products ', ' /-->'], $content);
+	if ($products) {
+		$content	= str_replace($products[0], '', $content);
+		$products	= theplugin_maybe_array($products[1]);
+		$products	= $products['products'];
+		arsort($products);
+	} else {
+		$products = [];
+	}
+
+	return $products;
+}
