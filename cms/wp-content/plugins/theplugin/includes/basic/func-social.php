@@ -235,7 +235,7 @@ function theplugin_yandex_reviews_widget($company, $is_mini = false)
 				<div class="y-review__container swiper-container">
 					<div class="y-review__wrapper swiper-wrapper">
 						<?php foreach ($commets as $comment) {
-							if ($comment['text']) { ?>
+							if (isset($comment['text']) && $comment['text']) { ?>
 								<div class="y-review__slide swiper-slide">
 									<div class="y-review">
 										<div class="y-review__header">

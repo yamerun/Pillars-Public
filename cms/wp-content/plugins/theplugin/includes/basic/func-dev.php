@@ -10,11 +10,12 @@ add_filter('theplugin_active_counters', 'theplugin_is_deactive_counters', 20, 1)
 add_action('init', function () {
 	$name = 'is-deactive-counters';
 	if (isset($_GET[$name])) {
-		$flag = absint($_GET[$name]);
+		$flag	= absint($_GET[$name]);
+		$url	= strtr(get_home_url(), ['https' => '', 'http' => '', '://' => '']);
 		if ($flag) {
-			setcookie($name, $flag, time() + 365 * 86400, '/', 'pillars.ru');
+			setcookie($name, $flag, time() + 365 * 86400, '/', $url);
 		} else {
-			setcookie($name, 0, time() - 86400, '/', 'pillars.ru');
+			setcookie($name, 0, time() - 86400, '/', $url);
 		}
 	}
 });
