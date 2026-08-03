@@ -63,4 +63,16 @@
 			font-size: $_24px;
 		}
 	}
+
+	#category-tabs {
+		position: relative;
+	}
+
+	.pillars-wc-product-tabs__nav.--thumb:not(.--fixed)+.pillars-wc-product-tabs__nav-feeder {
+		content: "";
+		left: 0;
+		bottom: 0;
+		z-index: 2;
+		width: 100%;
+	}
 }

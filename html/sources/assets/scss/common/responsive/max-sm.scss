@@ -52,4 +52,16 @@
 			}
 		}
 	}
+
+	.pillars-wc-product-tabs {
+		&__nav {
+			overflow-x: auto;
+		}
+
+		&__wrapper {
+			flex-wrap: nowrap;
+			column-gap: 0.5rem;
+			white-space: nowrap;
+		}
+	}
 }
