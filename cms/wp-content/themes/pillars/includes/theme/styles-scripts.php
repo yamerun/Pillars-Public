@@ -12,6 +12,7 @@ add_action('get_footer', 'pillars_styles_footer');
 
 add_action('wp_footer', 'pillars_footer_btn_action_recall_me', 1);
 add_action('wp_footer', 'pillars_footer_btn_action_up', 1);
+add_action('wp_footer', 'pillars_footer_catalog_popup', 1);
 
 add_action('wp_body_open', 'pillars_body_open_action_video');
 
@@ -284,6 +285,18 @@ function pillars_footer_btn_action_up()
 	if (theplugin_is_mobile()) { ?>
 		<div class="btn-up btn-up__hide"></div>
 	<?php }
+}
+
+/**
+ * Вывод кнопки скролла к верху страницы
+ *
+ * @return void
+ */
+function pillars_footer_catalog_popup()
+{
+	if (!isset($_COOKIE['pillars_view_catalog'])) {
+		get_template_part('template-parts/section/get-catalog');
+	}
 }
 
 /**
