@@ -202,15 +202,22 @@ function pillars_portfolio_get_iframe(&$content)
  */
 function pillars_portfolio_get_product_ids(&$content)
 {
-	if (get_current_blog_id() !== 1)
-		return [];
-
 	$products	= theplugin_get_preg_tag(['<!-- wp:woocommerce/handpicked-products ', ' /-->'], $content);
 	if ($products) {
 		$content	= str_replace($products[0], '', $content);
 		$products	= theplugin_maybe_array($products[1]);
 		$products	= $products['products'];
 		arsort($products);
+
+		$blog_id = get_current_blog_id();
+		if ($blog_id !== 1) {
+			$siblings = [];
+			foreach ($products as $id) {
+				$siblings[] = theplugin_multisite_post_get_sibling_id($id, $blog_id, 1);
+			}
+
+			return $siblings;
+		}
 	} else {
 		$products = [];
 	}
