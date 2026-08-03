@@ -17,8 +17,6 @@ function is_menu_item_childrens_show(e, item) {
 		}
 		wrapper.classList.add('active');
 	}
-
-
 }
 
 const main_menu = document.getElementById('main_menu');
@@ -157,7 +155,11 @@ menu_item_catalog_groups.forEach(group => {
 		}
 	});
 
-	group.addEventListener('click', (e) => { e.preventDefault() });
+	group.addEventListener('click', (e) => {
+		if (window.innerWidth > window.wp_data.break_sm) {
+			e.preventDefault();
+		}
+	});
 });
 
 

@@ -111,7 +111,6 @@
 
 .catalog-item {
 	display: inline-block;
-	height: 100%;
 	width: 100%;
 	position: relative;
 	overflow: hidden;
@@ -155,9 +154,12 @@
 			font-size: 1.25em;
 			font-weight: var(--weight_medium);
 			text-align: left;
-
-
 		}
+	}
+
+	p {
+		color: var(--color_alter);
+		font-size: 1rem;
 	}
 }
 

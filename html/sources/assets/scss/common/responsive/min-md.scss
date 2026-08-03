@@ -196,7 +196,7 @@
 					position: relative;
 
 					>.sub-menu {
-						width: calc(100vw - var(--up) * 4);
+						width: fit-content;
 						position: absolute;
 						left: 0;
 						z-index: -1;
@@ -379,6 +379,10 @@
 							background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSI3IiB2aWV3Qm94PSIwIDAgMTIgNyIgZmlsbD0ibm9uZSI+CiAgPHBhdGggZD0iTTEgMS4wNDI5N0w1Ljk1NTc0IDUuOTk5MDMiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2UtbGluZWNhcD0icm91bmQiPjwvcGF0aD4KICA8cGF0aCBkPSJNMTEgMUw2LjA0Mzk2IDUuOTU1OTEiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2UtbGluZWNhcD0icm91bmQiPjwvcGF0aD4KPC9zdmc+Cg==');
 						}
 					}
+				}
+
+				>.sub-menu {
+					width: calc(100vw - var(--up) * 4);
 				}
 			}
 		}

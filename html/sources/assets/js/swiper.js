@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
 			// Количество слайдов для показа
 			slidesPerView: 1,
 			// Деактивация слайдера при меньшем или равном количестве слайдов, чем в slidesPerView
-			watchOverflow: true,
+			watchOverflow: false,
 			// Отступ между слайдами
 			spaceBetween: swiper_args.spaceBetween,
 			// Количество слайдов в пролистывании
