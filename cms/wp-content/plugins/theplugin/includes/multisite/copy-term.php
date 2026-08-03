@@ -121,6 +121,11 @@ function theplugin_multisite_copy_term_to_site($term_id, $blog_id)
 		// Обновление порядка термина по `term_order`
 		theplugin_multisite_update_term_order($inserted_term_id, $catarr['category_order']);
 
+		$cities = [];
+		if ($current_blog_id === 1) {
+			$cities = theplugin_multisite_get_cities($current_blog_id, false);
+		}
+
 		// Обновляем мета-данные
 		foreach ($term_meta as $key => $values) {
 			// if you do not want weird redirects
@@ -128,6 +133,10 @@ function theplugin_multisite_copy_term_to_site($term_id, $blog_id)
 				continue;
 
 			foreach ($values as $value) {
+				if (in_array($key, ['_yoast_wpseo_title', '_yoast_wpseo_metadesc']) && $current_blog_id === 1) {
+					$value = strtr($value, $cities);
+				}
+
 				if ($catarr['cat_ID']) {
 					$update = update_term_meta($inserted_term_id, $key, $value);
 				} else {
@@ -156,10 +165,13 @@ function theplugin_multisite_copy_term_to_site($term_id, $blog_id)
 
 	restore_current_blog();
 
-	if ($success == 'success') {
+	if ($success == 'success' || $inserted_term_id) {
 		// Задаём перекрестное значение ID постов-близнецов для старшей записи
 		$multisite_term_ids['blog_' . $blog_id] = absint($inserted_term_id);
 		update_term_meta($term_id, '_multisite_term_ids', $multisite_term_ids);
+
+		// Обновление SEO-тега в таблице плагина YoastSEO
+		theplugin_multisite_update_wp_seo_by_term($inserted_term_id, $blog_id);
 	}
 
 	return $success;

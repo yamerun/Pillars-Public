@@ -259,6 +259,46 @@ function theplugin_multisite_update_wp_seo_by_post($post_id, $blog_id = 0)
 }
 
 /**
+ * Обновление seo-тегов под шаблон городов в переданном термине и ID блога
+ *
+ * @param [type] $post_id
+ * @param integer $blog_id
+ * @return int|bool
+ */
+function theplugin_multisite_update_wp_seo_by_term($term_id, $blog_id = 0)
+{
+	$current_blog_id = 1;
+	$cities = theplugin_multisite_get_cities($current_blog_id, false);
+
+	if ($current_blog_id == $blog_id || !$blog_id || !$cities)
+		return null;
+
+	$object_id	= theplugin_multisite_term_get_sibling_id($term_id, $current_blog_id, $blog_id);
+	$table_name	= 'yoast_indexable';
+	$prefix		= theplugin_multisite_get_blog_prefix($current_blog_id);
+	$table		= $prefix . $table_name;
+
+	global $wpdb;
+	$item	= $wpdb->get_row($wpdb->prepare("SELECT * FROM $table WHERE object_id = %d AND object_type = %s", $object_id, 'term'));
+	$table	= theplugin_multisite_get_blog_prefix($blog_id) . $table_name;
+
+	if ($item) {
+		return $wpdb->update(
+			$table,
+			[
+				'object_sub_type'	=> $item->object_sub_type,
+				'title'				=> strtr($item->title, $cities),
+				'description'		=> strtr($item->description, $cities),
+				'primary_focus_keyword'	=> $item->primary_focus_keyword,
+			],
+			['object_id' => $term_id, 'object_type' => 'term']
+		);
+	}
+
+	return null;
+}
+
+/**
  * Формирование шаблона замены города родительского сайта на теги автозамены в дочернем блоге
  *
  * @param integer $blog_id
