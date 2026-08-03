@@ -19,7 +19,7 @@ $products	= pillars_portfolio_get_product_ids($content);
 						<?php foreach ($gallery as $image) { ?>
 							<figure class="portfolio-gallery-item">
 								<a href="<?= wp_get_attachment_image_url($image, 'full') ?>" data-fancybox="portfolio">
-									<?= wp_get_attachment_image($image, 'medium_large', false, ['class' => 'wp-iimage-' . $image]) ?>
+									<?= wp_get_attachment_image($image, 'medium_large', false, ['class' => 'wp-image-' . $image]) ?>
 								</a>
 							</figure>
 						<?php } ?>

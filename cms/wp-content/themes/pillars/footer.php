@@ -2,7 +2,6 @@
 if (!isset($_COOKIE['pillars_cookie_agree'])) {
 	get_template_part('template-parts/section/cookie');
 }
-// echo pillars_view_messanger_buttons();
 ?>
 
 </main>
