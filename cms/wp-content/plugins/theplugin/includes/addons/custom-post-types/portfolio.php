@@ -89,7 +89,7 @@ function pillars_post_type_portfolio_messages($messages)
 /**
  * Обновляем данные last-modified Главной, когда Портфолио обновляется
  */
-add_action('save_post', function ($post_id) {
+add_action('save_post', function ($post_id, $post) {
 
 	// если это автосохранение ничего не делаем
 	if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
@@ -101,5 +101,21 @@ add_action('save_post', function ($post_id) {
 
 	if (get_post_type($post_id) == 'portfolio') {
 		theplugin_update_postdate(get_option('page_on_front'));
+
+		$product_ids = pillars_portfolio_get_product_ids($post->post_content);
+		if ($product_ids) {
+			foreach ($product_ids as $id) {
+				$portfolio_ids = get_post_meta($id, '_portfolio_ids', true);
+				if (!$portfolio_ids) {
+					$portfolio_ids = [];
+				}
+
+				$portfolio_ids[] = $post_id;
+				$portfolio_ids = array_unique($portfolio_ids);
+				arsort($portfolio_ids);
+
+				update_post_meta($id, '_portfolio_ids', $portfolio_ids);
+			}
+		}
 	}
-});
+}, 99, 2);
