@@ -155,6 +155,9 @@ function theplugin_yandex_reviews_widget($company, $is_mini = false)
 			}
 		}
 
+		// Включаем внутренний сбор ошибок libxml
+		libxml_use_internal_errors(true);
+
 		$dom	= new DomDocument();
 		$dom->loadHTML($data);
 		$xpath	= new DOMXpath($dom);
@@ -201,6 +204,10 @@ function theplugin_yandex_reviews_widget($company, $is_mini = false)
 				}
 			}
 		}
+
+		// TODO понять ошибку html-структуры виджета
+		// Очищаем буфер ошибок, чтобы они не копились в памяти
+		libxml_clear_errors();
 
 		if ($commets) {
 			update_option('maps_reviews_widget_comments', $commets);
