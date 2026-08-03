@@ -144,6 +144,22 @@ function theplugin_file_get_content_js_by_theme($file = '')
 }
 
 /**
+ * Вывод файла стилей в html-inline
+ *
+ * @param string $file
+ * @param string $id
+ * @return string
+ */
+function theplugin_file_get_content_js_by_theme_print($file = '', $id = '')
+{
+	echo sprintf(
+		"\t<script %s>%s</script>" . PHP_EOL,
+		(!empty($id)) ? 'id="' . $id . '-js"' : '',
+		theplugin_file_get_content_js_by_theme($file)
+	);
+}
+
+/**
  * Встраивание файла стилей в html-inline
  *
  * @param string $file
