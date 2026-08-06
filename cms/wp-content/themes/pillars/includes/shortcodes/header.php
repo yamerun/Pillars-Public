@@ -190,7 +190,7 @@ function pillars_shortcode_header_search()
 		<form class="form-search-products" id="form-search-products" action="/search" method="post">
 			<div class="form-search-products__wrapper">
 				<button class="form-search-products__submit"><?= pillars_theme_get_svg_symbol('search-product') ?></button>
-				<input name="search" class="form-search-products__input" placeholder="Например: Качели" type="text" autocomplete="off">
+				<input name="search" class="form-search-products__input" placeholder="Качели" type="text" autocomplete="off">
 				<?php wp_nonce_field('search_verify_action', 'search_verify_key'); ?>
 			</div>
 		</form>

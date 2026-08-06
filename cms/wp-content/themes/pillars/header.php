@@ -81,7 +81,10 @@
 						<?= do_shortcode('[pillars_header_search]') ?>
 					</div>
 					<div class="col-action">
-						<a class="btn-category pillars-popup__btn" data-form="form-catalog" href="#catalog" data-form_args="<?= theplugin_array_to_args(['page_id' => get_the_ID()]) ?>"><span>Запросить каталог</span></a>
+						<div class="btn-category__wrapper">
+							<a class="btn-category pillars-popup__btn" data-form="form-catalog" href="#catalog" data-form_args="<?= theplugin_array_to_args(['page_id' => get_the_ID()]) ?>"><span>Запросить каталог</span></a>
+							<a class="btn-category pillars-popup__btn" data-form="form-project_calculation" href="#project_calculation" data-form_args="<?= theplugin_array_to_args(['page_id' => get_the_ID()]) ?>"><span>Запросить расчёт проекта</span></a>
+						</div>
 					</div>
 				</div>
 			</div>
