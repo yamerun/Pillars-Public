@@ -27,6 +27,18 @@ function is_show_label(e) {
 	}
 }
 
+/**
+ * Оставить только цифры в переданном input
+ *
+ * @returns
+ */
+function numeric_only(e) {
+	const input = e.target;
+	input.value = input.value.replace(/[^0-9]/g, '');
+}
+
+
+
 tp_delegate(document.body, 'submit', 'form-ajax', function (e) {
 	e.preventDefault();
 
@@ -96,38 +108,26 @@ if (cookiesection) {
 		e.preventDefault();
 
 		const form = e.target;
-		let form_data = new FormData(form);
 		const wrapper = form.closest('section.cookie');
 
-		// TODO упрощенная анимация отправки
 		form.classList.add('block-loading');
 
-		fetch(window.wp_data.ajax_url, {
-			method: "post",
-			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-			body: new URLSearchParams(form_data).toString(),
-		})
-			.then(response => response.json())
-			.then(function (data) {
-				console.log('cookie', data);
-				form.classList.remove('block-loading');
+		let date = new Date();
+		date.setDate(date.getDate() + 365);
+		let val = 'ok for ' + date;
+		document.cookie = "pillars_cookie_agree=" + val + "; domain=" + document.domain.match(/[^\.]*\.[^.]*$/)[0] + "; expires=" + date.toUTCString() + "; path=/";
 
-				if (data.message != null && data.type != null) {
-					switch (data.type) {
-						case 'ok':
-							wrapper.remove();
-							break;
-						case 'error':
-						case 'fail':
-						case 'spam':
-							// TODO функционал простого нотиса
-							alert(data.message);
-							break;
-						default: ;
-					}
-				}
-			})
-			.catch(function (error) { console.warn('cookie-error', error); });
+		wrapper.remove();
+
+		console.log('cookie', date);
+		form.classList.remove('block-loading');
+	});
+}
+
+const numeric_inputs = document.querySelectorAll('form.form-style input[pattern^="[0-9]"]');
+if (numeric_inputs.length) {
+	numeric_inputs.forEach(input => {
+		input.addEventListener('blur', numeric_only);
 	});
 }
 

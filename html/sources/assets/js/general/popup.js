@@ -178,6 +178,14 @@ tp_delegate(document.body, 'click', popup_key + '__btn', function (e) {
 						});
 					}
 
+					// Добавляем проверку на наличие только цифр в соответствующих `input`
+					const numeric_inputs = document.querySelector(form_item).querySelectorAll('input[pattern^="[0-9]"]');
+					if (numeric_inputs.length) {
+						numeric_inputs.forEach(input => {
+							input.addEventListener('blur', numeric_only);
+						});
+					}
+
 					const phone_country_code = document.querySelector(form_item).querySelector('.phone-country-code');
 					if (phone_country_code) {
 						const phone_country_code_list = phone_country_code.querySelector('.phone-country-code__list');
