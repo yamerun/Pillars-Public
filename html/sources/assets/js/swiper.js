@@ -36,11 +36,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
 			// Отключение автопролистывания до границ слайда
 			freeMode: false,
 			speed: 500,
-
-			autoplay: {
-				delay: 5000,
-			},
 		});
+
+		let informer_first_slider = informer_slider.querySelector('.swiper-slide');
+		informer_first_slider.setAttribute('data-swiper-autoplay', '60000');
 	}
 
 	let portfolio_slider = document.querySelector('.portfolio-slider__container');

@@ -25,6 +25,20 @@
 			>img {
 				border-radius: var(--border-radius);
 			}
+
+			/*
+			&::after {
+				content: '';
+				display: block;
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+				border-radius: var(--border-radius);
+				background: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 37%, rgba(0, 0, 0, 0.1) 97%);
+			}
+			*/
 		}
 	}
 
@@ -84,6 +98,18 @@
 			background: white;
 			border-radius: 0 1.75rem 0 0;
 		}
+
+		&.pillars-popup__btn {
+			color: var(--button_2_text);
+			background-color: var(--button_2_background);
+			border-color: var(--button_2_border);
+
+			&:hover {
+				color: var(--button_2_focus_text);
+				background-color: var(--button_2_focus_background);
+				border-color: var(--button_2_focus_border);
+			}
+		}
 	}
 }
 
@@ -104,6 +130,14 @@
 	.informer-item {
 		&__thumb {
 			height: 550px;
+
+			/*
+			&:after {
+				width: 50%;
+				min-width: 600px;
+				background: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 37%, rgba(0, 0, 0, 0) 97%);
+			}
+			*/
 		}
 
 		&__header {
