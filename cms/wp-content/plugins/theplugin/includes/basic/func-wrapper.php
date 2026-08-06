@@ -1030,3 +1030,49 @@ function theplugin_get_custom_logo($blog_id = 0)
 
 	return apply_filters('get_custom_logo', $html, $blog_id);
 }
+
+/**
+ * Получения HTML-обёртки навигации по контенту записи
+ *
+ * @param [type] $_content
+ * @return string
+ */
+function theplugin_get_content_navigation_wrapper($_content)
+{
+	$wrapper	= '';
+	preg_match_all('#<h(2|3|4|5|6)(.+)</h(2|3|4|5|6)#isU', $_content, $_data);
+
+	$heading = [];
+	if (isset($_data[0])) {
+		foreach ($_data[0] as $i => $item) {
+			$text = trim(strip_tags($item));
+			if ($text) {
+				$heading[] = [
+					'lvl'	=> absint($_data[1][$i]),
+					'text'	=> $text
+				];
+			}
+		}
+	}
+
+	if ($heading) {
+		$wrapper .= '<ul>' . PHP_EOL;
+		$_lvl = 0;
+		foreach ($heading as $i => $item) {
+			if (!$_lvl) {
+				$_lvl = $item['lvl'];
+			}
+
+			if ($_lvl != $item['lvl']) {
+				$wrapper .= ($_lvl < $item['lvl']) ? '<ul>' : '</ul>';
+				$wrapper .= PHP_EOL;
+				$_lvl = $item['lvl'];
+			}
+
+			$wrapper .= sprintf('<li><a href="#heading-%d" data-tag="h%d">%s</a></li>' . PHP_EOL, ($i + 1), $item['lvl'], $item['text']);
+		}
+		$wrapper .= '</ul>' . PHP_EOL;
+	}
+
+	return $wrapper;
+}
