@@ -188,3 +188,15 @@ tp_delegate(document.getElementById('main-menu'), 'mouseover', 'menu-item', func
 		menu_item_has_children_hide(document.querySelector('#main-menu'));
 	}
 });
+
+window.addEventListener('scroll', () => {
+	// определяем величину прокрутки
+	const scrollY = window.scrollY || document.documentElement.scrollTop;
+	const header = document.querySelector('body > header');
+
+	if (scrollY > 0) {
+		header.classList.add('--sticky');
+	} else {
+		header.classList.remove('--sticky');
+	}
+});

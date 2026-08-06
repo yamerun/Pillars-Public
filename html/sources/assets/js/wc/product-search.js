@@ -107,7 +107,7 @@ if (search_products_inputs.length) {
 
 	function pl_products_input_placeholder() {
 		placeholder_input += placeholder_texts[placeholder_text].charAt(placeholder_step);
-		products_input_placeholder.setAttribute('placeholder', 'Например: ' + placeholder_input);
+		products_input_placeholder.setAttribute('placeholder', placeholder_input);
 		placeholder_step++;
 		if ((placeholder_texts[placeholder_text].length + 10) < placeholder_step) {
 			placeholder_step = 0;

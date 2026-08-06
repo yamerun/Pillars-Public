@@ -9,22 +9,14 @@ if (document.querySelector('.pillars-wc-product-tabs__nav')) {
 		show() {
 			// закрепляем панель
 			this.el.classList.add('--fixed');
-			// Если экран браузера под мобильный формат, то добавялем отсуп шапки сайта
-			if (window.innerWidth < window.wp_theplugin.break_sm) {
-				elOffset = document.querySelector('body > header').offsetHeight;
-				this.el.style.top = elOffset + 'px';
-			} else {
-				this.el.style.top = '0px';
-				elOffset = 0;
-			}
+			elOffset = document.querySelector('body > header').offsetHeight;
+			this.el.style.top = elOffset + 'px';
 		},
 		hide() {
 			// открепляем панель
 			this.el.classList.remove('--fixed');
-			if (window.innerWidth < window.wp_theplugin.break_sm) {
-				this.el.style.top = '0px';
-				elOffset = 0;
-			}
+			this.el.style.top = '0px';
+			elOffset = 0;
 		},
 		addEventListener() {
 			window.addEventListener('scroll', () => {

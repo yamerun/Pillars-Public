@@ -189,8 +189,7 @@ body {
 			margin: $_4px 0;
 			text-align: center;
 
-			img,
-			svg {
+			*:is(img, svg) {
 				max-height: 2.5rem;
 				width: auto;
 			}
@@ -448,8 +447,8 @@ body {
 		.btn-category {
 			display: inline-block;
 			padding: $_12px $_24px;
-			color: var(--button_border);
-			background: transparent;
+			color: white;
+			background: var(--button_border);
 			border: 1px solid var(--button_border);
 			border-radius: 2rem;
 			@include trans;
@@ -459,6 +458,55 @@ body {
 				color: var(--button_focus_text);
 				background: var(--button_focus_background);
 				border-color: var(--button_focus_border);
+			}
+
+			&[href="#project_calculation"] {
+				color: var(--button_focus_text);
+				background: var(--button_focus_background);
+				border-color: var(--button_focus_border);
+
+				&:hover,
+				&:focus {
+					color: var(--button_border);
+					background: transparent;
+					border-color: var(--button_border);
+				}
+			}
+
+			&__wrapper {
+				--category_height: 33px;
+				--category_step: -33px;
+
+				width: 100%;
+				height: var(--category_height);
+				overflow: hidden;
+
+				>* {
+					width: 100%;
+					text-align: center;
+				}
+
+				>*:nth-child(1) {
+					opacity: 1;
+				}
+
+				>*:nth-child(2) {
+					opacity: 0;
+				}
+
+				&.--toggle {
+					>* {
+						transform: translateY(var(--category_step));
+					}
+
+					>*:nth-child(1) {
+						opacity: 0;
+					}
+
+					>*:nth-child(2) {
+						opacity: 1;
+					}
+				}
 			}
 		}
 	}
@@ -845,3 +893,4 @@ section.cookie {
 }
 
 @import '../addons/wc-product-list';
+@import '../addons/wc-product-tabs';
