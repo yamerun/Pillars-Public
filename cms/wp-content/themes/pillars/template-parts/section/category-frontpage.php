@@ -64,7 +64,7 @@
 				}
 
 				$term = get_term($category_item['category_id'], 'product_cat');
-				if ($term) {
+				if ($term && !is_wp_error($term)) {
 					$image = (empty($category_item['image_id'])) ? get_term_meta($term->term_id, 'thumbnail_id', true) : $category_item['image_id'];
 					$image = wp_get_attachment_image($image, $category_item['image_size']);
 
