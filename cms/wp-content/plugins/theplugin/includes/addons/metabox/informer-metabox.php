@@ -18,7 +18,7 @@ function theplugin_informer_meta_add($post)
 		'post_id' 		=> $post->ID,
 		'post_meta' 	=> '_informer_link',
 		'input_id' 		=> 'pillars_informer_link_field',
-		'input_type'	=> 'url',
+		'input_type'	=> 'text',
 		'label' 		=> 'Ссылка'
 	]);
 
@@ -28,6 +28,14 @@ function theplugin_informer_meta_add($post)
 		'input_id' 		=> 'pillars_informer_link_text_field',
 		'input_type'	=> 'text',
 		'label' 		=> 'Ссылка текст'
+	]);
+
+	echo theplugin_get_components_panel([
+		'post_id' 		=> $post->ID,
+		'post_meta' 	=> '_informer_form_id',
+		'input_id' 		=> 'pillars_informer_form_id_field',
+		'input_type'	=> 'text',
+		'label' 		=> 'ID формы'
 	]);
 
 	echo theplugin_get_components_panel([
@@ -60,6 +68,7 @@ function theplugin_save_informer_postdata($post_id)
 	$data = array(
 		'pillars_informer_link_field' 			=> '_informer_link',
 		'pillars_informer_link_text_field' 		=> '_informer_link_text',
+		'pillars_informer_form_id_field' 		=> '_informer_form_id',
 		'pillars_informer_content_view_field' 	=> '_informer_content_view',
 		'pillars_informer_content_align_field' 	=> '_informer_content_align'
 	);
