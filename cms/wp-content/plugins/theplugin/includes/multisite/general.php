@@ -20,6 +20,27 @@ function theplugin_multisite_get_blog_prefix($blog_id = 0)
 }
 
 /**
+ * Получение ID сайтов
+ *
+ * @param boolean $public флаг публичных сайтов, по умолчанию выводятся все
+ * @return array
+ */
+function theplugin_multisite_get_site_ids($public = false)
+{
+	$site_ids = get_sites([
+		'site__not_in'	=> [1],
+		'fields'		=> 'ids',
+		'public'		=> absint($public) ? 1 : null
+	]);
+
+	if ($site_ids) {
+		return $site_ids;
+	}
+
+	return [];
+}
+
+/**
  * Обработка переданного адреса по поддоменам без переключения блога
  *
  * @param [type] $domain
@@ -106,7 +127,7 @@ function theplugin_multisite_post_get_sibling_id($post_id, $blog_id, $current_bl
 /**
  * Получение ID мульти-термина в блоге `$blog_id` по переданному ID термина-родственника в текущем блоге
  *
- * @param [type] $post_id
+ * @param [type] $term_id
  * @param [type] $blog_id
  * @return int
  */
@@ -300,8 +321,11 @@ function theplugin_multisite_update_option($blog_id = 0, $option_name = '', $opt
 	global $wpdb;
 	$table = theplugin_multisite_get_blog_prefix($blog_id) . 'options';
 	$option_value = (is_serialized($option_value)) ? $option_value : maybe_serialize($option_value);
-	// TODO возможно придётся сделать проверку на существование опции
-	return $wpdb->update($table, ['option_value' => $option_value], ['option_name' => $option_name]);
+	if (theplugin_multisite_get_option($table, $option_name)) {
+		return $wpdb->update($table, ['option_value' => $option_value], ['option_name' => $option_name]);
+	} else {
+		return $wpdb->insert($table, ['option_name' => $option_name, 'option_value' => $option_value]);
+	}
 }
 
 /**
