@@ -1,9 +1,3 @@
-<?php
-if (!isset($_COOKIE['pillars_cookie_agree'])) {
-	get_template_part('template-parts/section/cookie');
-}
-?>
-
 </main>
 <footer class="wc-cart-hide">
 	<div class="container">
