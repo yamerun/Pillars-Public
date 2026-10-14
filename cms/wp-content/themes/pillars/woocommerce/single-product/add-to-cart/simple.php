@@ -70,7 +70,9 @@ if ($product->is_in_stock()) : ?>
 				</tbody>
 			</table>
 
-			<button type="submit" name="add-to-cart" value="<?= esc_attr($product->get_id()) ?>" class="single_add_to_cart_button button alt<?php echo esc_attr(wc_wp_theme_get_element_class_name('button') ? ' ' . wc_wp_theme_get_element_class_name('button') : ''); ?>"><?php echo esc_html($product->single_add_to_cart_text()); ?></button>
+			<input type="hidden" name="product_id" value="<?= absint($product->get_id()) ?>" />
+			<input type="hidden" name="add-to-cart" value="<?= absint($product->get_id()) ?>" />
+			<button type="submit" class="single_add_to_cart_button button alt<?php echo esc_attr(wc_wp_theme_get_element_class_name('button') ? ' ' . wc_wp_theme_get_element_class_name('button') : ''); ?>"><?php echo esc_html($product->single_add_to_cart_text()); ?></button>
 
 			<?php do_action('woocommerce_after_add_to_cart_button'); ?>
 		<?php } ?>
