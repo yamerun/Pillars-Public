@@ -178,11 +178,11 @@ class THEPLUGIN_Form_Style
 
 		if ($args['name']) {
 			$wrapper .= sprintf(
-				'<label %s><input type="hidden" name="%s" %s %s><span></span><div %s>%s</div></label>' . PHP_EOL,
+				'<label %s><input type="checkbox" name="%s" %s value="on" %s><span></span><div %s>%s</div></label>' . PHP_EOL,
 				self::has_class($args['class']),
 				$args['name'],
 				self::is_required($args['required']),
-				($args['checked']) ? ' value="on"' : '',
+				($args['checked']) ? ' checked' : '',
 				self::has_class($args['class-text']),
 				$args['placeholder'],
 			);
