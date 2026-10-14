@@ -1076,3 +1076,109 @@ function theplugin_get_content_navigation_wrapper($_content)
 
 	return $wrapper;
 }
+
+/**
+ * Анонимизация email
+ *
+ * @param string $email
+ * @return string
+ */
+function theplugin_anonymizer_email($email = '')
+{
+	$email = filter_var(trim($email), FILTER_SANITIZE_EMAIL);
+	if ($email) {
+		$email = explode('@', $email);
+		$email[0] = mb_substr($email[0], 0, 1) . str_repeat('*', strlen($email[0]) - 1);
+		$host = explode('.', $email[1]);
+		$domen = array_pop($host);
+		$host = join('.', $host);
+		$email[1] = mb_substr($host, 0, 1) . str_repeat('*', strlen($host) - 1) . '.' . $domen;
+		$email = join('@', $email);
+	}
+
+	return $email;
+}
+
+/**
+ * Анонимизация телефона
+ *
+ * @param string $phone
+ * @return string
+ */
+function theplugin_anonymizer_phone($phone = '')
+{
+	$phone = preg_replace('/[^0-9]/', '', trim($phone));
+	if (strlen($phone) > 10) {
+		$phone = mb_substr($phone, 0, 2) . str_repeat('*', strlen($phone) - 4) . mb_substr($phone, -2);
+	}
+
+	return $phone;
+}
+
+/**
+ * Анонимизация имени
+ *
+ * @param string $name
+ * @return string
+ */
+function theplugin_anonymizer_name($name = '', $rand = true)
+{
+	$name = trim($name);
+	$times = ($rand) ? mt_rand(mb_strlen($name) - 1, mb_strlen($name) + mt_rand(0, 3)) : mb_strlen($name) - 1;
+	return mb_substr($name, 0, 1) . str_repeat('*', $times);
+}
+
+/**
+ * Анонимизация тексты
+ *
+ * @param string $text
+ * @return string
+ */
+function theplugin_anonymizer_text($text = '', $number = true, $show = 1)
+{
+	$text = explode(' ', $text);
+	if (is_array($text)) {
+		foreach ($text as $i => $item) {
+			$item = preg_replace('#[[:punct:]]#', '', $item);
+			if (mb_strlen($item) > 2) {
+				$text[$i] = mb_substr($item, 0, $show) . str_repeat('*', mb_strlen($item) - $show);
+				if ($number) {
+					$text[$i] = preg_replace('#[0-9]#', '*', $text[$i]);
+				}
+			} else {
+				$text[$i] = str_repeat('*', mb_strlen($item));
+			}
+		}
+
+		return join(' ', $text);
+	}
+
+	return $text;
+}
+
+/**
+ * Анонимизация IP
+ *
+ * @param string $ip
+ * @return string
+ */
+function theplugin_anonymizer_ip($ip = '')
+{
+	if (strpos($ip, '.') !== false) {
+		$separator = '.';
+	} elseif (strpos($ip, ':') !== false) {
+		$separator = ':';
+	} else {
+		return $ip;
+	}
+
+	$ip = explode($separator, $ip);
+	foreach ($ip as $i => $item) {
+		if ($i == 0)
+			continue;
+
+		$ip[$i] = str_repeat('*', mb_strlen($item));
+	}
+
+	return join($separator, $ip);
+}

@@ -671,6 +671,154 @@ function theplugin_is_mobile()
 }
 
 /**
+ * Определение имени и ОС браузера
+ *
+ * @source https://stackoverflow.com/questions/8754080/how-to-get-exact-browser-name-and-version
+ *
+ * @return array
+ */
+function theplugin_get_browser_data($useragent = '')
+{
+	if (!$useragent) {
+		$useragent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+	}
+
+	$os			= '';
+	$browser	= '';
+
+	if ($useragent) {
+
+		$os_array = [
+			'/windows nt 10.0/i'	=> 'Windows 10',
+			'/windows nt 11.0/i'	=> 'Windows 11',
+			'/windows nt 6.3/i'		=> 'Windows 8.1',
+			'/windows nt 6.2/i'		=> 'Windows 8',
+			'/windows nt 6.1/i'		=> 'Windows 7',
+			'/windows nt 6.0/i'		=> 'Windows Vista',
+			'/windows nt 5.2/i'		=> 'Windows Server 2003/XP x64',
+			'/windows nt 5.1/i'		=> 'Windows XP',
+			'/windows xp/i'			=> 'Windows XP',
+			'/windows nt 5.0/i'		=> 'Windows 2000',
+			'/windows me/i'			=> 'Windows ME',
+			'/win98/i'				=> 'Windows 98',
+			'/win95/i'				=> 'Windows 95',
+			'/win16/i'				=> 'Windows 3.11',
+			'/ubuntu/i'				=> 'Ubuntu',
+			'/iphone/i'				=> 'iPhone',
+			'/ipod/i'				=> 'iPod',
+			'/ipad/i'				=> 'iPad',
+			'/macintosh|mac os x/i'	=> 'Mac OS X',
+			'/mac_powerpc/i'		=> 'Mac OS 9',
+			'/android/i'			=> 'Android',
+			'/blackberry/i'			=> 'BlackBerry',
+			'/linux/i'				=> 'Linux',
+			'/webos/i'				=> 'Mobile'
+		];
+
+		foreach ($os_array as $regex => $value) {
+			if (preg_match($regex, $useragent)) {
+				$os = $value;
+				break;
+			}
+		}
+
+		$browser_array = [
+			'/googlebot/i'	=> 'robot',
+			'/yandexbot/i'	=> 'robot',
+			'/robot;/i'		=> 'robot',
+			'/adsbot/i'		=> 'robot',
+			'/share;/i'		=> 'robot',
+			'/telegram/i'	=> 'Telegram',
+			'/whatsapp/i'	=> 'WhatsApp',
+			'/msie/i'		=> 'Internet Explorer',
+			'/trident/i'	=> 'Internet Explorer',
+			'/edge/i'		=> 'Edge',
+			'/edg/i'		=> 'Edge (Chromium)',
+			'/opera/i'		=> 'Opera',
+			'/OPR/i'		=> 'Opera',
+			'/firefox/i'	=> 'Firefox',
+			'/yabrowser/i'			=> 'Yandex Browser',
+			'/yasearchbrowser/i'	=> 'Yandex Browser',
+			'/samsung/i'	=> 'Samsung Browser',
+			'/safari/i'		=> 'Safari',
+			'/netscape/i'	=> 'Netscape',
+			'/maxthon/i'	=> 'Maxthon',
+			'/konqueror/i'	=> 'Konqueror',
+			'/chrome/i'		=> 'Chrome',
+			'/mobile/i'		=> 'Handheld Browser',
+		];
+
+		foreach ($browser_array as $regex => $value) {
+			if (preg_match($regex, $useragent)) {
+				$browser = $value;
+				break;
+			}
+		}
+
+		// Дополнительная проверка для Chrome/Safari (т.к. у Safari в строке часто присутствует подстрока Chrome)
+		if ($browser == 'Safari' && strpos($useragent, 'Chrome') !== false) {
+			$browser = 'Chrome';
+		}
+		if ($browser == 'Safari' && strpos($useragent, 'Edg') !== false) {
+			$browser = 'Edge (Chromium)';
+		}
+	}
+
+	return [
+		'os'		=> $os,
+		'browser'	=> $browser,
+	];
+}
+
+/**
+ * Определение данных по IP, анонимизация по стране-региону по умолчанию
+ *
+ * @param string $ip
+ * @param boolean $anonymaizer
+ * @return string|array
+ */
+function theplugin_get_ip_country($ip = '', $anonymaizer = true)
+{
+	if (empty($ip))
+		return false;
+
+	$ch = curl_init();
+
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+	curl_setopt($ch, CURLOPT_HEADER, 0);
+	curl_setopt($ch, CURLOPT_URL, 'http://ip-api.com/json/' . $ip);
+
+	$data = curl_exec($ch);
+
+	curl_close($ch);
+
+	$data = theplugin_maybe_array($data);
+
+	if (is_array($data) && $anonymaizer) {
+
+		if (isset($data['org']) && $data['org']) {
+			if (in_array($data['org'], ['Yandex LLC', 'Google LLC'])) {
+				return $data['org'];
+			}
+		}
+
+		$region = '';
+		if (isset($data['countryCode']) && $data['countryCode']) {
+			$region .= $data['countryCode'];
+		}
+
+		if (isset($data['region']) && $data['region']) {
+			$region .= '-' . $data['region'];
+		}
+
+		return $region;
+	}
+
+	return $data;
+}
+
+/**
  * Обновление даты изменения поста по текущему времени
  *
  * @param [type] $post_id
