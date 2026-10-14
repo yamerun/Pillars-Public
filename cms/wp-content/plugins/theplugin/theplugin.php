@@ -67,14 +67,14 @@ function theplugin_activate()
 	 */
 	$table = $wpdb->prefix . 'wc_search_products';
 	$wpdb->query("CREATE TABLE IF NOT EXISTS $table (
-		id				bigint(20) UNSIGNED AUTO_INCREMENT NOT NULL,
-		title			varchar(100),
-		base_ids		text,
-		variation_ids	text,
-		date_update		datetime DEFAULT '1970-01-01 00:00:00',
-		priority		int(3) UNSIGNED DEFAULT 10,
-		is_auto			BOOLEAN DEFAULT 1,
-		PRIMARY KEY (id)
+			id				bigint(20) UNSIGNED AUTO_INCREMENT NOT NULL,
+			title			varchar(100),
+			base_ids		text,
+			variation_ids	text,
+			date_update		datetime DEFAULT '1970-01-01 00:00:00',
+			priority		int(3) UNSIGNED DEFAULT 10,
+			is_auto			BOOLEAN DEFAULT 1,
+			PRIMARY KEY (id)
 	);");
 
 	$table = $wpdb->prefix . 'wc_search_product_synonyms';
@@ -84,6 +84,61 @@ function theplugin_activate()
 		synonym			varchar(100),
 		PRIMARY KEY (synonym_id),
 		FOREIGN KEY (title_id) REFERENCES wp_wc_search_products (id)
+			ON UPDATE CASCADE
+			ON DELETE RESTRICT
+	);");
+
+	/**
+	 *  Таблица для сбора utm-меток
+	 */
+	$table = $wpdb->prefix . 'theplugin_cookie_agree';
+	$wpdb->query("CREATE TABLE IF NOT EXISTS $table (
+		id				bigint(20) UNSIGNED AUTO_INCREMENT NOT NULL,
+		create_time		datetime DEFAULT '1970-01-01 00:00:00',
+		create_time_gmt	datetime DEFAULT '1970-01-01 00:00:00',
+		php_session		varchar(64) DEFAULT '',
+		agent_ip		varchar(128) DEFAULT '0.0.0.0',
+		agent_hash		varchar(32) DEFAULT '',
+		blog_id			int(3) DEFAULT 1,
+		referer			text,
+		PRIMARY KEY (id)
+	);");
+
+	/**
+	 *  Таблица для сбора utm-меток
+	 */
+	$table = $wpdb->prefix . 'theplugin_utm_visits';
+	$wpdb->query("CREATE TABLE IF NOT EXISTS $table (
+		id				bigint(20) UNSIGNED AUTO_INCREMENT NOT NULL,
+		create_time		datetime DEFAULT '1970-01-01 00:00:00',
+		agent_hash		varchar(32) NOT NULL,
+		agent_type		varchar(16) DEFAULT 'pc',
+		agent_browser	varchar(16) DEFAULT '',
+		agent_os		varchar(16) DEFAULT '',
+		ip_country		varchar(32) DEFAULT '0.0.0.0',
+		PRIMARY KEY (id)
+	);");
+
+	$tablemeta = $wpdb->prefix . 'theplugin_utm_data';
+	$wpdb->query("CREATE TABLE IF NOT EXISTS $tablemeta (
+		data_id		bigint(20) UNSIGNED AUTO_INCREMENT NOT NULL,
+		utm_id		bigint(20) UNSIGNED NOT NULL,
+		utm_key		varchar(128) NOT NULL,
+		utm_value	text,
+		PRIMARY KEY (data_id),
+		FOREIGN KEY (utm_id) REFERENCES $table (id)
+			ON UPDATE CASCADE
+			ON DELETE RESTRICT
+	);");
+
+	$tablemeta = $wpdb->prefix . 'theplugin_utm_visits_meta';
+	$wpdb->query("CREATE TABLE IF NOT EXISTS $tablemeta (
+		meta_id		bigint(20) UNSIGNED AUTO_INCREMENT NOT NULL,
+		utm_id		bigint(20) UNSIGNED NOT NULL,
+		meta_key	varchar(255),
+		meta_value	longtext,
+		PRIMARY KEY (meta_id),
+		FOREIGN KEY (utm_id) REFERENCES $table (id)
 			ON UPDATE CASCADE
 			ON DELETE RESTRICT
 	);");

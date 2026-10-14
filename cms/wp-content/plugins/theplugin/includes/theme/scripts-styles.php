@@ -8,11 +8,14 @@ add_action('get_footer', 			'theplugin_add_footer_scripts', 100);
 add_action('get_footer', 			'theplugin_add_footer_styles', 100);
 
 add_action('wp_head', 				'theplugin_add_counters_head');
+add_action('wp_footer', 			'theplugin_add_cookie_banner', 100);
+add_action('wp_footer', 			'theplugin_add_counters_head_to_footer', 100);
 add_action('wp_footer', 			'theplugin_add_counters_footer');
 
 add_action('admin_enqueue_scripts', 'theplugin_admin_include_scripts_styles');
 
 add_filter('theplugin_active_counters', 'theplugin_is_active_counters', 10, 1);
+add_filter('theplugin_active_counters', 'theplugin_is_decline_counters', 30, 1);
 
 /**
  * STYLES & SCRIPTS
@@ -103,13 +106,82 @@ function theplugin_add_counters_head()
 
 	if ($is_active) {
 		$counters = get_option('tp_counters_code_head_id');
-		if ($counters) {
+		if ($counters && isset($_COOKIE['pillars_cookie_agree'])) {
 			$counters = wp_specialchars_decode($counters, ENT_QUOTES);
 			if (strpos($counters, '<script') === false) {
-				$counters = sprintf('<script>%s</script>', $counters);
+				$counters = sprintf('<script type="text/javascript">%s</script>', $counters);
 			}
+			echo $counters;
 		}
-		echo $counters;
+	}
+}
+
+/**
+ * Вывод куки-баннера
+ *
+ * @return void
+ */
+function theplugin_add_cookie_banner()
+{
+	if (!isset($_COOKIE['pillars_cookie_agree']) && !isset($_COOKIE['pillars_cookie_decline'])) {
+		get_template_part('template-parts/section/cookie');
+	}
+}
+
+/**
+ * Коды метрики для шапки сайта `wp_head` в подвал сайта для потверждения согласия на обработку ПД метрики
+ *
+ * @return void
+ */
+function theplugin_add_counters_head_to_footer()
+{
+	$is_active = apply_filters('theplugin_active_counters', true);
+	if ($is_active) {
+		$counters = get_option('tp_counters_code_head_id');
+		if ($counters && !isset($_COOKIE['pillars_cookie_agree'])) {
+			$counters = wp_specialchars_decode($counters, ENT_QUOTES);
+			if (strpos($counters, '<script') === false) {
+				$counters = sprintf('<script type="text/javascript">%s</script>', $counters);
+			}
+
+			$counters = str_replace('<script>', '<script type="text/javascript">', $counters);
+			preg_match_all('#<script type="text/javascript">(.+)</script>#isU', $counters, $scripts);
+
+			if ($scripts[1]) {
+				foreach ($scripts[1] as $i => $script) {
+					ob_start();
+?>
+					<script type="text/javascript">
+						(function() {
+							function load_metrika() {
+								console.log('load metrika');
+								<?= $script ?>
+							}
+
+							const cookiesection = document.getElementById('agree-cookie');
+							if (cookiesection) {
+								cookiesection.querySelector('.accept').addEventListener('click', () => {
+									load_metrika();
+								});
+
+								document.querySelector('#decline-cookie .decline').addEventListener('click', () => {
+									let date = new Date();
+									date.setDate(date.getDate() + 1);
+									let val = 'decline for ' + date;
+									document.cookie = "pillars_cookie_decline=" + val + "; domain=" + document.domain.match(/[^\.]*\.[^.]*$/)[0] + "; expires=" + date.toUTCString() + "; path=/";
+									cookiesection.closest('section.cookie').remove();
+								});
+							}
+						})();
+					</script>
+<?php
+					$script		= ob_get_clean();
+					$counters	= str_replace($scripts[0][$i], $script, $counters);
+				}
+			}
+
+			echo $counters;
+		}
 	}
 }
 
@@ -124,13 +196,13 @@ function theplugin_add_counters_footer()
 
 	if ($is_active) {
 		$counters = get_option('tp_counters_code_footer_id');
-		if ($counters) {
+		if ($counters && isset($_COOKIE['pillars_cookie_agree'])) {
 			$counters = wp_specialchars_decode($counters, ENT_QUOTES);
 			if (strpos($counters, '<script') === false) {
-				$counters = sprintf('<script>%s</script>', $counters);
+				$counters = sprintf('<script type="text/javascript">%s</script>', $counters);
 			}
+			echo $counters;
 		}
-		echo $counters;
 	}
 }
 
@@ -143,6 +215,20 @@ function theplugin_add_counters_footer()
 function theplugin_is_active_counters($active)
 {
 	if (theplugin_is_redactor())
+		return false;
+
+	return $active;
+}
+
+/**
+ * Отключение кодов метрики, если пользователь `editor`/`adminstrator`
+ *
+ * @param bool $active
+ * @return bool
+ */
+function theplugin_is_decline_counters($active)
+{
+	if (isset($_COOKIE['pillars_cookie_decline']))
 		return false;
 
 	return $active;

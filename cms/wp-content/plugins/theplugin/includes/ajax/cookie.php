@@ -9,6 +9,8 @@ class THEPLUGIN_AJAX_cookie extends THEPLUGIN_AJAX_Handler
 		/* Check existence post request --> begin */
 		if ($_POST) :
 
+			$referer = $_POST['_wp_http_referer'] ?? '';
+
 			$security = $this->security(array(
 				'type'				=> 'form-type',
 				'verify_key' 		=> 'cookie_verify_key',
@@ -27,7 +29,21 @@ class THEPLUGIN_AJAX_cookie extends THEPLUGIN_AJAX_Handler
 					$val  = 'ok for ' . date('Y-m-d', time() + 365 * 86400);
 					$time = time() + 365 * 86400;
 
-					if (setCookie('pillars_cookie_' . $type, $val, $time, '/')) {
+					$args = [
+						'create_time'		=> wp_date('Y-m-d H:i:s'),
+						'create_time_gmt'	=> wp_date('Y-m-d H:i:s', null, new DateTimeZone('UTC')),
+						'php_session'		=> $_COOKIE['PHPSESSID'] ?? null,
+						'agent_ip'			=> $_SERVER['REMOTE_ADDR'] ?? null,
+						'agent_hash'		=> md5(serialize(pillars_get_user_server_data())),
+						'blog_id'			=> get_current_blog_id(),
+						'referer'			=> esc_url($referer)
+					];
+
+					global $wpdb;
+					$table = theplugin_multisite_get_blog_prefix(1) . 'theplugin_cookie_agree';
+					$wpdb->insert($table, $args);
+
+					if ($wpdb->insert_id && !is_wp_error($wpdb->insert_id)) {
 						parent::get_message_info(array('message' => $val));
 					} else {
 						parent::get_message_warning(array('message' => 'Ошибка создания cookie-файла. Пожалуйста, обновите страницу и попробуйте ещё раз отправить сообщение.', 'type' => 'fail'));
