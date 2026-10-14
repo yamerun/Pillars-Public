@@ -11,8 +11,6 @@ if (!wp_next_scheduled('theplugin_update_published_date_posts_cron_event')) {
 add_action('theplugin_update_published_date_posts_cron_event', 'theplugin_update_published_date_posts_cron_action');
 function theplugin_update_published_date_posts_cron_action()
 {
-	$log = 'logs/cron/update-published-date-cron.log';
-
 	if (get_current_blog_id() === 1) {
 		theplugin_update_published_date_posts();
 	}
