@@ -13,7 +13,7 @@ defined('ABSPATH') || exit;
 function theplugin_get_preg_tag($tags = array(), $stroke = '', $all = false)
 {
 	if ($all) {
-		preg_match_all('|' . $tags[0] . '(.+)' . $tags[1] . '|isU', $stroke, $data);
+		preg_match_all('#' . $tags[0] . '(.+)' . $tags[1] . '#isU', $stroke, $data);
 	} else {
 		preg_match('|' . $tags[0] . '(.+)' . $tags[1] . '|isU', $stroke, $data);
 	}
