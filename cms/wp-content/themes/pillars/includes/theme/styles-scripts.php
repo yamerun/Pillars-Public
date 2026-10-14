@@ -267,7 +267,7 @@ function pillars_content_has_scripts_styles($content)
  */
 function pillars_footer_btn_action_recall_me()
 {
-	if (!theplugin_is_mobile()) { ?>
+	if (!theplugin_is_mobile() && is_woocommerce()) { ?>
 		<a class="btn-recall-me pillars-popup__btn --active" href="tel:<?= do_shortcode('[tp-get-contact wrapper="link"]') ?>" data-id="recall" data-form="form-recall" data-form_args="<?= theplugin_array_to_args(['page_id' => get_the_ID()]) ?>">
 			<?= pillars_theme_get_svg_symbol('contact-icon-phone') ?>
 			<p>Перезвоните мне</p>
