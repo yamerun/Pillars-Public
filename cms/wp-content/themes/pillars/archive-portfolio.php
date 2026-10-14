@@ -24,7 +24,7 @@ get_header();
 					</div>
 				</div><!-- .page-header -->
 
-			<?php
+				<?php
 				// Start the Loop.
 				while (have_posts()) :
 					the_post();
@@ -33,10 +33,16 @@ get_header();
 
 				// End the loop.
 				endwhile;
-
-				// Previous/next page navigation.
-				echo do_shortcode('[tp-pagination]');
-
+				?>
+				<div class="col-12">
+					<div class="block">
+						<?php
+						// Previous/next page navigation.
+						echo do_shortcode('[tp-pagination]');
+						?>
+					</div>
+				</div>
+			<?php
 			// If no content, include the "No posts found" template.
 			else :
 				get_template_part('template-parts/content/none');
