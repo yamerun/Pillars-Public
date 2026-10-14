@@ -857,7 +857,7 @@ section.cookie {
 }
 
 .cookie-wrapper {
-	max-width: 600px;
+	max-height: fit-content;
 	margin: 0.5rem 4.5rem 0.5rem 1rem;
 	background-color: rgba(255, 255, 255, .9);
 	box-shadow: 0 0 20px rgba(36, 39, 48, 0.25);
@@ -879,6 +879,7 @@ section.cookie {
 	.btn-1 {
 		width: 100%;
 		padding-inline: 0;
+		font-size: 0.75em;
 	}
 }
 

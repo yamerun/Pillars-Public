@@ -4,6 +4,7 @@
 // @prepros-append general/menu.js
 // @prepros-append general/format.js
 // @prepros-append general/api.js
+// @prepros-append general/cookie-banner.js
 // @prepros-append general/form.js
 // @prepros-append general/country-phone.js
 // @prepros-append general/sections.js

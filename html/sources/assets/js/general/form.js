@@ -37,8 +37,6 @@ function numeric_only(e) {
 	input.value = input.value.replace(/[^0-9]/g, '');
 }
 
-
-
 tp_delegate(document.body, 'submit', 'form-ajax', function (e) {
 	e.preventDefault();
 
@@ -98,31 +96,6 @@ tp_delegate(document.body, 'submit', 'form-ajax', function (e) {
 		})
 		.catch(function (error) { console.warn('error', error); });
 });
-
-/**
- * Cookie Accept
- */
-const cookiesection = document.getElementById('agree-cookie');
-if (cookiesection) {
-	cookiesection.addEventListener('submit', function (e) {
-		e.preventDefault();
-
-		const form = e.target;
-		const wrapper = form.closest('section.cookie');
-
-		form.classList.add('block-loading');
-
-		let date = new Date();
-		date.setDate(date.getDate() + 365);
-		let val = 'ok for ' + date;
-		document.cookie = "pillars_cookie_agree=" + val + "; domain=" + document.domain.match(/[^\.]*\.[^.]*$/)[0] + "; expires=" + date.toUTCString() + "; path=/";
-
-		wrapper.remove();
-
-		console.log('cookie', date);
-		form.classList.remove('block-loading');
-	});
-}
 
 const numeric_inputs = document.querySelectorAll('form.form-style input[pattern^="[0-9]"]');
 if (numeric_inputs.length) {
